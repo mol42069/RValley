@@ -8,5 +8,12 @@ namespace RValley.Entities.Enemies
 {
     internal class Zombie : Enemies
     {
+
+        public Zombie() {
+        
+            
+
+        }
+
     }
 }

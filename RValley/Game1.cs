@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Threading;
 
 namespace RValley
 {
@@ -8,7 +9,8 @@ namespace RValley
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
+        private Thread serverThread;
+        private Server.Server server;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -19,6 +21,9 @@ namespace RValley
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+            // here we start the server thread:
+            this.serverThread = new Thread(new ThreadStart(this.server.Update));
 
             base.Initialize();
         }
@@ -34,6 +39,12 @@ namespace RValley
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+
+            // we start the server thread after the server and all its stuff is initialized and running.
+            if (!this.server.running && this.server.initialized) this.serverThread.Start();
+
+
 
             // TODO: Add your update logic here
 

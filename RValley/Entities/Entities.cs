@@ -12,9 +12,9 @@ namespace RValley.Entities
 // WE WANT TO DO EVERYTHING (WHAT WE DO IN CHILDREN) WE CAN IN THIS CLASS:
     internal class Entities
     {
-        private int[] position, spriteSize;
-        private Rectangle HitBox;   // if we decide to add headshots or other stuff we might want to add this here... or save those somewhere else.
-        Texture2D currentSprite;    // current visible Sprite.
+        protected int[] position, spriteSize;
+        protected Rectangle HitBox;   // if we decide to add headshots or other stuff we might want to add this here... or save those somewhere else.
+        
 
         public Entities() {
 
@@ -31,6 +31,13 @@ namespace RValley.Entities
         public virtual void Movement(int[] move)
         {
 
+        }
+        public void LoadContent() { 
+        
+        }
+        public void Animation() {
+        
+        
         }
     }
 }
