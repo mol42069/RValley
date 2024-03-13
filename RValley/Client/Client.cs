@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using RValley.Entities;
 using RValley.Maps;
+using RValley.Server;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,37 +17,36 @@ namespace RValley.Client
 {
     internal class Client
     {
-        private MapManager mapManager;
-        private MobManager mobManager;
-        private Player player;
+        // WE MAINLY USE VARIABLES FROM THE SERVER CLASS 
+        private Server.Server server;   
 
-        public Client(MobManager mobManager, MapManager mapManager, Player player) {
-            this.mapManager = mapManager;
-            this.mobManager = mobManager;
-            this.player = player;
-
+        public Client(Server.Server server) {
+            this.server = server;
 
         }
 
         public void Update() {
-
+            // here we send the server a still-alive msg.
+            this.server.stillAliveSignal = true;
             // HERE WE RUN THINGS LIKE ANIMATION AS WELL AS THE PLAYER.
-
+            this.server.player.i++;
+            
             return;
-
         }
 
-        public void Draw(SpriteBatch spriteBatch) {
+        public void KeyHandler() {
+            // here we send the KeyStrokes and we 
+        
+        }
+
+        public SpriteBatch Draw(SpriteBatch spriteBatch) {
 
             // HERE WE DRAW EVERITHING:
 
-            return;
-        }
+            spriteBatch = this.server.mobManager.Draw(spriteBatch);
+            spriteBatch = this.server.player.Draw(spriteBatch);
 
-        private void SendToServer() {
-
-
-            return;
+            return spriteBatch;
         }
     }
 }

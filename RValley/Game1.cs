@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RValley.Entities;
+using RValley.Maps;
 using System.Threading;
 
 namespace RValley
@@ -13,8 +14,10 @@ namespace RValley
         private SpriteBatch _spriteBatch;
         private Thread serverThread;
         private Server.Server server;
+        private Client.Client client;
         private Player player;
         private MobManager mobManager;
+        private MapManager mapManager;
         private Texture2D[][] playerSprites;
 
 
@@ -29,8 +32,14 @@ namespace RValley
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            this.mobManager = new MobManager();
             this.player = new Player();
+            this.mobManager = new MobManager();
+            this.mapManager = new MapManager();
+            this.server = new Server.Server();
+            this.client = new Client.Client(this.server);
+
+            this.serverThread = new Thread(this.server.Update);
+            this.serverThread.Start();
             // here we start the server thread:
             // this.serverThread = new Thread(new ThreadStart(this.server.Update));
 
@@ -247,10 +256,16 @@ namespace RValley
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                this.server.running = false;
                 Exit();
+            }
 
             // THIS HERE WE WANT TO DO WHEN WE CHOOSE PLAYERCLASS INGAME!!!
             this.player.LoadContent(this.playerSprites[(int)enums.PlayerClass.KNIGHT]);
+
+
+            this.client.Update();
 
             // we start the server thread after the server and all its stuff is initialized and running.
             if (!this.server.running && this.server.initialized) this.serverThread.Start();

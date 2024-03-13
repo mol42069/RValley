@@ -9,8 +9,11 @@ namespace RValley.Entities
 {
     internal class Player : Entities
     {
+
+        public int i, z;
         public Player() {
-        
+            this.i = 0;
+            this.z = 0;
         }
         
     }
