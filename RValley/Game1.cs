@@ -1,17 +1,24 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RValley.Entities;
 using System.Threading;
 
 namespace RValley
 {
     public class Game1 : Game
     {
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Thread serverThread;
         private Server.Server server;
+        private Player player;
         private MobManager mobManager;
+        private Texture2D[][] playerSprites;
+
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -23,6 +30,7 @@ namespace RValley
         {
             // TODO: Add your initialization logic here
             this.mobManager = new MobManager();
+            this.player = new Player();
             // here we start the server thread:
             // this.serverThread = new Thread(new ThreadStart(this.server.Update));
 
@@ -189,13 +197,13 @@ namespace RValley
                 // TODO: change the paths when we change the sprites
 
 
-                Texture2D[][] playerSprites = new Texture2D[(int)enums.PlayerClass.MAX][];
+                this.playerSprites = new Texture2D[(int)enums.PlayerClass.MAX][];
 
                 for (int i = 0; i < (int)enums.PlayerClass.MAX; i++) {
 
                     string contentPath = "Heroes/";
 
-                    playerSprites[i] = new Texture2D[(int)enums.EntityState.MAX];
+                    this.playerSprites[i] = new Texture2D[(int)enums.EntityState.MAX];
 
 
                     // we change the path so we get every PlayerClass
@@ -203,6 +211,8 @@ namespace RValley
                         case (int)enums.PlayerClass.KNIGHT:
                             contentPath += "Knight/";
                             break;
+
+                            // TODO: ADD OTHER CHARACTERS
 
                         default:
                             break;
@@ -213,15 +223,15 @@ namespace RValley
 
                         switch (j) {
                             case (int)enums.EntityState.RUN:
-                                playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "Run-Sheet");
+                                this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "Run-Sheet");
                                 break;
 
                             case (int)enums.EntityState.IDLE:
-                                playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "Idle-Sheet");
+                                this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "Idle-Sheet");
                                 break;
 
                             case (int)enums.EntityState.DEATH:
-                                playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "Death-Sheet");
+                                this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "Death-Sheet");
                                 break;
 
                             default:
@@ -229,6 +239,7 @@ namespace RValley
                         }                    
                     }
                 }
+                // here we add those sprites
             
             }
         }
@@ -238,6 +249,8 @@ namespace RValley
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            // THIS HERE WE WANT TO DO WHEN WE CHOOSE PLAYERCLASS INGAME!!!
+            this.player.LoadContent(this.playerSprites[(int)enums.PlayerClass.KNIGHT]);
 
             // we start the server thread after the server and all its stuff is initialized and running.
             if (!this.server.running && this.server.initialized) this.serverThread.Start();
