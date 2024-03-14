@@ -42,5 +42,12 @@ namespace RValley
             DEATH,
             MAX
         }
+        public enum GameState
+        {
+            MENU,
+            INGAME,
+            
+            MAX
+        }
     }
 }

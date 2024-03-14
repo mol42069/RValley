@@ -19,7 +19,7 @@ namespace RValley
         private MobManager mobManager;
         private MapManager mapManager;
         private Texture2D[][] playerSprites;
-
+        public enums.GameState gameState;
 
 
         public Game1()
@@ -27,11 +27,15 @@ namespace RValley
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            _graphics.PreferredBackBufferWidth = 1800;
+            _graphics.PreferredBackBufferHeight = 1000;
+            _graphics.ApplyChanges();
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            this.gameState = enums.GameState.MENU;
             this.player = new Player();
             this.mobManager = new MobManager();
             this.mapManager = new MapManager();
@@ -249,7 +253,7 @@ namespace RValley
                     }
                 }
                 // here we add those sprites
-            
+                this.server.player.LoadContent(this.playerSprites[(int)enums.PlayerClass.KNIGHT]);
             }
         }
 
@@ -262,10 +266,17 @@ namespace RValley
             }
 
             // THIS HERE WE WANT TO DO WHEN WE CHOOSE PLAYERCLASS INGAME!!!
-            this.player.LoadContent(this.playerSprites[(int)enums.PlayerClass.KNIGHT]);
 
+            switch (this.gameState) {
+                case enums.GameState.MENU:
 
-            this.client.Update();
+                    break;
+
+                case enums.GameState.INGAME:
+                    this.client.Update();
+                    break;
+            
+            }
 
             // we start the server thread after the server and all its stuff is initialized and running.
             if (!this.server.running && this.server.initialized) this.serverThread.Start();
@@ -283,10 +294,31 @@ namespace RValley
             _spriteBatch.Begin();
 
             // TODO: Add your drawing code here
-            
 
+            switch (this.gameState) 
+            {
+                case enums.GameState.INGAME:
+                    _spriteBatch = this.InGameDraw(_spriteBatch);
+                    break;
+                case enums.GameState.MENU:
+                    if (this.server.player.spriteSheets != null) this.gameState = enums.GameState.INGAME;
+                    break;
+            }
             _spriteBatch.End();
             base.Draw(gameTime);
         }
+
+        private SpriteBatch InGameDraw(SpriteBatch spriteBatch) 
+        {
+
+            spriteBatch = this.client.Draw(spriteBatch);
+
+            return spriteBatch;
+        }
+
+
+
+
+
     }
 }

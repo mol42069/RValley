@@ -64,7 +64,9 @@ namespace RValley.Server
                 // BETWEEN THE LINES GOES THE GAME CODE:
                 // ----------------------------------------------------------------------------
 
-                this.player.z++;
+                this.mapManager.Update(); // here we manage the map position.
+
+                this.mobManager.ServerSideUpdate(); // here we update the mobs(basicly everything except Taking Damage)
                 
                 // ----------------------------------------------------------------------------
 

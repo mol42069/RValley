@@ -1,13 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using RValley.Entities;
 using RValley.Maps;
 using RValley.Server;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -18,26 +21,99 @@ namespace RValley.Client
     internal class Client
     {
         // WE MAINLY USE VARIABLES FROM THE SERVER CLASS 
-        private Server.Server server;   
+        private Server.Server server;
+        private Thread keyHandler;
+        private int[] move;
+        private long stillAliveTimerMax_ms;
+        private bool stillAliveSignal, running;
+        private Stopwatch stopwatch;
 
         public Client(Server.Server server) {
+            this.running = true;
+            this.stillAliveSignal = true;
+            this.stillAliveTimerMax_ms = 200;
+            this.stopwatch = new Stopwatch();
             this.server = server;
+            this.keyHandler = new Thread(KeyHandler);
+            this.keyHandler.Start();
 
         }
 
         public void Update() {
             // here we send the server a still-alive msg.
             this.server.stillAliveSignal = true;
+            this.stillAliveSignal = true;
             // HERE WE RUN THINGS LIKE ANIMATION AS WELL AS THE PLAYER.
-            this.server.player.i++;
-            
+            this.server.player.Update();
+            this.server.player.Movement(this.move);
+
             return;
         }
 
         public void KeyHandler() {
             // here we send the KeyStrokes and we 
-        
+            // we poll the keyboard.
+            this.move = new int[2] {0, 0};
+            this.stopwatch.Start();
+            while (this.running)
+            {
+                if (this.stopwatch.ElapsedMilliseconds >= this.stillAliveTimerMax_ms)
+                {
+                    // here we check the still alive signal
+                    this.stopwatch.Stop();
+
+                    if (this.stillAliveSignal)
+                    {
+                        this.stillAliveSignal = false;
+                        this.stopwatch.Reset();
+                        this.stopwatch.Start();
+                    }
+                    else
+                    {
+                        this.running = false;
+                        return;
+                    }
+                }
+
+
+
+                KeyboardState state = Keyboard.GetState();
+                /*if (state.IsKeyDown(Keys.Escape))
+                {
+
+                }*/
+                if (state.IsKeyDown(Keys.A) && !(state.IsKeyDown(Keys.D)))
+                {
+                    this.move[0] = -1;
+                }
+                else if (state.IsKeyDown(Keys.D) && !(state.IsKeyDown(Keys.A)))
+                {
+                    this.move[0] = 1;
+                }
+                else
+                {
+                    this.move[0] = 0;
+                }
+                if (state.IsKeyDown(Keys.W) && !(state.IsKeyDown(Keys.S)))
+                {
+                    this.move[1] = -1;
+
+                }
+                else if (state.IsKeyDown(Keys.S) && !(state.IsKeyDown(Keys.W)))
+                {
+                    this.move[1] = 1;
+                }
+                else
+                {
+                    this.move[1] = 0;
+                }
+            }
+            /*var mouseState = Mouse.GetState();
+            if (this.clicked)
+                this.player.sAttackTrigger = true;
+            */
         }
+    
 
         public SpriteBatch Draw(SpriteBatch spriteBatch) {
 
