@@ -45,7 +45,7 @@ namespace RValley.Client
             this.stillAliveSignal = true;
             // HERE WE RUN THINGS LIKE ANIMATION AS WELL AS THE PLAYER.
             this.server.player.Update();
-            this.server.player.Movement(this.move);
+            this.server.player.Movement(this.move, this.server.mapManager);
 
             // we do the animations.
             this.server.player.Animation();

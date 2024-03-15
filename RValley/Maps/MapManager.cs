@@ -12,7 +12,7 @@ namespace RValley.Maps
     internal class MapManager
     {
 
-        private Texture2D backgroundSprite;
+        public Texture2D backgroundSprite;
         private Rectangle mapRectangle;
         private int[] position;
 
@@ -67,13 +67,12 @@ namespace RValley.Maps
             this.mapRectangle = new Rectangle(this.position[0], this.position[1], this.backgroundSprite.Width, this.backgroundSprite.Height);
         }
 
-        public int[] calculateDrawPositionEntity(int[] realPosition) {
+        public int[] calculateDrawPositionEntity(int[] realPosition) { // whenever we update we want to send the positions of the entities here to get the pos at wich we want to draw them.
 
             int[] drawPosition = new int[2] {realPosition[0] + this.position[0], realPosition[1] + this.position[1] };
 
             return drawPosition;
         }
-
 
         public SpriteBatch Draw(SpriteBatch spriteBatch)
         {

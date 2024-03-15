@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RValley.Maps;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,13 +37,40 @@ namespace RValley.Entities
             {
                 // this.aniCount = 0;
                 this.direction = true;
+                switch (this.entityState)
+                {
+                    case enums.EntityState.IDLE_R:
+                        this.entityState = enums.EntityState.IDLE_L;
+                        break;
+
+                    case enums.EntityState.RUN_R:
+                        this.entityState = enums.EntityState.RUN_L;
+                        break;
+
+                    case enums.EntityState.DEATH_R:
+                        this.entityState = enums.EntityState.DEATH_L;
+                        break;
+                }
             }
             else if (this.lastMovement[0] > 0)
             {
                 // this.aniCount = 0;
                 this.direction = false;
-            }
+                switch (this.entityState)
+                {
+                    case enums.EntityState.IDLE_L:
+                        this.entityState = enums.EntityState.IDLE_R;
+                        break;
 
+                    case enums.EntityState.RUN_L:
+                        this.entityState = enums.EntityState.RUN_R;
+                        break;
+
+                    case enums.EntityState.DEATH_L:
+                        this.entityState = enums.EntityState.DEATH_R;
+                        break;
+                }
+            }
 
             // here we update the entity state as well as switch the aniCount Max so we dont go IndexOutOfBounds.
 
@@ -107,13 +135,13 @@ namespace RValley.Entities
         }
 
 
-        public virtual void Movement(int[] move)
+        public virtual void Movement(int[] move, MapManager mapManager)
         {
             this.lastMovement = move;
             if (move[0] != 0 && move[1] != 0)
             {   // here we handle movement in two Directions at once.
-                this.position[0] += move[0] * (this.speed * 3 / 4);
-                this.position[1] += move[1] * (this.speed * 3 / 4);
+                this.position[0] += move[0] * (this.speed * 4/5);
+                this.position[1] += move[1] * (this.speed * 4/5);
 
             }
             else 
@@ -121,6 +149,28 @@ namespace RValley.Entities
                 this.position[0] += move[0] * this.speed;
                 this.position[1] += move[1] * this.speed;
             }
+
+            // here we check that the entity wont move out of bounds_
+            // X-Axis:
+            if (this.position[0] < 0)
+            {
+                this.position[0] = 0;
+            }
+            else if (this.position[0] > mapManager.backgroundSprite.Width - this.spriteSize * 2)
+            {
+                this.position[0] = mapManager.backgroundSprite.Width - this.spriteSize * 2;
+            }
+            // Y-Axis:
+            if (this.position[1] < 0)
+            {
+                this.position[1] = 0;
+            }
+            else if (this.position[1] > mapManager.backgroundSprite.Height - this.spriteSize * 2)
+            {
+                this.position[1] = mapManager.backgroundSprite.Height - this.spriteSize * 2;
+            }
+
+
             this.drawBox.X = this.drawPosition[0];
             this.drawBox.Y = this.drawPosition[1];
         }
