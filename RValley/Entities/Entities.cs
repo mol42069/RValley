@@ -13,7 +13,7 @@ namespace RValley.Entities
 // WE WANT TO DO EVERYTHING (WHAT WE DO IN CHILDREN) WE CAN IN THIS CLASS:
     internal class Entities
     {
-        protected int[] position, lastMovement;
+        public int[] position, lastMovement , drawPosition;
         protected int spriteSize;
         protected Rectangle hitBox;   // if we decide to add headshots or other stuff we might want to add this here... or save those somewhere else.
         protected Rectangle drawBox;
@@ -44,7 +44,7 @@ namespace RValley.Entities
             }
 
 
-            // here we update the entity state.
+            // here we update the entity state as well as switch the aniCount Max so we dont go IndexOutOfBounds.
 
             if (this.lastMovement[0] == 0 && this.lastMovement[1] == 0 &&  !(this.entityState == enums.EntityState.IDLE_R || this.entityState == enums.EntityState.IDLE_L))
             {
@@ -121,8 +121,8 @@ namespace RValley.Entities
                 this.position[0] += move[0] * this.speed;
                 this.position[1] += move[1] * this.speed;
             }
-            this.drawBox.X = this.position[0];
-            this.drawBox.Y = this.position[1];
+            this.drawBox.X = this.drawPosition[0];
+            this.drawBox.Y = this.drawPosition[1];
         }
 
         // we only want spriteSheets for one playerClass.

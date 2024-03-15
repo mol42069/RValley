@@ -17,6 +17,7 @@ namespace RValley.Entities
             base.hpMax = 100;
             base.hp = base.hpMax;
             base.position = new int[2] {200, 200};
+            base.drawPosition = base.position;
             base.hitBox = new Rectangle(base.position[0] + 10, base.position[1] + 10, base.spriteSize - 20, base.spriteSize - 20);
             base.spriteScale = 2;
             base.aniCount = 0;

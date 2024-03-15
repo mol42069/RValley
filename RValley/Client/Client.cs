@@ -127,7 +127,7 @@ namespace RValley.Client
         public SpriteBatch Draw(SpriteBatch spriteBatch) {
 
             // HERE WE DRAW EVERITHING:
-
+            spriteBatch = this.server.mapManager.Draw(spriteBatch);
             spriteBatch = this.server.mobManager.Draw(spriteBatch);
             spriteBatch = this.server.player.Draw(spriteBatch);
 

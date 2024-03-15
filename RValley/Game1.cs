@@ -20,6 +20,7 @@ namespace RValley
         private MapManager mapManager;
         private Texture2D[][] playerSprites;
         public enums.GameState gameState;
+        private int[] screenSize;
 
 
         public Game1()
@@ -27,19 +28,22 @@ namespace RValley
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            _graphics.PreferredBackBufferWidth = 1800;
-            _graphics.PreferredBackBufferHeight = 1000;
-            _graphics.ApplyChanges();
+            
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            this.screenSize = new int[2] { 1800, 1000 };
+
+            this._graphics.PreferredBackBufferWidth = this.screenSize[0];
+            this._graphics.PreferredBackBufferHeight = this.screenSize[1];
+            this._graphics.ApplyChanges();
+
             this.gameState = enums.GameState.MENU;
             this.player = new Player();
             this.mobManager = new MobManager();
-            this.mapManager = new MapManager();
-            this.server = new Server.Server();
+            this.server = new Server.Server(this.screenSize);
             this.client = new Client.Client(this.server);
 
             this.serverThread = new Thread(this.server.Update);
@@ -222,11 +226,17 @@ namespace RValley
                                     }
                                 }
                             }
-                            break;                            
-                    }
+                        break;                            
+                        }
                 }
                 // now we give these spritesheets to the mob manager.
                 this.mobManager.LoadContent(mobSprites);
+            }
+            
+            // here we load the maps (currently only one)
+            {
+                Texture2D mapSprite = Content.Load<Texture2D>("Environment/Maps/grass");
+                this.server.mapManager.LoadContent(mapSprite);
             }
 
             // here we create an sprite-sheet array for all Heroes.
@@ -239,9 +249,7 @@ namespace RValley
                 for (int i = 0; i < (int)enums.PlayerClass.MAX; i++) {
 
                     string contentPath = "Heroes/";
-
                     this.playerSprites[i] = new Texture2D[(int)enums.EntityState.MAXA];
-
 
                     // we change the path so we get every PlayerClass
                     switch (i) {
@@ -253,7 +261,6 @@ namespace RValley
 
                         default:
                             break;
-
                     }
                     // then we load for every PlayerClass all EntityStates.
                     for (int j = 0; j < (int)enums.EntityState.MAXA; j++) {
@@ -310,14 +317,11 @@ namespace RValley
 
                 case enums.GameState.INGAME:
                     this.client.Update();
-                    break;
-            
+                    break;            
             }
 
             // we start the server thread after the server and all its stuff is initialized and running.
             if (!this.server.running && this.server.initialized) this.serverThread.Start();
-
-
 
             // TODO: Add your update logic here
 
@@ -336,6 +340,7 @@ namespace RValley
                 case enums.GameState.INGAME:
                     _spriteBatch = this.InGameDraw(_spriteBatch);
                     break;
+
                 case enums.GameState.MENU:
                     if (this.server.player.spriteSheets != null) this.gameState = enums.GameState.INGAME;
                     break;
@@ -351,10 +356,5 @@ namespace RValley
 
             return spriteBatch;
         }
-
-
-
-
-
     }
 }
