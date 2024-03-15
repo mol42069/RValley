@@ -37,10 +37,14 @@ namespace RValley
         }
         public enum EntityState 
         { 
-            RUN,
-            IDLE,
-            DEATH,
-            MAX
+            RUN_R,
+            RUN_L,
+            IDLE_R,
+            IDLE_L,
+            DEATH_R,
+            DEATH_L,
+            MAX = 3,
+            MAXA = 6
         }
         public enum GameState
         {

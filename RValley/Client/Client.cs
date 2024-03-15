@@ -47,6 +47,10 @@ namespace RValley.Client
             this.server.player.Update();
             this.server.player.Movement(this.move);
 
+            // we do the animations.
+            this.server.player.Animation();
+            this.server.mobManager.Animation();
+
             return;
         }
 
@@ -76,36 +80,41 @@ namespace RValley.Client
                 }
 
 
+                try
+                {
+                    KeyboardState state = Keyboard.GetState();
 
-                KeyboardState state = Keyboard.GetState();
-                /*if (state.IsKeyDown(Keys.Escape))
-                {
+                    /*if (state.IsKeyDown(Keys.Escape))
+                    {
 
-                }*/
-                if (state.IsKeyDown(Keys.A) && !(state.IsKeyDown(Keys.D)))
-                {
-                    this.move[0] = -1;
-                }
-                else if (state.IsKeyDown(Keys.D) && !(state.IsKeyDown(Keys.A)))
-                {
-                    this.move[0] = 1;
-                }
-                else
-                {
-                    this.move[0] = 0;
-                }
-                if (state.IsKeyDown(Keys.W) && !(state.IsKeyDown(Keys.S)))
-                {
-                    this.move[1] = -1;
+                    }*/
+                    if (state.IsKeyDown(Keys.A) && !(state.IsKeyDown(Keys.D)))
+                    {
+                        this.move[0] = -1;
+                    }
+                    else if (state.IsKeyDown(Keys.D) && !(state.IsKeyDown(Keys.A)))
+                    {
+                        this.move[0] = 1;
+                    }
+                    else
+                    {
+                        this.move[0] = 0;
+                    }
+                    if (state.IsKeyDown(Keys.W) && !(state.IsKeyDown(Keys.S)))
+                    {
+                        this.move[1] = -1;
 
-                }
-                else if (state.IsKeyDown(Keys.S) && !(state.IsKeyDown(Keys.W)))
-                {
-                    this.move[1] = 1;
-                }
-                else
-                {
-                    this.move[1] = 0;
+                    }
+                    else if (state.IsKeyDown(Keys.S) && !(state.IsKeyDown(Keys.W)))
+                    {
+                        this.move[1] = 1;
+                    }
+                    else
+                    {
+                        this.move[1] = 0;
+                    }
+                } catch {
+                    
                 }
             }
             /*var mouseState = Mouse.GetState();

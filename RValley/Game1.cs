@@ -121,15 +121,27 @@ namespace RValley
 
                                     switch (j)
                                     {
-                                        case (int)enums.EntityState.RUN:
+                                        case (int)enums.EntityState.RUN_R:
                                             mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Run-Sheet");
                                             break;
 
-                                        case (int)enums.EntityState.IDLE:
+                                        case (int)enums.EntityState.RUN_L:
+                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Run-Sheet");
+                                            break;
+
+                                        case (int)enums.EntityState.IDLE_R:
                                             mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Idle-Sheet");
                                             break;
 
-                                        case (int)enums.EntityState.DEATH:
+                                        case (int)enums.EntityState.IDLE_L:
+                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Idle-Sheet");
+                                            break;
+
+                                        case (int)enums.EntityState.DEATH_R:
+                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Death-Sheet");
+                                            break;
+
+                                        case (int)enums.EntityState.DEATH_L:
                                             mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Death-Sheet");
                                             break;
 
@@ -181,15 +193,27 @@ namespace RValley
 
                                     switch (j)
                                     {
-                                        case (int)enums.EntityState.RUN:
+                                        case (int)enums.EntityState.RUN_R:
                                             mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Run-Sheet");
                                             break;
 
-                                        case (int)enums.EntityState.IDLE:
+                                        case (int)enums.EntityState.RUN_L:
+                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Run-Sheet");
+                                            break;
+
+                                        case (int)enums.EntityState.IDLE_R:
                                             mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Idle-Sheet");
                                             break;
 
-                                        case (int)enums.EntityState.DEATH:
+                                        case (int)enums.EntityState.IDLE_L:
+                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Idle-Sheet");
+                                            break;
+
+                                        case (int)enums.EntityState.DEATH_R:
+                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Death-Sheet");
+                                            break;
+
+                                        case (int)enums.EntityState.DEATH_L:
                                             mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Death-Sheet");
                                             break;
 
@@ -216,7 +240,7 @@ namespace RValley
 
                     string contentPath = "Heroes/";
 
-                    this.playerSprites[i] = new Texture2D[(int)enums.EntityState.MAX];
+                    this.playerSprites[i] = new Texture2D[(int)enums.EntityState.MAXA];
 
 
                     // we change the path so we get every PlayerClass
@@ -232,19 +256,31 @@ namespace RValley
 
                     }
                     // then we load for every PlayerClass all EntityStates.
-                    for (int j = 0; j < (int)enums.EntityState.MAX; j++) {
+                    for (int j = 0; j < (int)enums.EntityState.MAXA; j++) {
 
                         switch (j) {
-                            case (int)enums.EntityState.RUN:
+                            case (int)enums.EntityState.RUN_R:
                                 this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "Run-Sheet");
                                 break;
 
-                            case (int)enums.EntityState.IDLE:
+                            case (int)enums.EntityState.RUN_L:
+                                this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "RunL-Sheet");
+                                break;
+
+                            case (int)enums.EntityState.IDLE_R:
                                 this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "Idle-Sheet");
                                 break;
 
-                            case (int)enums.EntityState.DEATH:
+                            case (int)enums.EntityState.IDLE_L:
+                                this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "IdleL-Sheet");
+                                break;
+
+                            case (int)enums.EntityState.DEATH_R:
                                 this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "Death-Sheet");
+                                break;
+
+                            case (int)enums.EntityState.DEATH_L:
+                                this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "DeathL-Sheet");
                                 break;
 
                             default:

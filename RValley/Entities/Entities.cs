@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,9 +19,12 @@ namespace RValley.Entities
         protected Rectangle drawBox;
         public Texture2D[] spriteSheets;
         protected Rectangle[][] sourceRectangle;
-        protected int aniCounter, aniCounterMax, aniTimer, aniTimerMax, aniCount;   // animation variables
+        protected int  aniCountMax, aniCount;   // animation variables
+        protected long[] aniTimerMax;
         public enums.EntityState entityState;
         public int speed, hp, hpMax, spriteScale;
+        protected Stopwatch animationTimer;
+        protected bool direction, spriteRotation;               // true = left | false = right
 
         public Entities() {
 
@@ -28,15 +32,84 @@ namespace RValley.Entities
 
         public virtual void Update() {
 
+            if (this.lastMovement[0] < 0)
+            {
+                // this.aniCount = 0;
+                this.direction = true;
+            }
+            else if (this.lastMovement[0] > 0)
+            {
+                // this.aniCount = 0;
+                this.direction = false;
+            }
+
+
+            // here we update the entity state.
+
+            if (this.lastMovement[0] == 0 && this.lastMovement[1] == 0 &&  !(this.entityState == enums.EntityState.IDLE_R || this.entityState == enums.EntityState.IDLE_L))
+            {
+                if (this.direction)
+                {
+
+                    this.entityState = enums.EntityState.IDLE_L;
+                    this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
+                    this.aniCount = this.aniCountMax - 1;
+                }
+                else
+                {
+
+                    this.entityState = enums.EntityState.IDLE_R;
+                    this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
+                    this.aniCount = 0;
+                }
+            }
+            else if(this.hp <= 0 && !(this.entityState == enums.EntityState.DEATH_R || this.entityState == enums.EntityState.DEATH_L))
+            {
+                if (this.direction)
+                {
+
+                    this.entityState = enums.EntityState.DEATH_L;
+                    this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
+                    this.aniCount = this.aniCountMax - 1;
+                }
+                else
+                {
+
+                    this.entityState = enums.EntityState.DEATH_R;
+                    this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
+                    this.aniCount = 0;
+                }
+            }
+            else if (!(this.entityState == enums.EntityState.RUN_R || this.entityState == enums.EntityState.RUN_L) && (this.lastMovement[0] != 0 || this.lastMovement[1] != 0))
+            {
+                if (this.direction)
+                {
+
+                    this.entityState = enums.EntityState.RUN_L;
+                    this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
+                    this.aniCount = this.aniCountMax - 1;
+                }
+                else
+                {
+
+                    this.entityState = enums.EntityState.RUN_R;
+                    this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
+                    this.aniCount = 0;
+                }
+            }
+          
         }
         public virtual SpriteBatch Draw(SpriteBatch spriteBatch){
 
             spriteBatch.Draw(this.spriteSheets[(int)this.entityState], this.drawBox, this.sourceRectangle[(int)this.entityState][this.aniCount], Color.White);
-
+            
             return spriteBatch;
         }
+
+
         public virtual void Movement(int[] move)
         {
+            this.lastMovement = move;
             if (move[0] != 0 && move[1] != 0)
             {   // here we handle movement in two Directions at once.
                 this.position[0] += move[0] * (this.speed * 3 / 4);
@@ -81,8 +154,23 @@ namespace RValley.Entities
         }
 
         public void Animation() {
-        
-        
+            if (this.animationTimer.ElapsedMilliseconds >= this.aniTimerMax[(int)decimal.Round(((int)this.entityState / 2), 0)]) {
+                this.animationTimer.Stop();
+                this.animationTimer.Reset();
+                this.animationTimer.Start();
+                
+                if (this.direction)
+                {
+                    this.aniCount--;
+
+                    if (this.aniCount < 0) this.aniCount = this.aniCountMax - 1;
+                }
+                else 
+                {
+                    this.aniCount++;
+                    if (this.aniCount >= this.aniCountMax) this.aniCount = 0;
+                }
+            }        
         }
     }
 }

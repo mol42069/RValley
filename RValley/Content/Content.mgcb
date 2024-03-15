@@ -373,6 +373,18 @@
 /processorParam:TextureFormat=Color
 /build:Heroes/Knight/Death-Sheet.png
 
+#begin Heroes/Knight/DeathL-Sheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Heroes/Knight/DeathL-Sheet.png
+
 #begin Heroes/Knight/Idle-Sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -385,6 +397,18 @@
 /processorParam:TextureFormat=Color
 /build:Heroes/Knight/Idle-Sheet.png
 
+#begin Heroes/Knight/IdleL-Sheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Heroes/Knight/IdleL-Sheet.png
+
 #begin Heroes/Knight/Run-Sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -396,6 +420,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Heroes/Knight/Run-Sheet.png
+
+#begin Heroes/Knight/RunL-Sheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Heroes/Knight/RunL-Sheet.png
 
 #begin Heroes/Rogue/Death-Sheet.png
 /importer:TextureImporter
