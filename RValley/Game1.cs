@@ -296,7 +296,7 @@ namespace RValley
                     }
                 }
                 // here we add those sprites
-                this.server.player.LoadContent(this.playerSprites[(int)enums.PlayerClass.KNIGHT]);
+                this.server.player[0].LoadContent(this.playerSprites[(int)enums.PlayerClass.KNIGHT]);
             }
         }
 
@@ -342,7 +342,7 @@ namespace RValley
                     break;
 
                 case enums.GameState.MENU:
-                    if (this.server.player.spriteSheets != null) this.gameState = enums.GameState.INGAME;
+                    if (this.server.player[0].spriteSheets != null) this.gameState = enums.GameState.INGAME;
                     break;
             }
             _spriteBatch.End();

@@ -23,7 +23,7 @@ namespace RValley.Entities
         protected int  aniCountMax, aniCount;   // animation variables
         protected long[] aniTimerMax;
         public enums.EntityState entityState;
-        public int speed, hp, hpMax, spriteScale;
+        public int speed, hp, hpMax, spriteScale, range;
         protected Stopwatch animationTimer;
         protected bool direction, spriteRotation;               // true = left | false = right
 

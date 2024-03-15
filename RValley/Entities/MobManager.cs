@@ -64,17 +64,27 @@ namespace RValley
 
         public void ServerSideUpdate()
         {
-
+            // here we Update all the mobs and let their AI move them.
+            for (int i = 0; i < this.enemies.Count; i++)
+            {
+                this.enemies[i].Update();
+            }
 
         }
         public void ClientSideUpdate()
         {
-
+            // here we basicly only do damage to the enemies using the player.
 
         }
 
         public SpriteBatch Draw(SpriteBatch spriteBatch) {
-        
+
+            // TODO: maybe add damage / hp / particles for the enemies.
+
+            for (int i = 0; i < this.enemies.Count; i++)
+            {
+                spriteBatch = this.enemies[i].Draw(spriteBatch);
+            }
             
             return spriteBatch; 
         }

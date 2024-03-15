@@ -44,11 +44,11 @@ namespace RValley.Client
             this.server.stillAliveSignal = true;
             this.stillAliveSignal = true;
             // HERE WE RUN THINGS LIKE ANIMATION AS WELL AS THE PLAYER.
-            this.server.player.Update();
-            this.server.player.Movement(this.move, this.server.mapManager);
+            this.server.player[0].Update();
+            this.server.player[0].Movement(this.move, this.server.mapManager);
 
             // we do the animations.
-            this.server.player.Animation();
+            this.server.player[0].Animation();
             this.server.mobManager.Animation();
 
             return;
@@ -129,7 +129,11 @@ namespace RValley.Client
             // HERE WE DRAW EVERITHING:
             spriteBatch = this.server.mapManager.Draw(spriteBatch);
             spriteBatch = this.server.mobManager.Draw(spriteBatch);
-            spriteBatch = this.server.player.Draw(spriteBatch);
+            for (int i = 0; i < this.server.player.Count; i++)
+            {
+                spriteBatch = this.server.player[i].Draw(spriteBatch);
+
+            }
 
             return spriteBatch;
         }

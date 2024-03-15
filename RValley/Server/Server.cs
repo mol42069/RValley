@@ -18,7 +18,7 @@ namespace RValley.Server
         private Thread networkingThread;
         public MobManager mobManager;
         public MapManager mapManager;
-        public Player player;
+        public List<Player> player;
         public long stillAliveTimerMax_ms, frameTime_ms;    // we use these to check if the client is still running.
         public int tickrate;
         public int[] screenSize;
@@ -27,7 +27,8 @@ namespace RValley.Server
             this.screenSize = screenSize;
 
             this.running = true;
-            this.player = new Player();
+            this.player = new List<Player>();
+            this.player.Add(new Player());
             this.mobManager = new MobManager();
             int[] startingmappos = new int[2] {-100, -100};
             this.mapManager = new MapManager(startingmappos);
@@ -68,9 +69,11 @@ namespace RValley.Server
                 // BETWEEN THE LINES GOES THE GAME CODE:
                 // ----------------------------------------------------------------------------
 
-                this.mapManager.Update(this.player.position, this.screenSize); // here we manage the map position.
-                this.player.drawPosition = this.mapManager.calculateDrawPositionEntity(this.player.position);
-
+                this.mapManager.Update(this.player[0].position, this.screenSize); // here we manage the map position.
+                for (int i = 0; i < this.player.Count; i++)
+                {
+                    this.player[i].drawPosition = this.mapManager.calculateDrawPositionEntity(this.player[i].position);
+                }
                 this.mobManager.ServerSideUpdate(); // here we update the mobs(basicly everything except Taking Damage)
                 
                 // ----------------------------------------------------------------------------
