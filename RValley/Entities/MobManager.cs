@@ -10,6 +10,7 @@ using RValley.Entities.Enemies;
 using RValley.Entities;
 using RValley.Maps;
 using System.Numerics;
+using System.Threading;
 
 namespace RValley
 {
@@ -48,7 +49,7 @@ namespace RValley
                     {   
                         spriteSize = this.sprites[i][j][k].Height;
                         // we create an array for all the actual Rectangles.                     
-                        this.sourceRectangle[i][j][k] = new Rectangle[(int)(this.sprites[i][j][k].Width / spriteSize) + 1];
+                        this.sourceRectangle[i][j][k] = new Rectangle[(int)(this.sprites[i][j][k].Width / spriteSize)];
 
                         for (int n = 0; n < (this.sprites[i][j][k].Width / spriteSize);  n++) 
                         {
@@ -74,8 +75,9 @@ namespace RValley
             for (int i = 0; i < this.enemies.Count; i++)
             {
                 this.enemies[i].Update(player, mapManager);
+
             }
-            this.Spawn(player);
+            this.Spawn(player, mapManager);
 
         }
         public void ClientSideUpdate()
@@ -84,23 +86,24 @@ namespace RValley
 
         }
 
-        private void Spawn(List<Player> player) {
+        private void Spawn(List<Player> player, MapManager mapManager) {
             // here we spawn the enemies for now we do this manualy so we need to change this when we have rooms.
+            if (mapManager.backgroundSprite == null) return;
 
-            if (this.enemies.Count < 2) {
+            if (this.enemies.Count < 8) {
                 int x = this.rand.Next(0, 10);
                 // int[] newPos = new int[2] {this.rand.Next(0, 1000), this.rand.Next(0, 800) };
-                int[] newPos = new int[2] { 100, 110 };
+                int[] newPos = new int[2] {this.rand.Next(0, mapManager.backgroundSprite.Width), this.rand.Next(0, mapManager.backgroundSprite.Height) };
                 switch (x) {
                     
                     case 0:
-                        this.enemies.Add(new Zombie(newPos));
+                        this.enemies.Add(new Zombie(newPos, new int[2] { this.rand.Next(-50, 50), this.rand.Next(-50, 50) }));
                         this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH], this.sourceRectangle[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH]);
                         break;
 
                      default:
-                        this.enemies.Add(new Zombie(newPos));
-                        this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH], this.sourceRectangle[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH]); 
+                        this.enemies.Add(new Zombie(newPos, new int[2] { this.rand.Next(-50, 50), this.rand.Next(-50, 50)})) ;
+                        this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH], this.sourceRectangle[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH]);
                         break;
                 }
             }

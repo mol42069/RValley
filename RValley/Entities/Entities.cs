@@ -32,7 +32,8 @@ namespace RValley.Entities
 
         }
 
-        public virtual void Update(MapManager mapManager) {
+        public virtual void Update(MapManager mapManager) 
+        {
             if (this.lastMovement != null)
             {
 
@@ -202,7 +203,7 @@ namespace RValley.Entities
             for (int i = 0; i < this.spriteSheets.Length; i++) 
             {
                 this.spriteSize = this.spriteSheets[i].Height;
-                this.sourceRectangle[i] = new Rectangle[this.spriteSheets[i].Width / this.spriteSize];
+                this.sourceRectangle[i] = new Rectangle[(this.spriteSheets[i].Width / this.spriteSize)];
 
                 for (int j = 0; j < this.sourceRectangle[i].Length; j++) 
                 {
@@ -224,16 +225,15 @@ namespace RValley.Entities
                 {
                     this.aniCount--;
 
-                    if (this.aniCount < 0) this.aniCount = this.aniCountMax - 2;
+                    if (this.aniCount < 0) this.aniCount = this.aniCountMax - 1;
                 }
                 else 
                 {
                     this.aniCount++;
-                    if (this.aniCount >= this.aniCountMax - 1) this.aniCount = 0;
+                    if (this.aniCount >= this.aniCountMax) this.aniCount = 0;
                 }
             }        
         }
-
 
         private void AttackAnimation(Texture2D attackSprite) { 
         

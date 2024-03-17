@@ -12,20 +12,33 @@ namespace RValley.Entities.Enemies
     {
         protected Player target;
         public int distance;
+        public int[] targetOffset;
         public Enemies() {
 
         }
 
 
-        public virtual void Update(List<Player> player, MapManager mapManager) {
+        public virtual void Update(List<Player> player, MapManager mapManager) 
+        {
             if (mapManager.backgroundSprite != null)
-            {                
+            {
+                if (this.target != null)
+                {
+                    int distx = ((this.target.hitBox.Center.X + this.targetOffset[0]) - base.hitBox.Center.X);
+                    if (distx < 0) distx *= -1;
+
+                    int disty = ((this.target.hitBox.Center.Y + this.targetOffset[1]) - base.hitBox.Center.Y);
+                    if (disty < 0) disty *= -1;
+
+                    this.distance = distx + disty;
+                }
+
                 if (this.distance < base.reach)
                 {
                     // here we will do the attacks.
-                    this.AI(player);
                     base.lastMovement[0] = 0;
                     base.lastMovement[1] = 0;
+                   
                 }
                 else
                 {
@@ -46,7 +59,6 @@ namespace RValley.Entities.Enemies
                 base.Update(mapManager);
 
                 base.drawPosition = mapManager.calculateDrawPositionEntity(base.position);
-
             }
         }
 
@@ -61,10 +73,10 @@ namespace RValley.Entities.Enemies
             {
                 this.target = player[0];
 
-                int distx = (this.target.hitBox.Center.X - base.hitBox.Center.X);
+                int distx = ((this.target.hitBox.Center.X + this.targetOffset[0])- base.hitBox.Center.X);
                 if (distx < 0) distx *= -1;
 
-                int disty = (this.target.hitBox.Center.Y - base.hitBox.Center.Y);
+                int disty = ((this.target.hitBox.Center.Y + this.targetOffset[1])- base.hitBox.Center.Y);
                 if (disty < 0) disty *= -1;
 
                 int distance = distx + disty;
@@ -93,17 +105,16 @@ namespace RValley.Entities.Enemies
                             p = player[i];
                         }
                     }
-                    this.distance = distance;
                     this.target = p;
                 }
             }
             // here we move to the actual target.
             int distxs = (this.target.hitBox.Center.X - base.hitBox.Center.X);
-            int distxt = distxs;
+            int distxt = ((this.target.hitBox.Center.X + this.targetOffset[0]) - base.hitBox.Center.X);
             if (distxs < 0) distxs *= -1;
 
             int distys = (this.target.hitBox.Center.Y - base.hitBox.Center.Y);
-            int distyt = (this.target.hitBox.Center.Y - base.hitBox.Center.Y);
+            int distyt = ((this.target.hitBox.Center.Y + this.targetOffset[1]) - base.hitBox.Center.Y);
 
             if (distys < 0) distys *= -1;
 

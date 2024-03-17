@@ -11,7 +11,9 @@ namespace RValley.Entities.Enemies
     internal class Zombie : Enemies
     {
 
-        public Zombie(int[]  startingPos) {
+        public Zombie(int[]  startingPos, int[] targetOffset) {
+
+            base.targetOffset = targetOffset;
 
             base.speed = 10;
             base.hpMax = 100;
