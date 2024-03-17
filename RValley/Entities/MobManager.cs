@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using RValley.Entities.Enemies;
+using RValley.Entities;
+using RValley.Maps;
+using System.Numerics;
 
 namespace RValley
 {
@@ -15,9 +18,11 @@ namespace RValley
         private List<Entities.Enemies.Enemies> enemies;
         private Texture2D[][][] sprites;
         private Rectangle[][][][] sourceRectangle;
+        private Random rand;
         
         public MobManager() {
-            enemies = new List<Enemies> { };
+            this.enemies = new List<Enemies> { };
+            this.rand = new Random();
         }
 
         private void CreateSourceRectangles() {
@@ -62,19 +67,44 @@ namespace RValley
             return;
         }
 
-        public void ServerSideUpdate()
+        public void ServerSideUpdate(List<Player> player, MapManager mapManager)
         {
+            if (this.sprites == null) return;
             // here we Update all the mobs and let their AI move them.
             for (int i = 0; i < this.enemies.Count; i++)
             {
-                this.enemies[i].Update();
+                this.enemies[i].Update(player, mapManager);
             }
+            this.Spawn(player);
 
         }
         public void ClientSideUpdate()
         {
             // here we basicly only do damage to the enemies using the player.
+        
 
+        }
+
+        private void Spawn(List<Player> player) {
+            // here we spawn the enemies for now we do this manualy so we need to change this when we have rooms.
+
+            if (this.enemies.Count < 2) {
+                int x = this.rand.Next(0, 10);
+                // int[] newPos = new int[2] {this.rand.Next(0, 1000), this.rand.Next(0, 800) };
+                int[] newPos = new int[2] { 100, 110 };
+                switch (x) {
+                    
+                    case 0:
+                        this.enemies.Add(new Zombie(newPos));
+                        this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.ORC][(int)enums.OrcClass.BASE], this.sourceRectangle[(int)enums.EnemyType.ORC][(int)enums.OrcClass.BASE]);
+                        break;
+
+                     default:
+                        this.enemies.Add(new Zombie(newPos));
+                        this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.ORC][(int)enums.OrcClass.BASE], this.sourceRectangle[(int)enums.EnemyType.ORC][(int)enums.OrcClass.BASE]); 
+                        break;
+                }
+            }
         }
 
         public SpriteBatch Draw(SpriteBatch spriteBatch) {
@@ -89,7 +119,9 @@ namespace RValley
             return spriteBatch; 
         }
         public void Animation() {
-
+            for (int i = 0; i < this.enemies.Count; i++) {
+                this.enemies[i].Animation();
+            }
             return;
         }
     }

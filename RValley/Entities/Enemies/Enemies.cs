@@ -16,34 +16,52 @@ namespace RValley.Entities.Enemies
 
         }
         public virtual void Update(List<Player> player, MapManager mapManager) {
-
-            base.Movement(this.AI(player), mapManager);
-            if (this.distance < base.range)
+            if (mapManager.backgroundSprite != null)
             {
-                // here we will do the attacks.
+                if (this.distance < base.reach)
+                {
+                    // here we will do the attacks.
+                    this.AI(player);
+                }
+                else
+                {
+                    base.Movement(this.AI(player), mapManager);
+                }
+                base.drawPosition = mapManager.calculateDrawPositionEntity(base.position);
+
             }
         }
 
-        public virtual int[] AI(List<Player> player)
+        public virtual float[] AI(List<Player> player)
         {
             // here we want to add the most basic ai which we might use multiple times. We want to call this in Update.
             // we just walk straight to the Player.
 
-            int[] nextMove = new int[2] {0, 0};
+            
 
             if (this.target == null)
             {
+                this.target = player[0];
+
+                int distx = (this.target.position[0] - base.position[0]);
+                if (distx < 0) distx *= -1;
+
+                int disty = (this.target.position[1] - base.position[1]);
+                if (disty < 0) disty *= -1;
+
+                int distance = distx + disty;
+
                 if (player.Count > 1)           // if there are more than 1 player we want the entity to move to the closest.
                 {                               // only usefull if multiplayer is implemented.
                     Player p = player[0];
 
-                    int distx = (p.position[0] - base.position[0]);
+                    distx = (p.position[0] - base.position[0]);
                     if (distx < 0) distx *= -1;
 
-                    int disty = (p.position[1] - base.position[1]);
+                    disty = (p.position[1] - base.position[1]);
                     if (disty < 0) disty *= -1;
 
-                    int distance = distx + disty;
+                    distance = distx + disty;
 
                     for (int i = 0; i < player.Count; i++)
                     {
@@ -60,30 +78,48 @@ namespace RValley.Entities.Enemies
                     this.distance = distance;
                     this.target = p;
                 }
-                // here we move to the actual target.
-                if (this.target.position[0] > base.position[0])
-                {
-                    nextMove[0] = 1;
-                }
-                else if (this.target.position[0] < base.position[0])
-                {
-                    nextMove[0] = -1;
-                }
-                else 
+            }
+            // here we move to the actual target.
+            int distxs = (this.target.position[0] - base.position[0]);
+            int distxt = (this.target.position[0] - base.position[0]);
+            if (distxs < 0) distxs *= -1;
+
+            int distys = (this.target.position[1] - base.position[1]);
+            int distyt = (this.target.position[1] - base.position[1]);
+            if (distys < 0) distys *= -1;
+
+            int distances = distxs + distys;
+            this.distance = distances;
+            float[] nextMove = new float[2] {0, 0};
+
+            if (distxt != 0 && distyt != 0)
+            {
+                nextMove[0] = (float)distxt / (float)distances;
+                nextMove[1] = (float)distyt / (float)distances;
+            }
+            else if (distxt == 0)
+            {
+                if (distyt > 0)
                 {
                     nextMove[0] = 0;
-                }
-
-                if (this.target.position[1] > base.position[1])
-                {
                     nextMove[1] = 1;
-                }
-                else if (this.target.position[1] < base.position[1])
-                {
-                    nextMove[1] = -1;
                 }
                 else
                 {
+                    nextMove[0] = 0;
+                    nextMove[1] = -1;
+                }
+            }
+            else if (distyt == 0)
+            {
+                if (distxt > 0)
+                {
+                    nextMove[0] = 1;
+                    nextMove[1] = 0;
+                }
+                else
+                {
+                    nextMove[0] = -1;
                     nextMove[1] = 0;
                 }
             }

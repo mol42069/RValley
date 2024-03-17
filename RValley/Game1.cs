@@ -118,9 +118,9 @@ namespace RValley
                                         break;
                                 }
 
-                                mobSprites[i][n] = new Texture2D[(int)enums.EntityState.MAX];
+                                mobSprites[i][n] = new Texture2D[(int)enums.EntityState.MAXA];
                                 // now we load all the spriteSheets.
-                                for (int j = 0; j < (int)enums.EntityState.MAX; j++)
+                                for (int j = 0; j < (int)enums.EntityState.MAXA; j++)
                                 {
 
                                     switch (j)
@@ -188,11 +188,11 @@ namespace RValley
                                         break;
                                 }
 
-                                mobSprites[i][n] = new Texture2D[(int)enums.EntityState.MAX];
+                                mobSprites[i][n] = new Texture2D[(int)enums.EntityState.MAXA];
 
                                 // now we load all the spriteSheets.
 
-                                for (int j = 0; j < (int)enums.EntityState.MAX; j++)
+                                for (int j = 0; j < (int)enums.EntityState.MAXA; j++)
                                 {
 
                                     switch (j)
@@ -230,7 +230,7 @@ namespace RValley
                         }
                 }
                 // now we give these spritesheets to the mob manager.
-                this.mobManager.LoadContent(mobSprites);
+                this.server.mobManager.LoadContent(mobSprites);
             }
             
             // here we load the maps (currently only one)

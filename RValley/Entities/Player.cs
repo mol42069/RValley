@@ -29,7 +29,7 @@ namespace RValley.Entities
             base.aniCount = 0;
             base.aniCountMax = 0;
             base.aniTimerMax = new long[(int)enums.EntityState.MAX] {25, 200, 100}; // 0 = RUN | 1 = IDLE | 2 = DEATH | (see enums.EntityState)
-            base.lastMovement = new int[2] {0, 0};
+            base.lastMovement = new float[2] {0, 0};
             this.direction = false;
 
         }

@@ -34,7 +34,7 @@ namespace RValley.Server
             this.mapManager = new MapManager(startingmappos);
             this.stopwatch = new Stopwatch();
             this.sAStopwatch = new Stopwatch();
-            this.stillAliveTimerMax_ms = 200;
+            this.stillAliveTimerMax_ms = 1000;
             this.stillAliveSignal = false;
             this.tickrate = 128;
             this.frameTime_ms = (long)(1000 / this.tickrate);
@@ -74,7 +74,7 @@ namespace RValley.Server
                 {
                     this.player[i].drawPosition = this.mapManager.calculateDrawPositionEntity(this.player[i].position);
                 }
-                this.mobManager.ServerSideUpdate(); // here we update the mobs(basicly everything except Taking Damage)
+                this.mobManager.ServerSideUpdate(this.player, this.mapManager); // here we update the mobs(basicly everything except Taking Damage)
                 
                 // ----------------------------------------------------------------------------
 

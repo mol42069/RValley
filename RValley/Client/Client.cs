@@ -23,7 +23,7 @@ namespace RValley.Client
         // WE MAINLY USE VARIABLES FROM THE SERVER CLASS 
         private Server.Server server;
         private Thread keyHandler;
-        private int[] move;
+        private float[] move;
         private long stillAliveTimerMax_ms;
         private bool stillAliveSignal, running;
         private Stopwatch stopwatch;
@@ -31,7 +31,7 @@ namespace RValley.Client
         public Client(Server.Server server) {
             this.running = true;
             this.stillAliveSignal = true;
-            this.stillAliveTimerMax_ms = 200;
+            this.stillAliveTimerMax_ms = 1000;
             this.stopwatch = new Stopwatch();
             this.server = server;
             this.keyHandler = new Thread(KeyHandler);
@@ -57,7 +57,7 @@ namespace RValley.Client
         public void KeyHandler() {
             // here we send the KeyStrokes and we 
             // we poll the keyboard.
-            this.move = new int[2] {0, 0};
+            this.move = new float[2] {0, 0};
             this.stopwatch.Start();
             while (this.running)
             {

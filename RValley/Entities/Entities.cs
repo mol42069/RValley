@@ -14,7 +14,8 @@ namespace RValley.Entities
 // WE WANT TO DO EVERYTHING (WHAT WE DO IN CHILDREN) WE CAN IN THIS CLASS:
     internal class Entities
     {
-        public int[] position, lastMovement , drawPosition;
+        public int[] position, drawPosition;
+        public float []lastMovement;
         protected int spriteSize;
         protected Rectangle hitBox;   // if we decide to add headshots or other stuff we might want to add this here... or save those somewhere else.
         protected Rectangle drawBox;
@@ -23,7 +24,7 @@ namespace RValley.Entities
         protected int  aniCountMax, aniCount;   // animation variables
         protected long[] aniTimerMax;
         public enums.EntityState entityState;
-        public int speed, hp, hpMax, spriteScale, range;
+        public int speed, hp, hpMax, spriteScale, reach;
         protected Stopwatch animationTimer;
         protected bool direction, spriteRotation;               // true = left | false = right
 
@@ -32,122 +33,127 @@ namespace RValley.Entities
         }
 
         public virtual void Update() {
-
-            if (this.lastMovement[0] < 0)
+            if (this.lastMovement != null)
             {
-                // this.aniCount = 0;
-                this.direction = true;
-                switch (this.entityState)
+                if (this.lastMovement[0] < 0)
                 {
-                    case enums.EntityState.IDLE_R:
+                    // this.aniCount = 0;
+                    this.direction = true;
+                    switch (this.entityState)
+                    {
+                        case enums.EntityState.IDLE_R:
+                            this.entityState = enums.EntityState.IDLE_L;
+                            break;
+
+                        case enums.EntityState.RUN_R:
+                            this.entityState = enums.EntityState.RUN_L;
+                            break;
+
+                        case enums.EntityState.DEATH_R:
+                            this.entityState = enums.EntityState.DEATH_L;
+                            break;
+                    }
+                }
+                else if (this.lastMovement[0] > 0)
+                {
+                    // this.aniCount = 0;
+                    this.direction = false;
+                    switch (this.entityState)
+                    {
+                        case enums.EntityState.IDLE_L:
+                            this.entityState = enums.EntityState.IDLE_R;
+                            break;
+
+                        case enums.EntityState.RUN_L:
+                            this.entityState = enums.EntityState.RUN_R;
+                            break;
+
+                        case enums.EntityState.DEATH_L:
+                            this.entityState = enums.EntityState.DEATH_R;
+                            break;
+                    }
+                }
+
+                // here we update the entity state as well as switch the aniCount Max so we dont go IndexOutOfBounds.
+
+                if (this.lastMovement[0] == 0 && this.lastMovement[1] == 0 && !(this.entityState == enums.EntityState.IDLE_R || this.entityState == enums.EntityState.IDLE_L))
+                {
+                    if (this.direction)
+                    {
+
                         this.entityState = enums.EntityState.IDLE_L;
-                        break;
+                        this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
+                        this.aniCount = this.aniCountMax - 1;
+                    }
+                    else
+                    {
 
-                    case enums.EntityState.RUN_R:
-                        this.entityState = enums.EntityState.RUN_L;
-                        break;
-
-                    case enums.EntityState.DEATH_R:
-                        this.entityState = enums.EntityState.DEATH_L;
-                        break;
-                }
-            }
-            else if (this.lastMovement[0] > 0)
-            {
-                // this.aniCount = 0;
-                this.direction = false;
-                switch (this.entityState)
-                {
-                    case enums.EntityState.IDLE_L:
                         this.entityState = enums.EntityState.IDLE_R;
-                        break;
+                        this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
+                        this.aniCount = 0;
+                    }
+                }
+                else if (this.hp <= 0 && !(this.entityState == enums.EntityState.DEATH_R || this.entityState == enums.EntityState.DEATH_L))
+                {
+                    if (this.direction)
+                    {
 
-                    case enums.EntityState.RUN_L:
-                        this.entityState = enums.EntityState.RUN_R;
-                        break;
+                        this.entityState = enums.EntityState.DEATH_L;
+                        this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
+                        this.aniCount = this.aniCountMax - 1;
+                    }
+                    else
+                    {
 
-                    case enums.EntityState.DEATH_L:
                         this.entityState = enums.EntityState.DEATH_R;
-                        break;
+                        this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
+                        this.aniCount = 0;
+                    }
                 }
-            }
-
-            // here we update the entity state as well as switch the aniCount Max so we dont go IndexOutOfBounds.
-
-            if (this.lastMovement[0] == 0 && this.lastMovement[1] == 0 &&  !(this.entityState == enums.EntityState.IDLE_R || this.entityState == enums.EntityState.IDLE_L))
-            {
-                if (this.direction)
+                else if (!(this.entityState == enums.EntityState.RUN_R || this.entityState == enums.EntityState.RUN_L) && (this.lastMovement[0] != 0 || this.lastMovement[1] != 0))
                 {
+                    if (this.direction)
+                    {
 
-                    this.entityState = enums.EntityState.IDLE_L;
-                    this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
-                    this.aniCount = this.aniCountMax - 1;
-                }
-                else
-                {
+                        this.entityState = enums.EntityState.RUN_L;
+                        this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
+                        this.aniCount = this.aniCountMax - 1;
+                    }
+                    else
+                    {
 
-                    this.entityState = enums.EntityState.IDLE_R;
-                    this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
-                    this.aniCount = 0;
-                }
-            }
-            else if(this.hp <= 0 && !(this.entityState == enums.EntityState.DEATH_R || this.entityState == enums.EntityState.DEATH_L))
-            {
-                if (this.direction)
-                {
-
-                    this.entityState = enums.EntityState.DEATH_L;
-                    this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
-                    this.aniCount = this.aniCountMax - 1;
-                }
-                else
-                {
-
-                    this.entityState = enums.EntityState.DEATH_R;
-                    this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
-                    this.aniCount = 0;
-                }
-            }
-            else if (!(this.entityState == enums.EntityState.RUN_R || this.entityState == enums.EntityState.RUN_L) && (this.lastMovement[0] != 0 || this.lastMovement[1] != 0))
-            {
-                if (this.direction)
-                {
-
-                    this.entityState = enums.EntityState.RUN_L;
-                    this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
-                    this.aniCount = this.aniCountMax - 1;
-                }
-                else
-                {
-
-                    this.entityState = enums.EntityState.RUN_R;
-                    this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
-                    this.aniCount = 0;
+                        this.entityState = enums.EntityState.RUN_R;
+                        this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
+                        this.aniCount = 0;
+                    }
                 }
             }
           
         }
         public virtual SpriteBatch Draw(SpriteBatch spriteBatch){
-
+            
             spriteBatch.Draw(this.spriteSheets[(int)this.entityState], this.drawBox, this.sourceRectangle[(int)this.entityState][this.aniCount], Color.White);
             
             return spriteBatch;
         }
 
 
-        public virtual void Movement(int[] move, MapManager mapManager)
+        public virtual void Movement(float[] move, MapManager mapManager)
         {
+            if (this.drawPosition == null) return;
+
             this.lastMovement = move;
+
             if (move[0] != 0 && move[1] != 0)
             {   // here we handle movement in two Directions at once.
-                this.position[0] += move[0] * (this.speed * 4/5);
-                this.position[1] += move[1] * (this.speed * 4/5);
+                this.position[0] +=(int)(move[0] * (this.speed * 4/5));
+                this.position[1] += (int)(move[1] * (this.speed * 4/5));
 
             }
             else 
             {   // here everything else.
-                this.position[0] += move[0] * this.speed;
-                this.position[1] += move[1] * this.speed;
+                this.position[0] += (int)(move[0] * this.speed);
+                this.position[1] += (int)(move[1] * this.speed);
             }
 
             // here we check that the entity wont move out of bounds_
@@ -179,6 +185,11 @@ namespace RValley.Entities
         public void LoadContent(Texture2D[] spriteSheets, Rectangle[][] sourceRectangle) { 
             this.spriteSheets = spriteSheets;
             this.sourceRectangle = sourceRectangle;
+            this.spriteSize = this.spriteSheets[0].Height;
+            this.hitBox.Width = this.spriteSize;
+            this.hitBox.Height = this.spriteSize; 
+            this.drawBox = new Rectangle(this.position[0], this.position[1], this.spriteSize * this.spriteScale, this.spriteSize * this.spriteScale);
+
         }
 
         public void LoadContent(Texture2D[] spriteSheets) {
