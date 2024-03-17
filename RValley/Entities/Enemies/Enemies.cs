@@ -15,18 +15,36 @@ namespace RValley.Entities.Enemies
         public Enemies() {
 
         }
+
+
         public virtual void Update(List<Player> player, MapManager mapManager) {
             if (mapManager.backgroundSprite != null)
-            {
+            {                
                 if (this.distance < base.reach)
                 {
                     // here we will do the attacks.
                     this.AI(player);
+                    base.lastMovement[0] = 0;
+                    base.lastMovement[1] = 0;
                 }
                 else
                 {
+                    base.hitBox.Width = base.spriteSize - 142;
+                    base.hitBox.Height = base.spriteSize - 142;
+
                     base.Movement(this.AI(player), mapManager);
+
+                    base.drawBox.X = base.drawPosition[0];
+                    base.drawBox.Y = base.drawPosition[1];
+
+                    base.position[0] = base.hitBox.X - 100;
+                    base.position[1] = base.hitBox.Y - 175;
+
+                    base.hitBox.Width = base.spriteSize - 142;
+                    base.hitBox.Height = base.spriteSize - 142;
                 }
+                base.Update(mapManager);
+
                 base.drawPosition = mapManager.calculateDrawPositionEntity(base.position);
 
             }
@@ -43,10 +61,10 @@ namespace RValley.Entities.Enemies
             {
                 this.target = player[0];
 
-                int distx = (this.target.position[0] - base.position[0]);
+                int distx = (this.target.hitBox.Center.X - base.hitBox.Center.X);
                 if (distx < 0) distx *= -1;
 
-                int disty = (this.target.position[1] - base.position[1]);
+                int disty = (this.target.hitBox.Center.Y - base.hitBox.Center.Y);
                 if (disty < 0) disty *= -1;
 
                 int distance = distx + disty;
@@ -55,19 +73,19 @@ namespace RValley.Entities.Enemies
                 {                               // only usefull if multiplayer is implemented.
                     Player p = player[0];
 
-                    distx = (p.position[0] - base.position[0]);
+                    distx = (p.hitBox.Center.X - base.hitBox.Center.X);
                     if (distx < 0) distx *= -1;
 
-                    disty = (p.position[1] - base.position[1]);
+                    disty = (p.hitBox.Center.Y - base.hitBox.Center.Y);
                     if (disty < 0) disty *= -1;
 
                     distance = distx + disty;
 
                     for (int i = 0; i < player.Count; i++)
                     {
-                        distx = (player[i].position[0] - base.position[0]);
+                        distx = (player[i].hitBox.Center.X - base.hitBox.Center.X);
                         if (distx < 0) distx *= -1;
-                        disty = (player[i].position[1] - base.position[1]);
+                        disty = (player[i].hitBox.Center.Y - base.hitBox.Center.Y);
                         if (disty < 0) disty *= -1;
 
                         if (distance > disty + distx) {
@@ -80,12 +98,13 @@ namespace RValley.Entities.Enemies
                 }
             }
             // here we move to the actual target.
-            int distxs = (this.target.position[0] - base.position[0]);
-            int distxt = (this.target.position[0] - base.position[0]);
+            int distxs = (this.target.hitBox.Center.X - base.hitBox.Center.X);
+            int distxt = distxs;
             if (distxs < 0) distxs *= -1;
 
-            int distys = (this.target.position[1] - base.position[1]);
-            int distyt = (this.target.position[1] - base.position[1]);
+            int distys = (this.target.hitBox.Center.Y - base.hitBox.Center.Y);
+            int distyt = (this.target.hitBox.Center.Y - base.hitBox.Center.Y);
+
             if (distys < 0) distys *= -1;
 
             int distances = distxs + distys;
@@ -124,6 +143,21 @@ namespace RValley.Entities.Enemies
                 }
             }
             return nextMove;
+        }
+        public void primaryAttack(List<Player> player) 
+        {        
+            // we use this of AOE attacks
+            
+        }
+        public void primaryAttack(Player player)
+        {
+            // we use this for single target attacks.
+
+            // first we animate the attack windup
+
+
+            
+
         }
     }
 }

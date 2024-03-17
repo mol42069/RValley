@@ -17,7 +17,7 @@ namespace RValley.Entities
         public int[] position, drawPosition;
         public float []lastMovement;
         protected int spriteSize;
-        protected Rectangle hitBox;   // if we decide to add headshots or other stuff we might want to add this here... or save those somewhere else.
+        public Rectangle hitBox;   // if we decide to add headshots or other stuff we might want to add this here... or save those somewhere else.
         protected Rectangle drawBox;
         public Texture2D[] spriteSheets;
         protected Rectangle[][] sourceRectangle;
@@ -32,9 +32,29 @@ namespace RValley.Entities
 
         }
 
-        public virtual void Update() {
+        public virtual void Update(MapManager mapManager) {
             if (this.lastMovement != null)
             {
+
+                if (this.hitBox.X < 0)
+                {
+                    this.hitBox.X = 0;
+                }
+                else if (this.hitBox.X > mapManager.backgroundSprite.Width - this.hitBox.Width)
+                {
+                    this.hitBox.X = mapManager.backgroundSprite.Width - this.hitBox.Width;
+                }
+                // Y-Axis:
+                if (this.hitBox.Y < 0)
+                {
+                    this.hitBox.Y = 0;
+                }
+                else if (this.hitBox.Y > mapManager.backgroundSprite.Height - this.hitBox.Height)
+                {
+                    this.hitBox.Y = mapManager.backgroundSprite.Height - this.hitBox.Height;
+                }
+
+
                 if (this.lastMovement[0] < 0)
                 {
                     // this.aniCount = 0;
@@ -47,10 +67,6 @@ namespace RValley.Entities
 
                         case enums.EntityState.RUN_R:
                             this.entityState = enums.EntityState.RUN_L;
-                            break;
-
-                        case enums.EntityState.DEATH_R:
-                            this.entityState = enums.EntityState.DEATH_L;
                             break;
                     }
                 }
@@ -66,10 +82,6 @@ namespace RValley.Entities
 
                         case enums.EntityState.RUN_L:
                             this.entityState = enums.EntityState.RUN_R;
-                            break;
-
-                        case enums.EntityState.DEATH_L:
-                            this.entityState = enums.EntityState.DEATH_R;
                             break;
                     }
                 }
@@ -93,23 +105,6 @@ namespace RValley.Entities
                         this.aniCount = 0;
                     }
                 }
-                else if (this.hp <= 0 && !(this.entityState == enums.EntityState.DEATH_R || this.entityState == enums.EntityState.DEATH_L))
-                {
-                    if (this.direction)
-                    {
-
-                        this.entityState = enums.EntityState.DEATH_L;
-                        this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
-                        this.aniCount = this.aniCountMax - 1;
-                    }
-                    else
-                    {
-
-                        this.entityState = enums.EntityState.DEATH_R;
-                        this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
-                        this.aniCount = 0;
-                    }
-                }
                 else if (!(this.entityState == enums.EntityState.RUN_R || this.entityState == enums.EntityState.RUN_L) && (this.lastMovement[0] != 0 || this.lastMovement[1] != 0))
                 {
                     if (this.direction)
@@ -128,7 +123,7 @@ namespace RValley.Entities
                     }
                 }
             }
-          
+
         }
         public virtual SpriteBatch Draw(SpriteBatch spriteBatch){
             
@@ -140,13 +135,15 @@ namespace RValley.Entities
 
         public virtual void Movement(float[] move, MapManager mapManager)
         {
+            
+
             if (this.drawPosition == null) return;
 
             this.lastMovement = move;
 
             if (move[0] != 0 && move[1] != 0)
             {   // here we handle movement in two Directions at once.
-                this.position[0] +=(int)(move[0] * (this.speed * 4/5));
+                this.position[0] += (int)(move[0] * (this.speed * 4/5));
                 this.position[1] += (int)(move[1] * (this.speed * 4/5));
 
             }
@@ -156,36 +153,38 @@ namespace RValley.Entities
                 this.position[1] += (int)(move[1] * this.speed);
             }
 
+            this.hitBox.X = this.position[0] + 100;
+            this.hitBox.Y = this.position[1] + 175;
+
             // here we check that the entity wont move out of bounds_
             // X-Axis:
-            if (this.position[0] < 0)
+            if (this.hitBox.X < 0)
             {
-                this.position[0] = 0;
+                this.hitBox.X = 0;
             }
-            else if (this.position[0] > mapManager.backgroundSprite.Width - this.spriteSize * 2)
+            else if (this.hitBox.X > mapManager.backgroundSprite.Width - this.hitBox.Width)
             {
-                this.position[0] = mapManager.backgroundSprite.Width - this.spriteSize * 2;
+                this.hitBox.X = mapManager.backgroundSprite.Width - this.hitBox.Width;
             }
             // Y-Axis:
-            if (this.position[1] < 0)
+            if (this.hitBox.Y < 0)
             {
-                this.position[1] = 0;
+                this.hitBox.Y = 0;
             }
-            else if (this.position[1] > mapManager.backgroundSprite.Height - this.spriteSize * 2)
+            else if (this.hitBox.Y > mapManager.backgroundSprite.Height - this.hitBox.Height)
             {
-                this.position[1] = mapManager.backgroundSprite.Height - this.spriteSize * 2;
+                this.hitBox.Y = mapManager.backgroundSprite.Height - this.hitBox.Height;
             }
 
 
-            this.drawBox.X = this.drawPosition[0];
-            this.drawBox.Y = this.drawPosition[1];
+
         }
 
         // we only want spriteSheets for one playerClass.
         public void LoadContent(Texture2D[] spriteSheets, Rectangle[][] sourceRectangle) { 
             this.spriteSheets = spriteSheets;
             this.sourceRectangle = sourceRectangle;
-            this.spriteSize = this.spriteSheets[0].Height;
+            this.spriteSize = this.spriteSheets[0].Height * this.spriteScale;
             this.hitBox.Width = this.spriteSize;
             this.hitBox.Height = this.spriteSize; 
             this.drawBox = new Rectangle(this.position[0], this.position[1], this.spriteSize * this.spriteScale, this.spriteSize * this.spriteScale);
@@ -216,6 +215,7 @@ namespace RValley.Entities
 
         public void Animation() {
             if (this.animationTimer.ElapsedMilliseconds >= this.aniTimerMax[(int)decimal.Round(((int)this.entityState / 2), 0)]) {
+                
                 this.animationTimer.Stop();
                 this.animationTimer.Reset();
                 this.animationTimer.Start();
@@ -224,14 +224,21 @@ namespace RValley.Entities
                 {
                     this.aniCount--;
 
-                    if (this.aniCount < 0) this.aniCount = this.aniCountMax - 1;
+                    if (this.aniCount < 0) this.aniCount = this.aniCountMax - 2;
                 }
                 else 
                 {
                     this.aniCount++;
-                    if (this.aniCount >= this.aniCountMax) this.aniCount = 0;
+                    if (this.aniCount >= this.aniCountMax - 1) this.aniCount = 0;
                 }
             }        
         }
+
+
+        private void AttackAnimation(Texture2D attackSprite) { 
+        
+        
+        }
+
     }
 }

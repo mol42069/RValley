@@ -81,7 +81,6 @@ namespace RValley
         public void ClientSideUpdate()
         {
             // here we basicly only do damage to the enemies using the player.
-        
 
         }
 
@@ -96,12 +95,12 @@ namespace RValley
                     
                     case 0:
                         this.enemies.Add(new Zombie(newPos));
-                        this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.ORC][(int)enums.OrcClass.BASE], this.sourceRectangle[(int)enums.EnemyType.ORC][(int)enums.OrcClass.BASE]);
+                        this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH], this.sourceRectangle[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH]);
                         break;
 
                      default:
                         this.enemies.Add(new Zombie(newPos));
-                        this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.ORC][(int)enums.OrcClass.BASE], this.sourceRectangle[(int)enums.EnemyType.ORC][(int)enums.OrcClass.BASE]); 
+                        this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH], this.sourceRectangle[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH]); 
                         break;
                 }
             }

@@ -68,17 +68,13 @@ namespace RValley
 
                 for (int i = 0; i < (int)enums.EnemyType.MAX; i++)
                 {
-                    string contentPath = "Enemy/";
+                    string contentPath = "Entities/Enemies/";
 
                     // we change the path so we get every EnemyType
                     switch (i)
                     {
-                        case (int)enums.EnemyType.ORC:
-                            contentPath += "Orc Crew/";
-                            break;
-
-                        case (int)enums.EnemyType.SKELETON:
-                            contentPath += "Skeleton Crew/";
+                        case (int)enums.EnemyType.GOBLIN:
+                            contentPath += "Goblin/";
                             break;
 
                         default:
@@ -87,31 +83,18 @@ namespace RValley
 
                     // now we append the enemyType to the path of the spriteSheet
                     switch (i){
-                        case (int)enums.EnemyType.ORC:
+                        case (int)enums.EnemyType.GOBLIN:
 
-                            mobSprites[i] = new Texture2D[(int)enums.OrcClass.MAX][];
-                            contentPath += "Orc";
+                            mobSprites[i] = new Texture2D[(int)enums.GoblinClass.MAX][];
 
                             // now we append the enemyClass to the path of the spriteSheet
-                            for (int n = 0; n < (int)enums.OrcClass.MAX; n++) {
+                            for (int n = 0; n < (int)enums.GoblinClass.MAX; n++) {
                                 contentTypePath = contentPath;
 
                                 switch (n)
                                 {
-                                    case (int)enums.OrcClass.BASE:
-                                        contentTypePath += "/";
-                                        break;
-
-                                    case (int)enums.OrcClass.ROGUE:
-                                        contentTypePath += " - Rogue/";
-                                        break;
-
-                                    case (int)enums.OrcClass.SHAMAN:
-                                        contentTypePath += " - Shaman/";
-                                        break;
-
-                                    case (int)enums.OrcClass.WARRIOR:
-                                        contentTypePath += " - Warrior/";
+                                    case (int)enums.GoblinClass.TORCH:
+                                        contentTypePath += "Torch/";
                                         break;
 
                                     default:
@@ -130,7 +113,7 @@ namespace RValley
                                             break;
 
                                         case (int)enums.EntityState.RUN_L:
-                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Run-Sheet");
+                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Run-Sheet_L");
                                             break;
 
                                         case (int)enums.EntityState.IDLE_R:
@@ -138,87 +121,15 @@ namespace RValley
                                             break;
 
                                         case (int)enums.EntityState.IDLE_L:
-                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Idle-Sheet");
+                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Idle-Sheet_L");
                                             break;
 
-                                        case (int)enums.EntityState.DEATH_R:
-                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Death-Sheet");
+                                        case (int)enums.EntityState.PATTACK_R:
+                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Primary-Attack");
                                             break;
 
-                                        case (int)enums.EntityState.DEATH_L:
-                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Death-Sheet");
-                                            break;
-
-                                        default:
-                                            break;
-                                    }
-                                }
-                            }
-                            break;
-
-                        case (int)enums.EnemyType.SKELETON:
-
-                            mobSprites[i] = new Texture2D[(int)enums.SkeletonClass.MAX][];
-                            contentPath += "Skeleton - ";
-
-                            // now we append the enemyClass to the path of the spriteSheet
-
-                            for (int n = 0; n < (int)enums.SkeletonClass.MAX; n++)
-                            {
-                                contentTypePath = contentPath;
-                                switch (n)
-                                {
-                                    case (int)enums.SkeletonClass.BASE:
-                                        contentTypePath += "Base/";
-                                        break;
-
-                                    case (int)enums.SkeletonClass.MAGE:
-                                        contentTypePath += "Rogue/";
-                                        break;
-
-                                    case (int)enums.SkeletonClass.ROGUE:
-                                        contentTypePath += "Mage/";
-                                        break;
-
-                                    case (int)enums.SkeletonClass.WARRIOR:
-                                        contentTypePath += "Warrior/";
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-
-                                mobSprites[i][n] = new Texture2D[(int)enums.EntityState.MAXA];
-
-                                // now we load all the spriteSheets.
-
-                                for (int j = 0; j < (int)enums.EntityState.MAXA; j++)
-                                {
-
-                                    switch (j)
-                                    {
-                                        case (int)enums.EntityState.RUN_R:
-                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Run-Sheet");
-                                            break;
-
-                                        case (int)enums.EntityState.RUN_L:
-                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Run-Sheet");
-                                            break;
-
-                                        case (int)enums.EntityState.IDLE_R:
-                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Idle-Sheet");
-                                            break;
-
-                                        case (int)enums.EntityState.IDLE_L:
-                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Idle-Sheet");
-                                            break;
-
-                                        case (int)enums.EntityState.DEATH_R:
-                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Death-Sheet");
-                                            break;
-
-                                        case (int)enums.EntityState.DEATH_L:
-                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Death-Sheet");
+                                        case (int)enums.EntityState.PATTACK_L:
+                                            mobSprites[i][n][j] = Content.Load<Texture2D>(contentTypePath + "Primary-Attack_L");
                                             break;
 
                                         default:
@@ -226,8 +137,8 @@ namespace RValley
                                     }
                                 }
                             }
-                        break;                            
-                        }
+                        break;                          
+                    }
                 }
                 // now we give these spritesheets to the mob manager.
                 this.server.mobManager.LoadContent(mobSprites);
@@ -248,7 +159,7 @@ namespace RValley
 
                 for (int i = 0; i < (int)enums.PlayerClass.MAX; i++) {
 
-                    string contentPath = "Heroes/";
+                    string contentPath = "Entities/Friendlies/";
                     this.playerSprites[i] = new Texture2D[(int)enums.EntityState.MAXA];
 
                     // we change the path so we get every PlayerClass
@@ -282,12 +193,12 @@ namespace RValley
                                 this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "IdleL-Sheet");
                                 break;
 
-                            case (int)enums.EntityState.DEATH_R:
-                                this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "Death-Sheet");
+                            case (int)enums.EntityState.PATTACK_R:
+                                this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "PrimaryAttack");
                                 break;
 
-                            case (int)enums.EntityState.DEATH_L:
-                                this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "DeathL-Sheet");
+                            case (int)enums.EntityState.PATTACK_L:
+                                this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "PrimaryAttack_L");
                                 break;
 
                             default:

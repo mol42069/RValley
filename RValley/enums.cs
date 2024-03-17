@@ -10,16 +10,12 @@ namespace RValley
     {
         public enum EnemyType 
         {
-            ORC,
-            SKELETON,
+            GOBLIN,
             MAX
         }
-        public enum OrcClass 
+        public enum GoblinClass 
         {
-            BASE,
-            ROGUE,
-            SHAMAN,
-            WARRIOR,
+            TORCH,
             MAX
         }
         public enum SkeletonClass 
@@ -41,8 +37,8 @@ namespace RValley
             RUN_L,
             IDLE_R,
             IDLE_L,
-            DEATH_R,
-            DEATH_L,
+            PATTACK_R,
+            PATTACK_L,
             MAX = 3,
             MAXA = 6
         }
