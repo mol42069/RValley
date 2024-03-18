@@ -27,6 +27,7 @@ namespace RValley.Client
         private long stillAliveTimerMax_ms;
         private bool stillAliveSignal, running, mouseClicked, pastMouseClicked;
         private Stopwatch stopwatch;
+        private int[] mousePosition;
 
         public Client(Server.Server server)
         {
@@ -40,7 +41,7 @@ namespace RValley.Client
             this.server = server;
             this.keyHandler = new Thread(KeyHandler);
             this.keyHandler.Start();
-
+            this.mousePosition = new int[2] { 0, 0 };
         }
 
         public void Update() {
@@ -50,17 +51,33 @@ namespace RValley.Client
             
             // here we update the mouse position.
             var mouseState = Mouse.GetState();
-            int[] mousePosition = new int[2] {mouseState.X, mouseState.Y};
-
+            
             // HERE WE RUN THINGS LIKE ANIMATION AS WELL AS THE PLAYER.
 
             this.server.player[0].Update(this.server.mapManager);
             this.server.player[0].Movement(this.move, this.server.mapManager);
 
             // here we do the attacks.
-            if (this.mouseClicked || this.pastMouseClicked) 
+
+
+            if (this.server.player[0].primaryAttackActive && this.server.player[0].primaryAttackFinished)
             {
-                this.server.player[0].primaryAttack(this.server.mobManager.enemies, mousePosition, this.server.mapManager);
+                this.server.player[0].primaryAttackFinished = false;
+                this.server.player[0].PrimaryAttack(this.server.mobManager.enemies, this.mousePosition, this.server.mapManager);
+
+            }
+            if (this.mouseClicked || this.pastMouseClicked)
+            {
+                this.mousePosition = new int[2] { mouseState.X, mouseState.Y };
+                if (this.mousePosition[0] < this.server.player[0].drawBox.Center.X)
+                {
+                    this.server.player[0].direction = true;
+                }
+                else 
+                {
+                    this.server.player[0].direction = false;
+                }
+                this.server.player[0].primaryAttackActive = true;
             }
 
             // we do the animations.

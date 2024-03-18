@@ -21,6 +21,9 @@ namespace RValley.Entities
             this.mouseReleased = false;
             this.mousePress = false;
 
+            base.primaryAttackActive = false;
+            base.primaryAttackAnimationCount = 0;
+
             base.speed = 20;
             base.hpMax = 100;
             base.hp = base.hpMax;
@@ -71,16 +74,16 @@ namespace RValley.Entities
 
         }
 
-        public void primaryAttack(List<Entities> entities)
+        public void PrimaryAttack(List<Entities> entities)
         {
             // this for auto-attacks
 
         }
 
-        public void primaryAttack(List<Enemies.Enemies> enemies, int[] targetPos, MapManager mapManager)
+        public void PrimaryAttack(List<Enemies.Enemies> enemies, int[] targetPos, MapManager mapManager)
         {
             // this for manual attacks.
-            this.item[0].primaryAttack(enemies, targetPos, mapManager);
+            this.item[0].PrimaryAttack(enemies, targetPos, mapManager);
 
         }
 

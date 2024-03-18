@@ -22,13 +22,13 @@ namespace RValley.Items
 
         }
 
-        public virtual void primaryAttack(List<Enemies> enemies) {
+        public virtual void PrimaryAttack(List<Enemies> enemies) {
             // Auto attacks.
             
 
         }
 
-        public virtual void primaryAttack(List<Enemies> enemies, int[] targetPosition, MapManager mapManager) {
+        public virtual void PrimaryAttack(List<Enemies> enemies, int[] targetPosition, MapManager mapManager) {
             // manual Attacks.
             List<Enemies> targets = this.findTargetsManual(enemies, targetPosition, mapManager);
 

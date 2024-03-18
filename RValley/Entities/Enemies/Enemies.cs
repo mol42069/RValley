@@ -155,12 +155,12 @@ namespace RValley.Entities.Enemies
             }
             return nextMove;
         }
-        public void primaryAttack(List<Player> player) 
+        public void PrimaryAttack(List<Player> player) 
         {        
             // we use this of AOE attacks
             
         }
-        public void primaryAttack(Player player)
+        public void PrimaryAttack(Player player)
         {
             // we use this for single target attacks.
 
