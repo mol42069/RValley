@@ -25,10 +25,14 @@ namespace RValley.Client
         private Thread keyHandler;
         private float[] move;
         private long stillAliveTimerMax_ms;
-        private bool stillAliveSignal, running;
+        private bool stillAliveSignal, running, mouseClicked, pastMouseClicked;
         private Stopwatch stopwatch;
 
-        public Client(Server.Server server) {
+        public Client(Server.Server server)
+        {
+            this.mouseClicked = false;
+            this.pastMouseClicked = false;
+
             this.running = true;
             this.stillAliveSignal = true;
             this.stillAliveTimerMax_ms = 1000;
@@ -43,9 +47,21 @@ namespace RValley.Client
             // here we send the server a still-alive msg.
             this.server.stillAliveSignal = true;
             this.stillAliveSignal = true;
+            
+            // here we update the mouse position.
+            var mouseState = Mouse.GetState();
+            int[] mousePosition = new int[2] {mouseState.X, mouseState.Y};
+
             // HERE WE RUN THINGS LIKE ANIMATION AS WELL AS THE PLAYER.
+
             this.server.player[0].Update(this.server.mapManager);
             this.server.player[0].Movement(this.move, this.server.mapManager);
+
+            // here we do the attacks.
+            if (this.mouseClicked || this.pastMouseClicked) 
+            {
+                this.server.player[0].primaryAttack(this.server.mobManager.enemies, mousePosition, this.server.mapManager);
+            }
 
             // we do the animations.
             this.server.player[0].Animation();
@@ -113,7 +129,49 @@ namespace RValley.Client
                     {
                         this.move[1] = 0;
                     }
-                } catch {
+
+                    var mouseState = Mouse.GetState();
+                    
+
+
+                    if (mouseState.LeftButton == ButtonState.Released)
+                    {
+                        this.mouseClicked = false;
+                    }
+                    if (mouseState.LeftButton == ButtonState.Pressed)
+                    {
+                        this.mouseClicked = true;
+                    }
+
+                    
+
+                    if (this.pastMouseClicked && !this.mouseClicked)
+                    {
+                        // here we want to do things which are on mouse-click release.
+
+                        this.server.player[0].mouseReleased = true;
+                        this.server.player[0].mousePress = false;
+                    }
+                    else if (this.mouseClicked)
+                    {
+                        // here we want to do things which are on mouse-click press
+
+                        this.server.player[0].mouseReleased = false;
+                        this.server.player[0].mousePress = true;
+                    }
+                    else
+                    {
+                        // we need to set those variables back to false.
+
+                        this.server.player[0].mouseReleased = false;
+                        this.server.player[0].mousePress = false;
+                    }
+
+                    this.pastMouseClicked = this.mouseClicked;
+
+                } 
+                catch 
+                {
                     
                 }
             }

@@ -235,6 +235,10 @@ namespace RValley.Entities
             }        
         }
 
+        public void TakeDamage(int damage) {
+            this.hp -= damage;        
+        }
+
         private void AttackAnimation(Texture2D attackSprite) { 
         
         

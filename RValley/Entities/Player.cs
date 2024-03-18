@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RValley.Items;
 using RValley.Maps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,9 +13,14 @@ namespace RValley.Entities
 {
     internal class Player : Entities
     {
+        public bool mouseReleased, mousePress;
+        public List<Item> item;
 
         public Player() 
         {
+            this.mouseReleased = false;
+            this.mousePress = false;
+
             base.speed = 20;
             base.hpMax = 100;
             base.hp = base.hpMax;
@@ -36,6 +43,9 @@ namespace RValley.Entities
             base.lastMovement = new float[2] {0, 0};
             this.direction = false;
 
+            this.item = new List<Item>();    // we want this to be an List in case we want the player to have multiple weapons.
+            this.item.Add( new Item());
+
         }
 
         public override void Update(MapManager mapManager)
@@ -56,6 +66,9 @@ namespace RValley.Entities
 
             base.hitBox.Width = base.spriteSize - 142;
             base.hitBox.Height = base.spriteSize - 142;
+
+
+
         }
 
         public void primaryAttack(List<Entities> entities)
@@ -64,9 +77,10 @@ namespace RValley.Entities
 
         }
 
-        public void primaryAttack(List<Entities> entities, int[] targetPos)
+        public void primaryAttack(List<Enemies.Enemies> enemies, int[] targetPos, MapManager mapManager)
         {
             // this for manual attacks.
+            this.item[0].primaryAttack(enemies, targetPos, mapManager);
 
         }
 

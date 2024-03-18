@@ -38,7 +38,9 @@ namespace RValley.Entities.Enemies
                     // here we will do the attacks.
                     base.lastMovement[0] = 0;
                     base.lastMovement[1] = 0;
-                   
+                    base.drawPosition = mapManager.calculateDrawPositionEntity(this.position);
+                    base.drawBox.X = base.drawPosition[0];
+                    base.drawBox.Y = base.drawPosition[1];
                 }
                 else
                 {
@@ -66,8 +68,6 @@ namespace RValley.Entities.Enemies
         {
             // here we want to add the most basic ai which we might use multiple times. We want to call this in Update.
             // we just walk straight to the Player.
-
-            
 
             if (this.target == null)
             {
@@ -109,11 +109,11 @@ namespace RValley.Entities.Enemies
                 }
             }
             // here we move to the actual target.
-            int distxs = (this.target.hitBox.Center.X - base.hitBox.Center.X);
+            int distxs = ((this.target.hitBox.Center.X + this.targetOffset[0]) - base.hitBox.Center.X);
             int distxt = ((this.target.hitBox.Center.X + this.targetOffset[0]) - base.hitBox.Center.X);
             if (distxs < 0) distxs *= -1;
 
-            int distys = (this.target.hitBox.Center.Y - base.hitBox.Center.Y);
+            int distys = ((this.target.hitBox.Center.Y + this.targetOffset[1]) - base.hitBox.Center.Y);
             int distyt = ((this.target.hitBox.Center.Y + this.targetOffset[1]) - base.hitBox.Center.Y);
 
             if (distys < 0) distys *= -1;

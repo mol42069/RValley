@@ -11,7 +11,7 @@ namespace RValley.Entities.Enemies
     internal class Zombie : Enemies
     {
 
-        public Zombie(int[]  startingPos, int[] targetOffset) {
+        public Zombie(int[]  startingPos, int[] targetOffset, int aniCount) {
 
             base.targetOffset = targetOffset;
 
@@ -35,7 +35,7 @@ namespace RValley.Entities.Enemies
             // HERE WE SET ALL THE ANIMATION VARIABLES.
             base.animationTimer = new System.Diagnostics.Stopwatch();
             base.animationTimer.Start();
-            base.aniCount = 0;
+            base.aniCount = aniCount;
             base.aniCountMax = 0;
             base.aniTimerMax = new long[(int)enums.EntityState.MAX] { 50, 50, 100 }; // 0 = RUN | 1 = IDLE | 2 = DEATH | (see enums.EntityState)
             base.lastMovement = new float[2] { 0, 0 };

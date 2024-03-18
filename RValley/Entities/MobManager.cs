@@ -16,7 +16,7 @@ namespace RValley
 {
     internal class MobManager
     {
-        private List<Entities.Enemies.Enemies> enemies;
+        public List<Entities.Enemies.Enemies> enemies;
         private Texture2D[][][] sprites;
         private Rectangle[][][][] sourceRectangle;
         private Random rand;
@@ -76,6 +76,8 @@ namespace RValley
             {
                 this.enemies[i].Update(player, mapManager);
 
+                if (this.enemies[i].hp <= 0) this.enemies.RemoveAt(i);
+
             }
             this.Spawn(player, mapManager);
 
@@ -97,12 +99,12 @@ namespace RValley
                 switch (x) {
                     
                     case 0:
-                        this.enemies.Add(new Zombie(newPos, new int[2] { this.rand.Next(-50, 50), this.rand.Next(-50, 50) }));
+                        this.enemies.Add(new Zombie(newPos, new int[2] { this.rand.Next(-50, 50), this.rand.Next(-50, 50) }, this.rand.Next(0, 4)));
                         this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH], this.sourceRectangle[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH]);
                         break;
 
                      default:
-                        this.enemies.Add(new Zombie(newPos, new int[2] { this.rand.Next(-50, 50), this.rand.Next(-50, 50)})) ;
+                        this.enemies.Add(new Zombie(newPos, new int[2] { this.rand.Next(-50, 50), this.rand.Next(-50, 50)}, this.rand.Next(0, 4)));
                         this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH], this.sourceRectangle[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH]);
                         break;
                 }
