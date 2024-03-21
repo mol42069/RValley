@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RValley.Entities.Enemies
 {
-    internal class Zombie : Enemies
+    internal class Zombie : Enemies             // For now these are goblins.
     {
 
         public Zombie(int[]  startingPos, int[] targetOffset, int aniCount) {
@@ -23,12 +23,15 @@ namespace RValley.Entities.Enemies
             base.position = startingPos;
             
             base.drawPosition = base.position;
-            base.hitBox = new Rectangle(base.position[0] + 10, base.position[1] + 10, base.spriteSize - 20, base.spriteSize - 20);
-
-            this.hitBox.Width = this.spriteSize - 92;
-            this.hitBox.Height = this.spriteSize - 92;
-
             base.spriteScale = 1;
+            base.hitBoxOffset = new int[2] {67 * base.spriteScale, 119 * base.spriteScale};
+
+            base.hitBox = new Rectangle(base.position[0] + base.hitBoxOffset[0], base.position[1] + base.hitBoxOffset[1], base.spriteSize - base.hitBoxOffset[0] * 2, base.spriteSize - base.hitBoxOffset[1]);
+
+            base.hitBox.Width = base.spriteSize * base.spriteScale - base.hitBoxOffset[0];
+            base.hitBox.Height = base.spriteSize * base.spriteScale - base.hitBoxOffset[1];
+
+            
             base.aniCount = 0;
             base.entityState = enums.EntityState.IDLE_L;
 

@@ -15,7 +15,7 @@ namespace RValley.Entities
     internal class Entities
     {
         public int[] position, drawPosition;
-        public float []lastMovement;
+         public float []lastMovement;
         protected int spriteSize;
         public Rectangle hitBox;   // if we decide to add headshots or other stuff we might want to add this here... or save those somewhere else.
         public Rectangle drawBox;
@@ -27,7 +27,7 @@ namespace RValley.Entities
         public int speed, hp, hpMax, spriteScale, reach;
         protected Stopwatch animationTimer;
         public bool direction, spriteRotation;               // true = left | false = right
-
+        public int[] hitBoxOffset;                          // hitBoxOffset is to size and place the hitboxes correctly.
         public bool primaryAttackActive, primaryAttackFinished;
         public int primaryAttackAnimationCount, primaryAttackAnimationCountMax;
 
@@ -185,8 +185,8 @@ namespace RValley.Entities
                 this.position[1] += (int)(move[1] * this.speed);
             }
 
-            this.hitBox.X = this.position[0] + 100;
-            this.hitBox.Y = this.position[1] + 175;
+            this.hitBox.X = this.position[0] + this.hitBoxOffset[0];
+            this.hitBox.Y = this.position[1] + this.hitBoxOffset[1];
 
             // here we check that the entity wont move out of bounds_
             // X-Axis:
@@ -207,7 +207,8 @@ namespace RValley.Entities
             {
                 this.hitBox.Y = mapManager.backgroundSprite.Height - this.hitBox.Height;
             }
-
+            this.position[0] = this.hitBox.X - this.hitBoxOffset[0];
+            this.position[1] = this.hitBox.Y - this.hitBoxOffset[1];
 
 
         }
@@ -217,8 +218,9 @@ namespace RValley.Entities
             this.spriteSheets = spriteSheets;
             this.sourceRectangle = sourceRectangle;
             this.spriteSize = this.spriteSheets[0].Height * this.spriteScale;
-            this.hitBox.Width = this.spriteSize;
-            this.hitBox.Height = this.spriteSize; 
+            this.hitBox.Width = this.spriteSize * this.spriteScale - this.hitBoxOffset[0];
+            this.hitBox.Height = this.spriteSize * this.spriteScale - this.hitBoxOffset[1];
+
             this.drawBox = new Rectangle(this.position[0], this.position[1], this.spriteSize * this.spriteScale, this.spriteSize * this.spriteScale);
 
         }

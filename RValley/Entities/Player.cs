@@ -27,13 +27,18 @@ namespace RValley.Entities
             base.speed = 20;
             base.hpMax = 100;
             base.hp = base.hpMax;
-            base.position = new int[2] {200, 200};base.drawPosition = base.position;
-            base.hitBox = new Rectangle(base.position[0] + 10, base.position[1] + 10, base.spriteSize - 20, base.spriteSize - 20);
-
-            this.hitBox.Width = this.spriteSize - 100;
-            this.hitBox.Height = this.spriteSize - 100;
-
             base.spriteScale = 1;
+
+            base.position = new int[2] {200, 200};base.drawPosition = base.position;
+            
+            
+            base.hitBoxOffset = new int[2] { 119 * base.spriteScale, 67 * base.spriteScale };
+
+            base.hitBox = new Rectangle(base.position[0] + base.hitBoxOffset[0], base.position[1] + base.hitBoxOffset[1], base.spriteSize - base.hitBoxOffset[0] * 2, base.spriteSize - base.hitBoxOffset[1]);
+
+            base.hitBox.Width = base.spriteSize * base.spriteScale - base.hitBoxOffset[0];
+            base.hitBox.Height = base.spriteSize * base.spriteScale - base.hitBoxOffset[1];
+
             base.aniCount = 0;
             base.entityState = enums.EntityState.IDLE_L;
 
@@ -53,22 +58,18 @@ namespace RValley.Entities
 
         public override void Update(MapManager mapManager)
         {
-            base.hitBox.X = base.position[0] + 75;
-            base.hitBox.Y = base.position[1] + 150;
-
-            base.hitBox.Width = base.spriteSize - 142;
-            base.hitBox.Height = base.spriteSize - 142;
             
             base.Update(mapManager);
+
+            base.hitBox.X = base.position[0] + base.hitBoxOffset[0];
+            base.hitBox.Y = base.position[1] + base.hitBoxOffset[1];
+
 
             base.drawBox.X = base.drawPosition[0];
             base.drawBox.Y = base.drawPosition[1];
 
-            base.position[0] = base.hitBox.X - 75;
-            base.position[1] = base.hitBox.Y - 150;
-
-            base.hitBox.Width = base.spriteSize - 142;
-            base.hitBox.Height = base.spriteSize - 142;
+            base.hitBox.Width = base.spriteSize * base.spriteScale - base.hitBoxOffset[0];
+            base.hitBox.Height = base.spriteSize * base.spriteScale - base.hitBoxOffset[1];
 
 
 

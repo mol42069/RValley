@@ -44,19 +44,11 @@ namespace RValley.Entities.Enemies
                 }
                 else
                 {
-                    base.hitBox.Width = base.spriteSize - 142;
-                    base.hitBox.Height = base.spriteSize - 142;
 
                     base.Movement(this.AI(player), mapManager);
 
                     base.drawBox.X = base.drawPosition[0];
                     base.drawBox.Y = base.drawPosition[1];
-
-                    base.position[0] = base.hitBox.X - 100;
-                    base.position[1] = base.hitBox.Y - 175;
-
-                    base.hitBox.Width = base.spriteSize - 142;
-                    base.hitBox.Height = base.spriteSize - 142;
                 }
                 base.Update(mapManager);
 
