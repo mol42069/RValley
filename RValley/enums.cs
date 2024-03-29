@@ -49,5 +49,12 @@ namespace RValley
             
             MAX
         }
+        public enum FireBall {
+            FIRE,
+            FIREBALL,
+
+            MAX
+        
+        }
     }
 }

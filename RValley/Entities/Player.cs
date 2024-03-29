@@ -19,6 +19,7 @@ namespace RValley.Entities
         public bool mouseReleased, mousePress;
         public List<Item> item;
         public HealthBar healthBar;
+        public Texture2D[] FireBallSprites;
         public Player() 
         {
             this.healthBar = new HealthBar();
@@ -57,17 +58,18 @@ namespace RValley.Entities
             this.direction = false;
 
             this.item = new List<Item>();    // we want this to be an List in case we want the player to have multiple weapons.
-            this.item.Add( new Item());
+            this.item.Add( new MagicStaffFire());
 
         }
-        public void LoadContent(Texture2D[] spriteSheets, Texture2D[] uiHBElements)
+        public void LoadContent(Texture2D[] spriteSheets, Texture2D[] uiHBElements, Texture2D[] ProjectileSprites)
         {
+            this.FireBallSprites = ProjectileSprites;
             this.healthBar.LoadContent(uiHBElements);
 
             base.LoadContent(spriteSheets);
         }
 
-        public override void Update(MapManager mapManager)
+        public void Update(MapManager mapManager, List<Enemies.Enemies> enemies)
         {
             
             base.Update(mapManager);
@@ -82,7 +84,7 @@ namespace RValley.Entities
             base.hitBox.Width = base.spriteSize * base.spriteScale - base.hitBoxOffset[0];
             base.hitBox.Height = base.spriteSize * base.spriteScale - base.hitBoxOffset[1];
 
-
+            this.item[0].Update(enemies);
 
         }
 
@@ -91,11 +93,20 @@ namespace RValley.Entities
             // this for auto-attacks
 
         }
+        public override SpriteBatch Draw(SpriteBatch spriteBatch, MapManager mapManager) { 
+
+            this.item[0].Draw(spriteBatch, mapManager);
+
+            return base.Draw(spriteBatch, mapManager);
+        }
 
         public void PrimaryAttack(List<Enemies.Enemies> enemies, int[] targetPos, MapManager mapManager)
         {
             // this for manual attacks.
-            this.item[0].PrimaryAttack(enemies, targetPos, mapManager);
+
+            targetPos = mapManager.calculateRealPositionEntity(targetPos);
+
+            this.item[0].PrimaryAttack(enemies, targetPos, mapManager, this.FireBallSprites, base.position);
 
         }
 

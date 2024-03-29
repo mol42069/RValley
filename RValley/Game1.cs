@@ -214,8 +214,14 @@ namespace RValley
                     Content.Load<Texture2D>("UI/HealthBar/HBarHealth"),
                 };
 
+                Texture2D[] FireBallSprites = new Texture2D[2] 
+                {
+                    Content.Load<Texture2D>("Projectiles/Fire"),
+                    Content.Load<Texture2D>("Projectiles/FireBall")
+                };
+
                 // here we add those sprites
-                this.server.player[0].LoadContent(this.playerSprites[(int)enums.PlayerClass.KNIGHT], UiSprites);
+                this.server.player[0].LoadContent(this.playerSprites[(int)enums.PlayerClass.KNIGHT], UiSprites, FireBallSprites);
             }
         }
 

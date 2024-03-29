@@ -111,13 +111,13 @@ namespace RValley
             }
         }
 
-        public SpriteBatch Draw(SpriteBatch spriteBatch) {
+        public SpriteBatch Draw(SpriteBatch spriteBatch, MapManager mapManager) {
 
             // TODO: maybe add damage / hp / particles for the enemies.
 
             for (int i = 0; i < this.enemies.Count; i++)
             {
-                spriteBatch = this.enemies[i].Draw(spriteBatch);
+                spriteBatch = this.enemies[i].Draw(spriteBatch, mapManager);
             }
             
             return spriteBatch; 

@@ -38,12 +38,16 @@ namespace RValley.Client.UI
 
         public void LoadContent(Texture2D[] textures) {
             this.textures = textures;
-            this.HealthBarSizeMax = new int[2] { this.textures[(int)UIEnums.HealthBar.BG].Width - 10, this.textures[(int)UIEnums.HealthBar.BG].Height - 10 };
+            this.HealthBarSizeMax = new int[2] 
+            { 
+                this.textures[(int)UIEnums.HealthBar.BG].Width - 10,
+                this.textures[(int)UIEnums.HealthBar.BG].Height - 10 
+            };
             this.rectangles = new Rectangle[2]
-                {      
+            {      
                 new Rectangle(this.position[0], this.position[1], this.textures[(int)UIEnums.HealthBar.BG].Width, this.textures[(int)UIEnums.HealthBar.BG].Height),
                 new Rectangle(this.position[0] + 5, this.position[1] + 5, this.HealthBarSizeMax[0], this.HealthBarSizeMax[1])
-                };
+            };
         }
 
     }

@@ -15,7 +15,7 @@ namespace RValley.Entities
     public class Entities
     {
         public int[] position, drawPosition;
-         public float []lastMovement;
+        public float []lastMovement;
         protected int spriteSize;
         public Rectangle hitBox;   // if we decide to add headshots or other stuff we might want to add this here... or save those somewhere else.
         public Rectangle drawBox;
@@ -152,7 +152,7 @@ namespace RValley.Entities
             }
 
         }
-        public virtual SpriteBatch Draw(SpriteBatch spriteBatch){
+        public virtual SpriteBatch Draw(SpriteBatch spriteBatch,MapManager mapManager){
             try
             {
                 spriteBatch.Draw(this.spriteSheets[(int)this.entityState], this.drawBox, this.sourceRectangle[(int)this.entityState][this.aniCount], Color.White);

@@ -54,7 +54,7 @@ namespace RValley.Client
             
             // HERE WE RUN THINGS LIKE ANIMATION AS WELL AS THE PLAYER.
 
-            this.server.player[0].Update(this.server.mapManager);
+            this.server.player[0].Update(this.server.mapManager, this.server.mobManager.enemies);
             this.server.player[0].Movement(this.move, this.server.mapManager);
 
             // here we do the attacks.
@@ -203,10 +203,10 @@ namespace RValley.Client
 
             // HERE WE DRAW EVERITHING:
             spriteBatch = this.server.mapManager.Draw(spriteBatch);
-            spriteBatch = this.server.mobManager.Draw(spriteBatch);
+            spriteBatch = this.server.mobManager.Draw(spriteBatch, this.server.mapManager);
             for (int i = 0; i < this.server.player.Count; i++)
             {
-                spriteBatch = this.server.player[i].Draw(spriteBatch);
+                spriteBatch = this.server.player[i].Draw(spriteBatch, this.server.mapManager);
 
             }
 

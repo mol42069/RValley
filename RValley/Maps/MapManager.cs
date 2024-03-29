@@ -74,6 +74,14 @@ namespace RValley.Maps
             return drawPosition;
         }
 
+        public int[] calculateRealPositionEntity(int[] drawPosition)
+        { // whenever we update we want to send the positions of the entities here to get the pos at wich we want to draw them.
+
+            int[] realPosition = new int[2] { drawPosition[0] ^- this.position[0], drawPosition[1] - this.position[1] };
+
+            return realPosition;
+        }
+
         public SpriteBatch Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(this.backgroundSprite, this.mapRectangle, Color.White);

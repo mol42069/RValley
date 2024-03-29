@@ -1,4 +1,6 @@
-﻿using RValley.Entities.Enemies;
+﻿using Microsoft.Xna.Framework.Graphics;
+using RValley.Entities.Enemies;
+using RValley.Items.Projectiles;
 using RValley.Maps;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ namespace RValley.Items
     public class Item
     {
         protected int damage, attackSpeed, targetAmount, reach, weaponRange;
+        protected List<FireBall> projectiles;
 
         public Item() {
         
@@ -22,13 +25,26 @@ namespace RValley.Items
 
         }
 
+        public virtual void Update(List<Enemies> enemies)
+        {
+        
+        }
+
+
         public virtual void PrimaryAttack(List<Enemies> enemies) {
             // Auto attacks.
             
 
         }
 
-        public virtual void PrimaryAttack(List<Enemies> enemies, int[] targetPosition, MapManager mapManager) {
+        public virtual SpriteBatch Draw(SpriteBatch spriteBatch, MapManager mapManager)
+        {
+
+            
+            return spriteBatch;
+        }
+
+        public virtual void PrimaryAttack(List<Enemies> enemies, int[] targetPosition, MapManager mapManager, Texture2D[] projectileSprites, int[] playerPos) {
             // manual Attacks.
             List<Enemies> targets = this.findTargetsManual(enemies, targetPosition, mapManager);
 
@@ -36,7 +52,7 @@ namespace RValley.Items
             {
                 targets[i].TakeDamage(this.damage);
             }
-
+            targets.Clear();
 
         }
 
