@@ -9,6 +9,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using static RValley.Client.UI.UIEnums;
+using HealthBar = RValley.Client.UI.HealthBar;
 
 namespace RValley.Entities
 {
@@ -16,10 +18,10 @@ namespace RValley.Entities
     {
         public bool mouseReleased, mousePress;
         public List<Item> item;
-        public UI ui;
+        public HealthBar healthBar;
         public Player() 
         {
-            this.ui = new UI();
+            this.healthBar = new HealthBar();
 
             this.mouseReleased = false;
             this.mousePress = false;
@@ -50,7 +52,7 @@ namespace RValley.Entities
             base.animationTimer.Start();
             base.aniCount = 0;
             base.aniCountMax = 0;
-            base.aniTimerMax = new long[(int)enums.EntityState.MAX] {50, 50, 100}; // 0 = RUN | 1 = IDLE | 2 = DEATH | (see enums.EntityState)
+            base.aniTimerMax = new long[(int)enums.EntityState.MAX] {50, 50, 50}; // 0 = RUN | 1 = IDLE | 2 = DEATH | (see enums.EntityState)
             base.lastMovement = new float[2] {0, 0};
             this.direction = false;
 
@@ -58,9 +60,9 @@ namespace RValley.Entities
             this.item.Add( new Item());
 
         }
-        public void LoadContent(Texture2D[] spriteSheets, Texture2D[][] uiElements)
+        public void LoadContent(Texture2D[] spriteSheets, Texture2D[] uiHBElements)
         {
-            this.ui.LoadContent(uiElements);
+            this.healthBar.LoadContent(uiHBElements);
 
             base.LoadContent(spriteSheets);
         }

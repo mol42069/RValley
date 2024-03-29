@@ -208,8 +208,7 @@ namespace RValley
                 }
                 // here we load the UI sprites.
 
-                Texture2D[][] UiSprites = new Texture2D[1][];
-                UiSprites[0] = new Texture2D[2]
+                Texture2D[] UiSprites = new Texture2D[2]
                 {
                     Content.Load<Texture2D>("UI/HealthBar/HBarBg"),
                     Content.Load<Texture2D>("UI/HealthBar/HBarHealth"),

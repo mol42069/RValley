@@ -42,7 +42,7 @@ namespace RValley.Entities.Enemies
             base.animationTimer.Start();
             base.aniCount = aniCount;
             base.aniCountMax = 0;
-            base.aniTimerMax = new long[(int)enums.EntityState.MAX] { 50, 50, 100 }; // 0 = RUN | 1 = IDLE | 2 = DEATH | (see enums.EntityState)
+            base.aniTimerMax = new long[(int)enums.EntityState.MAX] { 50, 50, 100 }; // 0 = RUN | 1 = IDLE | 2 = PATTACK | (see enums.EntityState)
             base.lastMovement = new float[2] { 0, 0 };
             base.direction = false;
 

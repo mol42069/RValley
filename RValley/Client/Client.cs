@@ -210,7 +210,7 @@ namespace RValley.Client
 
             }
 
-            spriteBatch = this.server.player[0].ui.Draw(spriteBatch, this.server.player[0]);    // we have to make sure somewhere that player[0] is the player which is running on this machine
+            spriteBatch = this.server.player[0].healthBar.Draw(spriteBatch, this.server.player[0]);    // we have to make sure somewhere that player[0] is the player which is running on this machine
 
             return spriteBatch;
         }
