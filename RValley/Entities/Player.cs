@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RValley.Client.UI;
 using RValley.Items;
 using RValley.Maps;
 using System;
@@ -11,13 +12,15 @@ using System.Threading.Tasks;
 
 namespace RValley.Entities
 {
-    internal class Player : Entities
+    public class Player : Entities
     {
         public bool mouseReleased, mousePress;
         public List<Item> item;
-
+        public UI ui;
         public Player() 
         {
+            this.ui = new UI();
+
             this.mouseReleased = false;
             this.mousePress = false;
 
@@ -54,6 +57,12 @@ namespace RValley.Entities
             this.item = new List<Item>();    // we want this to be an List in case we want the player to have multiple weapons.
             this.item.Add( new Item());
 
+        }
+        public void LoadContent(Texture2D[] spriteSheets, Texture2D[][] uiElements)
+        {
+            this.ui.LoadContent(uiElements);
+
+            base.LoadContent(spriteSheets);
         }
 
         public override void Update(MapManager mapManager)

@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace RValley.Entities.Enemies
 {
-    internal class Enemies : Entities
+    public class Enemies : Entities
     {
         protected Player target;
-        public int distance;
+        public int distance, damage;
         public int[] targetOffset;
+        private bool alreadyAttacked;
         public Enemies() {
 
         }
@@ -41,6 +42,8 @@ namespace RValley.Entities.Enemies
                     base.drawPosition = mapManager.calculateDrawPositionEntity(this.position);
                     base.drawBox.X = base.drawPosition[0];
                     base.drawBox.Y = base.drawPosition[1];
+                    this.PrimaryAttack(player[0]);
+
                 }
                 else
                 {
@@ -156,11 +159,38 @@ namespace RValley.Entities.Enemies
         {
             // we use this for single target attacks.
 
-            // first we animate the attack windup
+            // first we animate the attack windup and when we are far enough we deal damage.
+            base.primaryAttackActive = true;
+            if (player.position[0] <= base.position[0])
+            {
+                base.direction = true;
+            }
+            else 
+            {
+                base.direction = false;
+            }
 
+            if (base.aniCount == base.aniCountMax - 2)      // - 1 can be changed to whatever we just want the damage to be delt before the animation is finished. 
+            {
+                if (!this.alreadyAttacked)
+                {
+                    this.alreadyAttacked = true;
+                    player.TakeDamage(this.damage);
+                }
+            }
+            else {
+                this.alreadyAttacked = false;
+            }
+
+
+        }
+
+        protected bool PrimaryAttackAnimation() {
 
             
 
+
+            return false;
         }
     }
 }

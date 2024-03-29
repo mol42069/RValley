@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace RValley.Items
 {
-    internal class Item
+    public class Item
     {
         protected int damage, attackSpeed, targetAmount, reach, weaponRange;
 
         public Item() {
         
             this.damage = 50;
-            this.targetAmount = 2;
+            this.targetAmount = 2000;
             this.reach = 800;
-            this.weaponRange = 50;
+            this.weaponRange = 200;
 
         }
 
@@ -47,7 +47,7 @@ namespace RValley.Items
             {
                 if (enemies[i].distance <= this.reach) 
                 {
-                    int[] drawHitBox = new int[2] { enemies[i].hitBox.X, enemies[i].hitBox.Y };
+                    int[] drawHitBox = new int[2] { enemies[i].hitBox.Center.X, enemies[i].hitBox.Center.Y };
                     drawHitBox = mapManager.calculateDrawPositionEntity(drawHitBox);
 
                     int mouseDistanceX = targetPosition[0] - drawHitBox[0];

@@ -25,6 +25,7 @@
   <ItemGroup>
     <Folder Include="Content\Entities\Enemies\Goblin\" />
     <Folder Include="Content\Entities\Friendlies\Knight\" />
+    <Folder Include="Content\UI\HealthBar\" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />

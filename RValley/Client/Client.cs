@@ -60,7 +60,7 @@ namespace RValley.Client
             // here we do the attacks.
 
 
-            if (this.server.player[0].primaryAttackActive && this.server.player[0].primaryAttackFinished)
+            if (!this.server.player[0].primaryAttackActive && this.server.player[0].primaryAttackFinished)
             {
                 this.server.player[0].primaryAttackFinished = false;
                 this.server.player[0].PrimaryAttack(this.server.mobManager.enemies, this.mousePosition, this.server.mapManager);
@@ -209,6 +209,8 @@ namespace RValley.Client
                 spriteBatch = this.server.player[i].Draw(spriteBatch);
 
             }
+
+            spriteBatch = this.server.player[0].ui.Draw(spriteBatch, this.server.player[0]);    // we have to make sure somewhere that player[0] is the player which is running on this machine
 
             return spriteBatch;
         }

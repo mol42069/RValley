@@ -15,6 +15,8 @@ namespace RValley.Entities.Enemies
 
             base.targetOffset = targetOffset;
 
+            base.damage = 5;
+
             base.speed = 10;
             base.hpMax = 100;
             base.hp = base.hpMax;

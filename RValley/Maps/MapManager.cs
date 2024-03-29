@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RValley.Maps
 {
-    internal class MapManager
+    public class MapManager
     {
 
         public Texture2D backgroundSprite;

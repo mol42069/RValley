@@ -206,8 +206,17 @@ namespace RValley
                         }                    
                     }
                 }
+                // here we load the UI sprites.
+
+                Texture2D[][] UiSprites = new Texture2D[1][];
+                UiSprites[0] = new Texture2D[2]
+                {
+                    Content.Load<Texture2D>("UI/HealthBar/HBarBg"),
+                    Content.Load<Texture2D>("UI/HealthBar/HBarHealth"),
+                };
+
                 // here we add those sprites
-                this.server.player[0].LoadContent(this.playerSprites[(int)enums.PlayerClass.KNIGHT]);
+                this.server.player[0].LoadContent(this.playerSprites[(int)enums.PlayerClass.KNIGHT], UiSprites);
             }
         }
 
@@ -228,6 +237,18 @@ namespace RValley
 
                 case enums.GameState.INGAME:
                     this.client.Update();
+                    int tempPlayerCount = this.server.player.Count;
+                    for (int i = 0; i < this.server.player.Count; i++) {
+
+                        if (this.server.player[i].hp <= 0) {
+                            tempPlayerCount--;
+                        }
+                    }
+                    if (tempPlayerCount == 0) 
+                    {
+                        this.gameState = enums.GameState.MENU;
+                    }
+
                     break;            
             }
 

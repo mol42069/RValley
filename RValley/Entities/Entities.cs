@@ -12,7 +12,7 @@ namespace RValley.Entities
 {
 
 // WE WANT TO DO EVERYTHING (WHAT WE DO IN CHILDREN) WE CAN IN THIS CLASS:
-    internal class Entities
+    public class Entities
     {
         public int[] position, drawPosition;
          public float []lastMovement;
