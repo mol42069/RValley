@@ -70,10 +70,7 @@ namespace RValley.Items.Projectiles
                 base.rectangle.Width = base.explosionSprites.Height;
                 base.rectangle.Height = base.explosionSprites.Height;            
             }
-
-
-            return base.Animation(); ;
+            return base.Animation();
         }
-
     }
 }

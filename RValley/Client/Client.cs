@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RValley.Client.UI;
 using RValley.Entities;
 using RValley.Maps;
 using RValley.Server;
@@ -201,11 +202,11 @@ namespace RValley.Client
         }
     
 
-        public SpriteBatch Draw(SpriteBatch spriteBatch) {
+        public SpriteBatch Draw(SpriteBatch spriteBatch, EnemyHealthBar enemyHealthBar) {
 
             // HERE WE DRAW EVERITHING:
             spriteBatch = this.server.mapManager.Draw(spriteBatch);
-            spriteBatch = this.server.mobManager.Draw(spriteBatch, this.server.mapManager);
+            spriteBatch = this.server.mobManager.Draw(spriteBatch, this.server.mapManager, enemyHealthBar);
             for (int i = 0; i < this.server.player.Count; i++)
             {
                 spriteBatch = this.server.player[i].Draw(spriteBatch, this.server.mapManager);

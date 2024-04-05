@@ -86,7 +86,6 @@ namespace RValley.Entities
             List <Player> list = new List<Player>();
             list.Add(this);
             this.item[0].Update(enemies, list);
-
         }
 
         public void PrimaryAttack(List<Entities> entities)

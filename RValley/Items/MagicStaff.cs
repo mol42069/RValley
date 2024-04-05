@@ -98,7 +98,6 @@ namespace RValley.Items
             {
                 spriteBatch = this.projectiles[i].Draw(spriteBatch, mapManager);
             }
-
             return spriteBatch;
         }
 

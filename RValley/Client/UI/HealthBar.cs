@@ -21,8 +21,6 @@ namespace RValley.Client.UI
         public HealthBar() {
             this.position = new int[2] { 100, 800 };
             
-
-        
         }
 
         public SpriteBatch Draw(SpriteBatch spriteBatch, Player player) {

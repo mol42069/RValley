@@ -11,6 +11,7 @@ using RValley.Entities;
 using RValley.Maps;
 using System.Numerics;
 using System.Threading;
+using RValley.Client.UI;
 
 namespace RValley
 {
@@ -20,7 +21,6 @@ namespace RValley
         private Texture2D[][][] sprites;
         private Rectangle[][][][] sourceRectangle;
         private Random rand;
-        
         public MobManager() {
             this.enemies = new List<Enemies> { };
             this.rand = new Random();
@@ -111,9 +111,11 @@ namespace RValley
             }
         }
 
-        public SpriteBatch Draw(SpriteBatch spriteBatch, MapManager mapManager) {
+        public SpriteBatch Draw(SpriteBatch spriteBatch, MapManager mapManager, EnemyHealthBar enemyHealthBar) {
 
             // TODO: maybe add damage / hp / particles for the enemies.
+
+            spriteBatch = enemyHealthBar.Draw(spriteBatch, this.enemies, mapManager);
 
             for (int i = 0; i < this.enemies.Count; i++)
             {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RValley.Client.UI;
 using RValley.Entities;
 using RValley.Maps;
 using System.Threading;
@@ -21,6 +22,8 @@ namespace RValley
         private Texture2D[][] playerSprites;
         public enums.GameState gameState;
         private int[] screenSize;
+        public EnemyHealthBar enemyHB;
+
 
 
         public Game1()
@@ -213,6 +216,13 @@ namespace RValley
                     Content.Load<Texture2D>("UI/HealthBar/HBarBg"),
                     Content.Load<Texture2D>("UI/HealthBar/HBarHealth"),
                 };
+                Texture2D[] EnemyUISprites = new Texture2D[2]
+                {
+                    Content.Load<Texture2D>("UI/EnemyHealthBar/EnemyHealthBarBG"),
+                    Content.Load<Texture2D>("UI/EnemyHealthBar/EnemyHealthBar")
+                };
+                this.enemyHB = new EnemyHealthBar();
+                this.enemyHB.LoadContent(EnemyUISprites);
 
                 Texture2D[] FireBallSprites = new Texture2D[2] 
                 {
@@ -289,7 +299,7 @@ namespace RValley
         private SpriteBatch InGameDraw(SpriteBatch spriteBatch) 
         {
 
-            spriteBatch = this.client.Draw(spriteBatch);
+            spriteBatch = this.client.Draw(spriteBatch, this.enemyHB);
 
             return spriteBatch;
         }
