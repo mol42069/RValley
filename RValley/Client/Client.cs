@@ -50,7 +50,6 @@ namespace RValley.Client
             this.stillAliveSignal = true;
             
             // here we update the mouse position.
-            var mouseState = Mouse.GetState();
             
             // HERE WE RUN THINGS LIKE ANIMATION AS WELL AS THE PLAYER.
 
@@ -66,6 +65,46 @@ namespace RValley.Client
                 this.server.player[0].PrimaryAttack(this.server.mobManager.enemies, this.mousePosition, this.server.mapManager);
 
             }
+
+            var mouseState = Mouse.GetState();
+
+
+
+            if (mouseState.LeftButton == ButtonState.Released)
+            {
+                this.mouseClicked = false;
+            }
+            if (mouseState.LeftButton == ButtonState.Pressed)
+            {
+                this.mouseClicked = true;
+            }
+
+
+
+            if (this.pastMouseClicked && !this.mouseClicked)
+            {
+                // here we want to do things which are on mouse-click release.
+
+                this.server.player[0].mouseReleased = true;
+                this.server.player[0].mousePress = false;
+            }
+            else if (this.mouseClicked)
+            {
+                // here we want to do things which are on mouse-click press
+
+                this.server.player[0].mouseReleased = false;
+                this.server.player[0].mousePress = true;
+            }
+            else
+            {
+                // we need to set those variables back to false.
+
+                this.server.player[0].mouseReleased = false;
+                this.server.player[0].mousePress = false;
+            }
+
+            this.pastMouseClicked = this.mouseClicked;
+
             if (this.mouseClicked || this.pastMouseClicked)
             {
                 this.mousePosition = new int[2] { mouseState.X, mouseState.Y };
@@ -78,6 +117,7 @@ namespace RValley.Client
                     this.server.player[0].direction = false;
                 }
                 this.server.player[0].primaryAttackActive = true;
+                
             }
 
             // we do the animations.
@@ -147,44 +187,7 @@ namespace RValley.Client
                         this.move[1] = 0;
                     }
 
-                    var mouseState = Mouse.GetState();
-                    
-
-
-                    if (mouseState.LeftButton == ButtonState.Released)
-                    {
-                        this.mouseClicked = false;
-                    }
-                    if (mouseState.LeftButton == ButtonState.Pressed)
-                    {
-                        this.mouseClicked = true;
-                    }
-
-                    
-
-                    if (this.pastMouseClicked && !this.mouseClicked)
-                    {
-                        // here we want to do things which are on mouse-click release.
-
-                        this.server.player[0].mouseReleased = true;
-                        this.server.player[0].mousePress = false;
-                    }
-                    else if (this.mouseClicked)
-                    {
-                        // here we want to do things which are on mouse-click press
-
-                        this.server.player[0].mouseReleased = false;
-                        this.server.player[0].mousePress = true;
-                    }
-                    else
-                    {
-                        // we need to set those variables back to false.
-
-                        this.server.player[0].mouseReleased = false;
-                        this.server.player[0].mousePress = false;
-                    }
-
-                    this.pastMouseClicked = this.mouseClicked;
+                   
 
                 } 
                 catch 

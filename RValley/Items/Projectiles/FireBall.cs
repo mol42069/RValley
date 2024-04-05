@@ -3,6 +3,7 @@ using RValley.Entities.Enemies;
 using RValley.Maps;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,30 +20,38 @@ namespace RValley.Items.Projectiles
             base.explosionSprites = sprite[0];
             base.createSourceRectangles();
             base.position = new int[2] {playerPos[0], playerPos[1]};
-            base.stopwatch = new System.Diagnostics.Stopwatch();
             base.aniCount = 0;
             base.aniTime = 50;
             base.exploding = false;
-            base.range = 500;
+            base.range = 10;
             base.speed = 20;
             base.getStaticMovement();
             base.rectangle = new Microsoft.Xna.Framework.Rectangle(base.position[0], base.position[1], base.sprite.Height, base.sprite.Height);
+
+            base.animationTimer = new Stopwatch();
+            base.animationTimer.Start();
+
         }
 
         public override bool Update(List<Enemies> enemies)          // return true if the projectile is to be deleted
         {
             if (!base.exploding)
             {
+                base.getStaticMovement();
+
                 base.position[0] += (int)(base.staticMovement[0] * base.speed);
                 base.position[1] += (int)(base.staticMovement[1] * base.speed);
 
-                int distx = base.position[0] - base.targetPos[0];
+                base.rectangle.X = base.position[0];
+                base.rectangle.Y = base.position[1];
+
+                int distx = base.rectangle.Center.X - base.targetPos[0];
                 if (distx < 0)
                 {
                     distx *= -1;
                 }
 
-                int disty = base.position[1] - base.targetPos[1];
+                int disty = base.rectangle.Center.Y - base.targetPos[1];
                 if (disty < 0)
                 {
                     disty *= -1;

@@ -23,6 +23,7 @@ namespace RValley.Items
         {
             base.PrimaryAttack(enemies);
         }
+
         public override void Update(List<Enemies> enemies) {
             for (int i = 0; i < projectiles.Count; i++)
             {
