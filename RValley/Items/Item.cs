@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using RValley.Entities;
 using RValley.Entities.Enemies;
 using RValley.Items.Projectiles;
 using RValley.Maps;
@@ -28,6 +29,10 @@ namespace RValley.Items
         public virtual void Update(List<Enemies> enemies)
         {
         
+        }
+        public virtual void Update(List<Enemies> enemies, List<Player> players)
+        {
+
         }
 
 

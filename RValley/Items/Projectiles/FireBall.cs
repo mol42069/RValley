@@ -14,7 +14,7 @@ namespace RValley.Items.Projectiles
     {
         public FireBall(int damage, int[] targetPos, Texture2D[] sprite, int[] playerPos)
         {
-            this.damage = damage;
+            this.damage = damage;       // Damage is done on each animation frame so the total damage is damage * aniCountMax
             this.targetPos = targetPos;
             base.sprite = sprite[1];
             base.explosionSprites = sprite[0];
@@ -23,7 +23,7 @@ namespace RValley.Items.Projectiles
             base.aniCount = 0;
             base.aniTime = 50;
             base.exploding = false;
-            base.range = 10;
+            base.range = 200;
             base.speed = 20;
             base.getStaticMovement();
             base.rectangle = new Microsoft.Xna.Framework.Rectangle(base.position[0], base.position[1], base.sprite.Height, base.sprite.Height);
@@ -58,7 +58,7 @@ namespace RValley.Items.Projectiles
                 }
                 int distance = distx + disty;
 
-                if (distance <= base.range)
+                if (distance <= (int)(base.range / 10))
                 {
                     base.exploding = true;
                     base.aniCount = 0;

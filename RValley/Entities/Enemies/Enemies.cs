@@ -23,6 +23,9 @@ namespace RValley.Entities.Enemies
         {
             if (mapManager.backgroundSprite != null)
             {
+                base.hitBox.X = base.position[0];
+                base.hitBox.Y = base.position[1];
+
                 if (this.target != null)
                 {
                     int distx = ((this.target.hitBox.Center.X + this.targetOffset[0]) - base.hitBox.Center.X);

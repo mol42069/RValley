@@ -24,7 +24,7 @@ namespace RValley.Items.Projectiles
         protected float[] staticMovement;
         protected Texture2D sprite, explosionSprites;
         protected Rectangle[] rectangles, expSourceRectangles;
-        protected Rectangle rectangle, drawRectangle;
+        public Rectangle rectangle, drawRectangle;
         protected bool exploding;                                               // also used for making the projectile stop moveing
         protected Stopwatch animationTimer;
 
@@ -94,10 +94,7 @@ namespace RValley.Items.Projectiles
                 this.animationTimer.Reset();
                 this.animationTimer.Start();
 
-                if (this.aniCount == this.aniCountMax && this.exploding)
-                {
-                    return true;
-                }
+                
 
                 if (this.aniCount + 1 > this.aniCountMax)
                 {
@@ -106,6 +103,15 @@ namespace RValley.Items.Projectiles
                 else
                 {
                     this.aniCount++;
+                }
+
+                if (this.aniCount == 1 && this.exploding)
+                {
+                    return true;
+                }
+                else if (this.exploding)
+                {
+                    return true;
                 }
                 return false;
             }

@@ -83,8 +83,9 @@ namespace RValley.Entities
 
             base.hitBox.Width = base.spriteSize * base.spriteScale - base.hitBoxOffset[0];
             base.hitBox.Height = base.spriteSize * base.spriteScale - base.hitBoxOffset[1];
-
-            this.item[0].Update(enemies);
+            List <Player> list = new List<Player>();
+            list.Add(this);
+            this.item[0].Update(enemies, list);
 
         }
 

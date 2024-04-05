@@ -103,9 +103,7 @@ namespace RValley.Client
                 this.server.player[0].mousePress = false;
             }
 
-            this.pastMouseClicked = this.mouseClicked;
-
-            if (this.mouseClicked || this.pastMouseClicked)
+            if (this.pastMouseClicked && !this.mouseClicked)
             {
                 this.mousePosition = new int[2] { mouseState.X, mouseState.Y };
                 if (this.mousePosition[0] < this.server.player[0].drawBox.Center.X)
@@ -117,8 +115,9 @@ namespace RValley.Client
                     this.server.player[0].direction = false;
                 }
                 this.server.player[0].primaryAttackActive = true;
-                
             }
+
+            this.pastMouseClicked = this.mouseClicked;
 
             // we do the animations.
             this.server.player[0].Animation();

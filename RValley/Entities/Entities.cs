@@ -39,7 +39,7 @@ namespace RValley.Entities
         {
             if (this.lastMovement != null)
             {
-
+                // HERE WE ENFORCE THE MAPLIMIT
                 if (this.hitBox.X < 0)
                 {
                     this.hitBox.X = 0;
@@ -57,6 +57,8 @@ namespace RValley.Entities
                 {
                     this.hitBox.Y = mapManager.backgroundSprite.Height - this.hitBox.Height;
                 }
+
+                // HERE WE DO THE ATTACKS
 
                 if (this.primaryAttackActive) 
                 {
@@ -81,6 +83,8 @@ namespace RValley.Entities
                     }
                     return;
                 }
+
+
 
                 if (this.lastMovement[0] < 0)
                 {
@@ -258,10 +262,13 @@ namespace RValley.Entities
                 {
                     this.aniCount--;
 
-                    if (this.aniCount < 0) {
+                    if (this.aniCount <= 0) {
                         this.aniCount = this.aniCountMax - 1;
-                        this.primaryAttackFinished = true;
-                        this.primaryAttackActive = false;
+                        if (this.primaryAttackActive)
+                        {
+                            this.primaryAttackFinished = true;
+                            this.primaryAttackActive = false;
+                        }
                     }
                 }
                 else 

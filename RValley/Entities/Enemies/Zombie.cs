@@ -17,7 +17,7 @@ namespace RValley.Entities.Enemies
 
             base.damage = 5;
 
-            base.speed = 10;
+            base.speed = 5;
             base.hpMax = 100;
             base.hp = base.hpMax;
             base.reach = 100;
