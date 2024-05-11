@@ -62,7 +62,17 @@ namespace RValley.Items.Projectiles
                 {
                     base.exploding = true;
                     base.aniCount = 0;
-                    base.aniCountMax = base.expSourceRectangles.Length - 1; ;
+                    base.aniCountMax = base.expSourceRectangles.Length - 1;
+                }
+
+                for (int i = 0; i < enemies.Count; i++) {
+
+                    if (this.range >= (Math.Abs(enemies[i].hitBox.Center.X - base.rectangle.Center.X) + Math.Abs(enemies[i].hitBox.Center.Y - base.rectangle.Center.Y))) {
+                        base.exploding = true;
+                        base.aniCount = 0;
+                        base.aniCountMax = base.expSourceRectangles.Length - 1;
+                    }
+
                 }
             }
             else 

@@ -50,7 +50,7 @@ namespace RValley.Items.Projectiles
 
             int distance = distx + disty;
 
-            if (distance <= range)
+            if (distance <= this.range)
             {
                 this.exploding = true;
             }
