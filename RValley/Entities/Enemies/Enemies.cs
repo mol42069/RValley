@@ -53,12 +53,14 @@ namespace RValley.Entities.Enemies
 
                     base.Movement(this.AI(player), mapManager);
 
+                    base.drawPosition = mapManager.calculateDrawPositionEntity(base.position);
+
                     base.drawBox.X = base.drawPosition[0];
                     base.drawBox.Y = base.drawPosition[1];
                 }
                 base.Update(mapManager);
 
-                base.drawPosition = mapManager.calculateDrawPositionEntity(base.position);
+               
             }
         }
 

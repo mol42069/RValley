@@ -21,18 +21,18 @@ namespace RValley.Client.UI
 
         public EnemyHealthBar()
         { 
-            this.maxSize = 190;
-            this.offset = 5;
-            this.rectangle = new Rectangle(0, 0, 200, 25);
-            this.baseRectangle = new Rectangle(this.offset, this.offset, this.maxSize, 25 - this.offset * 2);
+            this.maxSize = 146;
+            this.offset = 2;
+            this.baseRectangle = new Rectangle(0, 0, 150, 15);
+            this.rectangle = new Rectangle(this.offset, this.offset, this.maxSize, 15 - this.offset * 2);
         }
         public SpriteBatch Draw(SpriteBatch spriteBatch, List<Enemies> enemy, MapManager mapManager) 
         {
             for (int i = 0; i < enemy.Count; i++) {
                 int[] tempbr = new int[2] 
                 { 
-                    enemy[i].hitBox.X - this.baseRectangle.Width / 2,
-                    enemy[i].hitBox.Y - enemy[i].hitBox.Height / 2
+                    enemy[i].position[0] + 25,
+                    enemy[i].position[1] + enemy[i].drawBox.Height / 3
                 };
 
                 tempbr = mapManager.calculateDrawPositionEntity(tempbr);
@@ -44,8 +44,8 @@ namespace RValley.Client.UI
                 this.rectangle.Y = this.baseRectangle.Y + this.offset;
                 this.rectangle.Width = this.maxSize - (enemy[i].hpMax - enemy[i].hp);
 
-                spriteBatch.Draw(this.texture[0], this.rectangle, Color.White);
-                spriteBatch.Draw(this.texture[1], this.baseRectangle, Color.White);
+                spriteBatch.Draw(this.texture[0], this.baseRectangle, Color.White);
+                spriteBatch.Draw(this.texture[1], this.rectangle, Color.White);
 
             }
 

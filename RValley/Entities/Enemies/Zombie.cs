@@ -26,7 +26,7 @@ namespace RValley.Entities.Enemies
             
             base.drawPosition = base.position;
             base.spriteScale = 1;
-            base.hitBoxOffset = new int[2] {67 * base.spriteScale, 119 * base.spriteScale};
+            base.hitBoxOffset = new int[2] {50, 100};
 
             base.hitBox = new Rectangle(base.position[0] + base.hitBoxOffset[0], base.position[1] + base.hitBoxOffset[1], base.spriteSize - base.hitBoxOffset[0] * 2, base.spriteSize - base.hitBoxOffset[1]);
 
