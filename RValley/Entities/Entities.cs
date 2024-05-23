@@ -16,6 +16,7 @@ namespace RValley.Entities
     {
         public int[] position, drawPosition;
         public float []lastMovement;
+        public float spriteScale;
         protected int spriteSize;
         public Rectangle hitBox;   // if we decide to add headshots or other stuff we might want to add this here... or save those somewhere else.
         public Rectangle drawBox;
@@ -24,7 +25,7 @@ namespace RValley.Entities
         public int  aniCountMax, aniCount;   // animation variables
         protected long[] aniTimerMax;
         public enums.EntityState entityState;
-        public int speed, hp, hpMax, spriteScale, reach;
+        public int speed, hp, hpMax, reach;
         protected Stopwatch animationTimer;
         public bool direction, spriteRotation;               // true = left | false = right
         public int[] hitBoxOffset;                          // hitBoxOffset is to size and place the hitboxes correctly.
@@ -160,6 +161,14 @@ namespace RValley.Entities
             try
             {
                 spriteBatch.Draw(this.spriteSheets[(int)this.entityState], this.drawBox, this.sourceRectangle[(int)this.entityState][this.aniCount], Color.White);
+                
+                /*
+                Texture2D _texture;
+                _texture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
+                _texture.SetData(new Color[] { Color.Green });
+                spriteBatch.Draw(_texture, this.hitBox, Color.White);
+                */
+
             }
             catch 
             {
@@ -221,11 +230,18 @@ namespace RValley.Entities
         public void LoadContent(Texture2D[] spriteSheets, Rectangle[][] sourceRectangle) { 
             this.spriteSheets = spriteSheets;
             this.sourceRectangle = sourceRectangle;
-            this.spriteSize = this.spriteSheets[0].Height * this.spriteScale;
-            this.hitBox.Width = this.spriteSize * this.spriteScale - this.hitBoxOffset[0];
-            this.hitBox.Height = this.spriteSize * this.spriteScale - this.hitBoxOffset[1];
+            this.spriteSize = (int)(this.spriteSheets[0].Height * this.spriteScale);
 
-            this.drawBox = new Rectangle(this.position[0], this.position[1], this.spriteSize * this.spriteScale, this.spriteSize * this.spriteScale);
+            this.hitBoxOffset = new int[2] { (int)(56 * this.spriteScale), (int)((this.spriteSize / 2) * this.spriteScale) };
+            
+            this.hitBox = new Rectangle(this.position[0] + this.hitBoxOffset[0], this.position[1] + this.hitBoxOffset[1], this.spriteSize - this.hitBoxOffset[0] * 2, this.spriteSize - this.hitBoxOffset[1]);
+
+           
+            this.hitBox.Width = (int)((this.spriteSize - this.hitBoxOffset[0] * 2) * this.spriteScale);
+            this.hitBox.Height = (int)(this.spriteSize * this.spriteScale - this.hitBoxOffset[1]);
+
+
+            this.drawBox = new Rectangle(this.position[0], this.position[1], (int)(this.spriteSize * this.spriteScale), (int)(this.spriteSize * this.spriteScale));
 
         }
 
@@ -248,7 +264,7 @@ namespace RValley.Entities
                 }
             }
             // so we know where to Draw the sprite:
-            this.drawBox = new Rectangle(this.position[0], this.position[1], this.spriteSize * this.spriteScale, this.spriteSize * this.spriteScale);
+            this.drawBox = new Rectangle(this.position[0], this.position[1], (int)(this.spriteSize * this.spriteScale), (int)(this.spriteSize * this.spriteScale));
         }
 
         public void Animation() {

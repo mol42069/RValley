@@ -18,13 +18,12 @@ namespace RValley.Entities.Enemies
 
         }
 
-
         public virtual void Update(List<Player> player, MapManager mapManager) 
         {
             if (mapManager.backgroundSprite != null)
             {
-                base.hitBox.X = base.position[0];
-                base.hitBox.Y = base.position[1];
+                base.hitBox.X = base.position[0] + base.hitBoxOffset[0];
+                base.hitBox.Y = base.position[1] + base.hitBoxOffset[1];
 
                 if (this.target != null)
                 {
@@ -175,7 +174,7 @@ namespace RValley.Entities.Enemies
                 base.direction = false;
             }
 
-            if (base.aniCount == base.aniCountMax - 2)      // - 1 can be changed to whatever we just want the damage to be delt before the animation is finished. 
+            if ((base.aniCount == base.aniCountMax - 1 && base.entityState == enums.EntityState.PATTACK_R) || (base.aniCount == 0 && base.entityState == enums.EntityState.PATTACK_L))      // - 1 can be changed to whatever we just want the damage to be delt before the animation is finished. 
             {
                 if (!this.alreadyAttacked)
                 {
@@ -186,14 +185,9 @@ namespace RValley.Entities.Enemies
             else {
                 this.alreadyAttacked = false;
             }
-
-
         }
 
         protected bool PrimaryAttackAnimation() {
-
-            
-
 
             return false;
         }

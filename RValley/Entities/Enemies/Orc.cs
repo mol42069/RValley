@@ -1,39 +1,32 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RValley.Entities.Enemies
 {
-    internal class Zombie : Enemies             // For now these are goblins.
+    internal class Orc : Enemies
     {
-
-        public Zombie(int[]  startingPos, int[] targetOffset, int aniCount) {
-
+        public Orc(int[] startingPos,int[] targetOffset, int aniCount)
+        {
             base.targetOffset = targetOffset;
 
-            base.damage = 5;
+            base.damage = 50;
 
             base.speed = 5;
-            base.hpMax = 100;
+            base.hpMax = 500;
             base.hp = base.hpMax;
-            base.reach = 100;
+            base.reach = 200;
             base.distance = 1000000;
             base.position = startingPos;
-            
+
             base.drawPosition = base.position;
-            base.spriteScale = 1;
-            base.hitBoxOffset = new int[2] { (int)(56 * base.spriteScale), (int)(100 * base.spriteScale) };
+            base.spriteScale = 1.5f;
 
-            base.hitBox = new Rectangle(base.position[0] + base.hitBoxOffset[0], base.position[1] + base.hitBoxOffset[1], base.spriteSize - base.hitBoxOffset[0] * 2, base.spriteSize - base.hitBoxOffset[1]);
 
-            base.hitBox.Width = (int)(base.spriteSize * base.spriteScale - base.hitBoxOffset[0] * 2);
-            base.hitBox.Height = (int)(base.spriteSize * base.spriteScale - base.hitBoxOffset[1]);
 
-            
             base.aniCount = 0;
             base.entityState = enums.EntityState.IDLE_L;
 
@@ -47,6 +40,5 @@ namespace RValley.Entities.Enemies
             base.direction = false;
 
         }
-
     }
 }
