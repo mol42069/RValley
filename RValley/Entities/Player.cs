@@ -19,7 +19,7 @@ namespace RValley.Entities
         public bool mouseReleased, mousePress;
         public List<Item> item;
         public HealthBar healthBar;
-        public Texture2D[] FireBallSprites;
+        public Texture2D[] FireBallSprites, explosiveBallSprites;
         public Player() 
         {
             this.healthBar = new HealthBar();
@@ -61,11 +61,11 @@ namespace RValley.Entities
             this.item.Add( new MagicStaffFire());
 
         }
-        public void LoadContent(Texture2D[] spriteSheets, Texture2D[] uiHBElements, Texture2D[] ProjectileSprites)
+        public void LoadContent(Texture2D[] spriteSheets, Texture2D[] uiHBElements, Texture2D[] ProjectileSprites, Texture2D[] explosiveBallSprite)
         {
             this.FireBallSprites = ProjectileSprites;
             this.healthBar.LoadContent(uiHBElements);
-
+            this.explosiveBallSprites = explosiveBallSprite;
             base.LoadContent(spriteSheets);
         }
 
@@ -105,11 +105,19 @@ namespace RValley.Entities
             // this for manual attacks.
 
             targetPos = mapManager.calculateRealPositionEntity(targetPos);
-
-            this.item[0].PrimaryAttack(enemies, targetPos, mapManager, this.FireBallSprites, base.position);
+            int[] temp = { base.hitBox.Center.X, base.hitBox.Center.Y };
+            this.item[0].PrimaryAttack(enemies, targetPos, mapManager, this.explosiveBallSprites, base.position);
 
         }
 
+        public void AutoAttack(List<Enemies.Enemies> enemies, MapManager mapManager) {
+
+
+            this.item[0].AutoAttack(enemies, mapManager, this.FireBallSprites, base.position);
+
+        }
 
     }
 }
+
+

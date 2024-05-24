@@ -13,10 +13,10 @@ namespace RValley.Items
 {
     public class MagicStaffFire : Item
     {
-        protected List<FireBall> projectiles;
+        protected List<Projectile> projectiles;
         public MagicStaffFire() {
             
-            this.projectiles = new List<FireBall>();   
+            this.projectiles = new List<Projectile>();   
             
         }
 
@@ -29,6 +29,8 @@ namespace RValley.Items
             int distx = 0;
             int disty = 0;
             int distance = 0;
+        
+
 
             for (int i = 0; i < projectiles.Count; i++)
             {
@@ -48,7 +50,7 @@ namespace RValley.Items
                         }
                         distance = distx + disty;
 
-                        if (distance <= this.projectiles[i].range)
+                        if (distance <= this.projectiles[i].range && this.projectiles[i].aniCount == 2)
                         {
                             enemies[j].TakeDamage(this.projectiles[i].damage);
                         }
@@ -89,8 +91,36 @@ namespace RValley.Items
 
         public override void PrimaryAttack(List<Enemies> enemies, int[] targetPosition, MapManager mapManager, Texture2D[] sprite, int[] playerPos)
         {
-            this.projectiles.Add(new FireBall(10, targetPosition, sprite, playerPos));
+            this.projectiles.Add(new ExplosiveBall(50, targetPosition, sprite, playerPos));
         }
+
+        public override void AutoAttack(List<Enemies> enemies, MapManager mapManager, Texture2D[] sprite, int[] playerPos) {
+
+            int distance = 100000000;
+            int distPlayer = -1;
+
+
+            for (int i = 0; i < enemies.Count; i++) {
+
+                int tempDist = Math.Abs(Math.Abs(enemies[i].hitBox.Center.X) - Math.Abs(playerPos[0])) + Math.Abs(Math.Abs(enemies[i].hitBox.Center.Y) - Math.Abs(playerPos[1]));
+
+                if (tempDist < distance && tempDist > 500) {
+
+                    distPlayer = i;
+                    distance = tempDist;
+                
+                }
+            }
+
+            if (distance <= base.reach) {
+                int[] tempPos = { enemies[distPlayer].hitBox.Center.X, enemies[distPlayer].hitBox.Center.Y };
+                this.projectiles.Add(new FireBall(1, tempPos, sprite, playerPos));
+            
+            }
+
+        
+        }
+
 
         public override SpriteBatch Draw(SpriteBatch spriteBatch, MapManager mapManager) {
             if (this.projectiles == null) return spriteBatch;

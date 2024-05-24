@@ -230,8 +230,14 @@ namespace RValley
                     Content.Load<Texture2D>("Projectiles/FireBall")
                 };
 
+                Texture2D[] ExplosiveBallSprites = new Texture2D[2]
+                {
+                    Content.Load<Texture2D>("Projectiles/Explosions"),
+                    Content.Load<Texture2D>("Projectiles/FireBall")
+                };
+
                 // here we add those sprites
-                this.server.player[0].LoadContent(this.playerSprites[(int)enums.PlayerClass.KNIGHT], UiSprites, FireBallSprites);
+                this.server.player[0].LoadContent(this.playerSprites[(int)enums.PlayerClass.KNIGHT], UiSprites, FireBallSprites, ExplosiveBallSprites);
             }
         }
 

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using RValley.Entities;
 using RValley.Entities.Enemies;
-using RValley.Maps;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace RValley.Items.Projectiles
 {
-    public class FireBall : Projectile
+    public class ExplosiveBall : Projectile
     {
-        public FireBall(int damage, int[] targetPos, Texture2D[] sprite, int[] playerPos)
+        public ExplosiveBall(int damage, int[] targetPos, Texture2D[] sprite, int[] playerPos)
         {
             this.damage = damage;       // Damage is done on each animation frame so the total damage is damage * aniCountMax
             this.targetPos = targetPos;
             base.sprite = sprite[1];
             base.explosionSprites = sprite[0];
             base.createSourceRectangles();
-            base.position = new int[2] {playerPos[0], playerPos[1]};
+            base.position = new int[2] { playerPos[0], playerPos[1] };
             base.aniCount = 0;
             base.aniTime = 50;
             base.exploding = false;
@@ -59,16 +57,18 @@ namespace RValley.Items.Projectiles
                 }
                 int distance = distx + disty;
 
-                if ((distance <= (int)(base.range / 10)))
+                if (distance <= (int)(base.range / 10))
                 {
                     base.exploding = true;
                     base.aniCount = 0;
                     base.aniCountMax = base.expSourceRectangles.Length - 1;
                 }
 
-                for (int i = 0; i < enemies.Count; i++) {       // HERE WE MAKE THE FIREBALL EXPLODE WHEN ITS CLOSE TO AN ENEMY.
+                for (int i = 0; i < enemies.Count; i++)
+                {       // HERE WE MAKE THE FIREBALL EXPLODE WHEN ITS CLOSE TO AN ENEMY.
 
-                    if ((this.range >= (Math.Abs(enemies[i].hitBox.Center.X - base.rectangle.Center.X) + Math.Abs(enemies[i].hitBox.Center.Y - base.rectangle.Center.Y)))) {
+                    if (this.range >= (Math.Abs(enemies[i].hitBox.Center.X - base.rectangle.Center.X) + Math.Abs(enemies[i].hitBox.Center.Y - base.rectangle.Center.Y)))
+                    {
                         base.exploding = true;
                         base.aniCount = 0;
                         base.aniCountMax = base.expSourceRectangles.Length - 1;
@@ -76,10 +76,10 @@ namespace RValley.Items.Projectiles
 
                 }
             }
-            else 
+            else
             {
                 base.rectangle.Width = base.explosionSprites.Height;
-                base.rectangle.Height = base.explosionSprites.Height;            
+                base.rectangle.Height = base.explosionSprites.Height;
             }
             return base.Animation();
         }

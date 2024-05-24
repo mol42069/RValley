@@ -22,7 +22,7 @@ namespace RValley.Items
             this.damage = 50;
             this.targetAmount = 2000;
             this.reach = 800;
-            this.weaponRange = 200;
+            this.weaponRange = 200;     // <- must be the same as the range of the weapon
 
         }
 
@@ -40,6 +40,11 @@ namespace RValley.Items
             // Auto attacks.
             
 
+        }
+
+        public virtual void AutoAttack(List<Enemies> enemies, MapManager mapManager, Texture2D[] sprite, int[] playerPos) { 
+        
+        
         }
 
         public virtual SpriteBatch Draw(SpriteBatch spriteBatch, MapManager mapManager)

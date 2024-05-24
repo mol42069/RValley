@@ -67,6 +67,8 @@ namespace RValley.Client
 
             }
 
+            this.server.player[0].AutoAttack(this.server.mobManager.enemies, this.server.mapManager);
+
             var mouseState = Mouse.GetState();
 
 
