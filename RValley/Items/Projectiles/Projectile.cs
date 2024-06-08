@@ -120,10 +120,9 @@ namespace RValley.Items.Projectiles
 
         public SpriteBatch Draw(SpriteBatch spriteBatch, MapManager mapManager)
         {
-
             int[] drawPos = mapManager.calculateDrawPositionEntity(this.position);
 
-            this.drawRectangle = new Rectangle(drawPos[0], drawPos[1], this.sprite.Height, this.sprite.Height);
+            this.drawRectangle = new Rectangle(drawPos[0], drawPos[1], this.rectangle.Width, this.rectangle.Height);
 
             if (this.explosionSprites != null)
             {       // HERE WE DRAW THE EXPLODING PROJECTILES
@@ -134,6 +133,12 @@ namespace RValley.Items.Projectiles
                 }
                 else
                 {
+                    int[] scaledPos = { this.rectangle.Center.X - this.rectangle.Width / 2, this.rectangle.Center.Y - this.rectangle.Height / 2 };
+                    int[] drawPoss = mapManager.calculateDrawPositionEntity(scaledPos);
+
+                    this.drawRectangle.X = drawPoss[0];
+                    this.drawRectangle.Y = drawPoss[1];
+
                     spriteBatch.Draw(this.explosionSprites, this.drawRectangle, this.expSourceRectangles[this.aniCount], Color.White);
 
                 }

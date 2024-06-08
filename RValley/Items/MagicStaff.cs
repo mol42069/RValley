@@ -75,7 +75,7 @@ namespace RValley.Items
                         }
                         distance = distx + disty;
 
-                        if (distance <= this.projectiles[i].range)
+                        if (distance <= this.projectiles[i].range && this.projectiles.GetType() == typeof(ExplosiveBall))
                         {
                             players[z].TakeDamage(this.projectiles[i].damage);
                         }
@@ -104,7 +104,7 @@ namespace RValley.Items
 
                 int tempDist = Math.Abs(Math.Abs(enemies[i].hitBox.Center.X) - Math.Abs(playerPos[0])) + Math.Abs(Math.Abs(enemies[i].hitBox.Center.Y) - Math.Abs(playerPos[1]));
 
-                if (tempDist < distance && tempDist > 500) {
+                if (tempDist < distance ) {
 
                     distPlayer = i;
                     distance = tempDist;
@@ -114,7 +114,7 @@ namespace RValley.Items
 
             if (distance <= base.reach) {
                 int[] tempPos = { enemies[distPlayer].hitBox.Center.X, enemies[distPlayer].hitBox.Center.Y };
-                this.projectiles.Add(new FireBall(1, tempPos, sprite, playerPos));
+                this.projectiles.Add(new FireBall(10, tempPos, sprite, playerPos));
             
             }
 

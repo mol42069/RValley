@@ -100,6 +100,10 @@ namespace RValley
                                         contentTypePath += "Torch/";
                                         break;
 
+                                    case (int)enums.GoblinClass.TNT:
+                                        contentTypePath += "TNT/";
+                                        break;
+
                                     default:
                                         break;
                                 }

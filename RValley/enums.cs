@@ -16,6 +16,7 @@ namespace RValley
         public enum GoblinClass 
         {
             TORCH,
+            TNT,
             MAX
         }
         public enum SkeletonClass 

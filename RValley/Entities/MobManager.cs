@@ -92,7 +92,7 @@ namespace RValley
             // here we spawn the enemies for now we do this manualy so we need to change this when we have rooms.
             if (mapManager.backgroundSprite == null) return;
 
-            if (this.enemies.Count < 15) {
+            if (this.enemies.Count < 15 ) {
                 int x = this.rand.Next(0, 2);
                 // int[] newPos = new int[2] {this.rand.Next(0, 1000), this.rand.Next(0, 800) };
                 int[] newPos = new int[2] {this.rand.Next(0, mapManager.backgroundSprite.Width), this.rand.Next(0, mapManager.backgroundSprite.Height) };
@@ -105,7 +105,7 @@ namespace RValley
 
                      default:
                         this.enemies.Add(new Orc(newPos, new int[2] { this.rand.Next(-50, 50), this.rand.Next(-50, 50) }, this.rand.Next(0, 4)));
-                        this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH], this.sourceRectangle[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH]);
+                        this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TNT], this.sourceRectangle[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TNT]);
                         break;
                 }
             }

@@ -23,7 +23,7 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Entities\Enemies\Goblin\" />
+    <Folder Include="Content\Entities\Enemies\Goblin\TNT\" />
     <Folder Include="Content\Entities\Friendlies\Knight\" />
     <Folder Include="Content\UI\HealthBar\" />
   </ItemGroup>

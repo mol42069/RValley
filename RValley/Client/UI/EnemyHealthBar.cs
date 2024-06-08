@@ -42,7 +42,7 @@ namespace RValley.Client.UI
 
                 tempbr = mapManager.calculateDrawPositionEntity(tempbr);
 
-                this.baseRectangle.X = tempbr[0] + 15;
+                this.baseRectangle.X = tempbr[0];
                 this.baseRectangle.Y = tempbr[1];
 
                 this.rectangle.X = this.baseRectangle.X + this.offset;

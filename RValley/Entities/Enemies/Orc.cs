@@ -23,7 +23,7 @@ namespace RValley.Entities.Enemies
             base.position = startingPos;
 
             base.drawPosition = base.position;
-            base.spriteScale = 1.5f;
+            base.spriteScale = 1.0f;
 
 
 
@@ -38,6 +38,8 @@ namespace RValley.Entities.Enemies
             base.aniTimerMax = new long[(int)enums.EntityState.MAX] { 50, 50, 100 }; // 0 = RUN | 1 = IDLE | 2 = PATTACK | (see enums.EntityState)
             base.lastMovement = new float[2] { 0, 0 };
             base.direction = false;
+
+            base.hitBoxOffset = new int[2] { 60, 112 };
 
         }
     }

@@ -20,9 +20,13 @@ namespace RValley.Entities
         public List<Item> item;
         public HealthBar healthBar;
         public Texture2D[] FireBallSprites, explosiveBallSprites;
+        public int autoAttackCounter, autoAttackCounterMax;
         public Player() 
         {
             this.healthBar = new HealthBar();
+
+            this.autoAttackCounter = 0;
+            this.autoAttackCounterMax = 10;
 
             this.mouseReleased = false;
             this.mousePress = false;
@@ -112,9 +116,12 @@ namespace RValley.Entities
 
         public void AutoAttack(List<Enemies.Enemies> enemies, MapManager mapManager) {
 
-
-            this.item[0].AutoAttack(enemies, mapManager, this.FireBallSprites, base.position);
-
+            this.autoAttackCounter++;
+            if (this.autoAttackCounter > this.autoAttackCounterMax)
+            {
+                this.item[0].AutoAttack(enemies, mapManager, this.FireBallSprites, base.position);
+                this.autoAttackCounter = 0;
+            }
         }
 
     }
