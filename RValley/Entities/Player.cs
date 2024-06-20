@@ -119,7 +119,7 @@ namespace RValley.Entities
             this.autoAttackCounter++;
             if (this.autoAttackCounter > this.autoAttackCounterMax)
             {
-                this.item[0].AutoAttack(enemies, mapManager, this.FireBallSprites, base.position);
+                //this.item[0].AutoAttack(enemies, mapManager, this.FireBallSprites, base.position);
                 this.autoAttackCounter = 0;
             }
         }

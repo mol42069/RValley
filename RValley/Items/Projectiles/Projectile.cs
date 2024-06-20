@@ -119,8 +119,9 @@ namespace RValley.Items.Projectiles
         }
 
         public SpriteBatch Draw(SpriteBatch spriteBatch, MapManager mapManager)
-        {
-            int[] drawPos = mapManager.calculateDrawPositionEntity(this.position);
+        {   
+            int[] tempPos = new int[2] {this.rectangle.X, this.rectangle.Y};
+            int[] drawPos = mapManager.calculateDrawPositionEntity(tempPos);
 
             this.drawRectangle = new Rectangle(drawPos[0], drawPos[1], this.rectangle.Width, this.rectangle.Height);
 
@@ -133,7 +134,7 @@ namespace RValley.Items.Projectiles
                 }
                 else
                 {
-                    int[] scaledPos = { this.rectangle.Center.X - this.rectangle.Width / 2, this.rectangle.Center.Y - this.rectangle.Height / 2 };
+                    int[] scaledPos = { this.rectangle.X, this.rectangle.Y };
                     int[] drawPoss = mapManager.calculateDrawPositionEntity(scaledPos);
 
                     this.drawRectangle.X = drawPoss[0];
