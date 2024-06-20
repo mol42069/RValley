@@ -57,6 +57,39 @@ namespace RValley.Items.Projectiles
 
             return false;
         }
+
+        public virtual void Update() {
+            int distx = this.position[0] - this.targetPos[0];
+            if (distx < 0)
+            {
+                distx *= -1;
+            }
+
+            int disty = this.position[1] - this.targetPos[1];
+            if (disty < 0)
+            {
+                disty *= -1;
+            }
+
+            int distance = distx + disty;
+
+            if (distance <= this.range)
+            {
+                this.exploding = true;
+            }
+
+            this.getStaticMovement();
+
+            this.position[0] += (int)(this.staticMovement[0] * (float)this.speed);
+            this.position[1] += (int)(this.staticMovement[1] * (float)this.speed);
+            this.rectangle.X = this.position[0];
+            this.rectangle.Y = this.position[1];
+
+            return;
+
+
+
+        }
         protected void getStaticMovement()
         {
 

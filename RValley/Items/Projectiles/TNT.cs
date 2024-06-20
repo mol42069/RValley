@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace RValley.Items.Projectiles
 {
-    public class ExplosiveBall : Projectile
+    internal class TNT : Projectile
     {
-        public ExplosiveBall(int damage, int[] targetPos, Texture2D[] sprite, int[] playerPos)
+        public TNT(int damage, int[] targetPos, Texture2D[] sprite, int[] playerPos)
         {
             this.damage = damage;       // Damage is done on ani frame 1
             this.targetPos = targetPos;
-            base.sprite = sprite[1];
-            base.explosionSprites = sprite[0];
+            base.sprite = sprite[0];
+            base.explosionSprites = sprite[1];
             base.createSourceRectangles();
             base.position = new int[2] { playerPos[0], playerPos[1] };
             base.aniCount = 0;
             base.aniTime = 50;
             base.exploding = false;
             base.range = 200;
-            base.speed = 20;
+            base.speed = 10;
             base.getStaticMovement();
             base.rectangle = new Microsoft.Xna.Framework.Rectangle(base.position[0], base.position[1], base.sprite.Height, base.sprite.Height);
 
@@ -86,12 +86,14 @@ namespace RValley.Items.Projectiles
                     base.rectangle.Width = base.explosionSprites.Height * 4;
                     base.rectangle.Height = base.explosionSprites.Height * 4;
                 }
-                
-               
+
+
 
 
             }
             return base.Animation();
         }
+
+
     }
 }

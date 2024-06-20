@@ -12,6 +12,7 @@ using RValley.Maps;
 using System.Numerics;
 using System.Threading;
 using RValley.Client.UI;
+using RValley.Items.Projectiles;
 
 namespace RValley
 {
@@ -19,6 +20,7 @@ namespace RValley
     {
         public List<Entities.Enemies.Enemies> enemies;
         private Texture2D[][][] sprites;
+        private Texture2D[][] projectileSprites;
         private Rectangle[][][][] sourceRectangle;
         private Random rand;
         public MobManager() {
@@ -67,6 +69,11 @@ namespace RValley
             this.CreateSourceRectangles();
             return;
         }
+        public void LoadProjContent(Texture2D[][] sprites)
+        {
+            this.projectileSprites = sprites;
+            return;
+        }
 
         public void ServerSideUpdate(List<Player> player, MapManager mapManager)
         {
@@ -89,11 +96,15 @@ namespace RValley
         }
 
         private void Spawn(List<Player> player, MapManager mapManager) {
+
+            if (this.projectileSprites == null) return;
+
             // here we spawn the enemies for now we do this manualy so we need to change this when we have rooms.
             if (mapManager.backgroundSprite == null) return;
 
             if (this.enemies.Count < 15 ) {
-                int x = this.rand.Next(0, 2);
+                //int x = this.rand.Next(0, 2);
+                int x = 1;
                 // int[] newPos = new int[2] {this.rand.Next(0, 1000), this.rand.Next(0, 800) };
                 int[] newPos = new int[2] {this.rand.Next(0, mapManager.backgroundSprite.Width), this.rand.Next(0, mapManager.backgroundSprite.Height) };
                 switch (x) {
@@ -103,7 +114,15 @@ namespace RValley
                         this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH], this.sourceRectangle[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH]);
                         break;
 
-                     default:
+                    case 1:
+                        this.enemies.Add(new TNTGoblin(newPos, new int[2] { this.rand.Next(-50, 50), this.rand.Next(-50, 50) }, this.rand.Next(0, 4)));
+                        this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TNT], this.sourceRectangle[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TORCH]);
+                        Texture2D[][] enemyProjSprite = new Texture2D[1][] {this.projectileSprites[(int)ProjEnums.Projectile.TNT] };
+                        this.enemies[this.enemies.Count - 1].LoadProjectileContent(this.projectileSprites);
+
+                        break;
+
+                    default:
                         this.enemies.Add(new Orc(newPos, new int[2] { this.rand.Next(-50, 50), this.rand.Next(-50, 50) }, this.rand.Next(0, 4)));
                         this.enemies[this.enemies.Count - 1].LoadContent(this.sprites[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TNT], this.sourceRectangle[(int)enums.EnemyType.GOBLIN][(int)enums.GoblinClass.TNT]);
                         break;

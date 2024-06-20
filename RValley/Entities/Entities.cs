@@ -21,6 +21,7 @@ namespace RValley.Entities
         public Rectangle hitBox;   // if we decide to add headshots or other stuff we might want to add this here... or save those somewhere else.
         public Rectangle drawBox;
         public Texture2D[] spriteSheets;
+        public Texture2D[][] projectileSprites;
         protected Rectangle[][] sourceRectangle;
         public int  aniCountMax, aniCount;   // animation variables
         protected long[] aniTimerMax;
@@ -249,6 +250,12 @@ namespace RValley.Entities
             this.spriteSheets = spriteSheets;
             this.CreatesourceRectangles();
         }
+
+        public void LoadProjectileContent(Texture2D[][] spriteSheets)
+        {
+            this.projectileSprites = spriteSheets;
+        }
+
 
         private void CreatesourceRectangles() 
         {

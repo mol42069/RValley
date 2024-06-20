@@ -1,4 +1,6 @@
-﻿using RValley.Maps;
+﻿using Microsoft.Xna.Framework.Graphics;
+using RValley.Items.Projectiles;
+using RValley.Maps;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,13 +15,25 @@ namespace RValley.Entities.Enemies
         protected Player target;
         public int distance, damage;
         public int[] targetOffset;
-        private bool alreadyAttacked;
+        protected bool alreadyAttacked;
+
+        public List<Projectile> projectiles;
+
         public Enemies() {
 
         }
 
         public virtual void Update(List<Player> player, MapManager mapManager) 
         {
+            if (this.projectiles != null) {
+                for (int i = 0; i < this.projectiles.Count; i++)
+                {
+
+                    this.projectiles[i].Update();
+
+                }
+            }
+
             if (mapManager.backgroundSprite != null)
             {
                 base.hitBox.X = base.position[0] + base.hitBoxOffset[0];
@@ -159,7 +173,7 @@ namespace RValley.Entities.Enemies
             // we use this of AOE attacks
             
         }
-        public void PrimaryAttack(Player player)
+        public virtual void PrimaryAttack(Player player)
         {
             // we use this for single target attacks.
 
@@ -187,9 +201,21 @@ namespace RValley.Entities.Enemies
             }
         }
 
+        public override SpriteBatch Draw(SpriteBatch spriteBatch, MapManager mapManager)
+        {
+            if (this.projectiles != null) {
+                for (int i = 0; i < this.projectiles.Count; i++)
+                {
+                    spriteBatch = this.projectiles[i].Draw(spriteBatch, mapManager);
+                }
+            }
+            return base.Draw(spriteBatch, mapManager);
+        }
+    }
+    /*
         protected bool PrimaryAttackAnimation() {
 
             return false;
-        }
-    }
+        }*/
+    
 }

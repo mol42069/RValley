@@ -26,7 +26,7 @@ namespace RValley.Entities
             this.healthBar = new HealthBar();
 
             this.autoAttackCounter = 0;
-            this.autoAttackCounterMax = 10;
+            this.autoAttackCounterMax = 30;
 
             this.mouseReleased = false;
             this.mousePress = false;
@@ -119,7 +119,7 @@ namespace RValley.Entities
             this.autoAttackCounter++;
             if (this.autoAttackCounter > this.autoAttackCounterMax)
             {
-                //this.item[0].AutoAttack(enemies, mapManager, this.FireBallSprites, base.position);
+                this.item[0].AutoAttack(enemies, mapManager, this.FireBallSprites, base.position);
                 this.autoAttackCounter = 0;
             }
         }
