@@ -23,6 +23,7 @@ namespace RValley
         private Texture2D[][] projectileSprites;
         private Rectangle[][][][] sourceRectangle;
         private Random rand;
+       
         public MobManager() {
             this.enemies = new List<Enemies> { };
             this.rand = new Random();
@@ -102,11 +103,13 @@ namespace RValley
             // here we spawn the enemies for now we do this manualy so we need to change this when we have rooms.
             if (mapManager.backgroundSprite == null) return;
 
-            if (this.enemies.Count < 15 ) {
-                //int x = this.rand.Next(0, 2);
-                int x = 1;
-                // int[] newPos = new int[2] {this.rand.Next(0, 1000), this.rand.Next(0, 800) };
+            if (this.enemies.Count < 20 ) {
+                int x = this.rand.Next(0, 2);
+                x = 1;
+                //int[] newPos = new int[2] {this.rand.Next(0, 1000), this.rand.Next(0, 800) };
                 int[] newPos = new int[2] {this.rand.Next(0, mapManager.backgroundSprite.Width), this.rand.Next(0, mapManager.backgroundSprite.Height) };
+
+
                 switch (x) {
                     
                     case 0:
@@ -143,6 +146,8 @@ namespace RValley
             
             return spriteBatch; 
         }
+
+
         public void Animation() {
             for (int i = 0; i < this.enemies.Count; i++) {
                 this.enemies[i].Animation();

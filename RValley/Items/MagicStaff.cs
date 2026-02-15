@@ -114,7 +114,7 @@ namespace RValley.Items
 
             if (distance <= base.reach) {
                 int[] tempPos = { enemies[distPlayer].hitBox.Center.X, enemies[distPlayer].hitBox.Center.Y };
-                this.projectiles.Add(new FireBall(10, tempPos, sprite, playerPos));
+                this.projectiles.Add(new FireBall(1000, tempPos, sprite, playerPos));
             
             }
 

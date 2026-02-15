@@ -72,6 +72,7 @@ namespace RValley.Items.Projectiles
                         base.exploding = true;
                         base.aniCount = 0;
                         base.aniCountMax = base.expSourceRectangles.Length - 1;
+                        enemies[i].TakeDamage(this.damage);
                     }
 
                 }
@@ -85,11 +86,7 @@ namespace RValley.Items.Projectiles
 
                     base.rectangle.Width = base.explosionSprites.Height * 4;
                     base.rectangle.Height = base.explosionSprites.Height * 4;
-                }
-                
-               
-
-
+                }      
             }
             return base.Animation();
         }

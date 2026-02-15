@@ -156,7 +156,6 @@ namespace RValley.Entities
                     }
                 }
             }
-
         }
         public virtual SpriteBatch Draw(SpriteBatch spriteBatch,MapManager mapManager){
             try

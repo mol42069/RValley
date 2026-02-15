@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using RValley.Entities;
 using RValley.Entities.Enemies;
 using System;
 using System.Collections.Generic;
@@ -11,19 +12,21 @@ namespace RValley.Items.Projectiles
 {
     internal class TNT : Projectile
     {
+        bool hit;
         public TNT(int damage, int[] targetPos, Texture2D[] sprite, int[] playerPos)
         {
             this.damage = damage;       // Damage is done on ani frame 1
-            this.targetPos = targetPos;
+            base.targetPos = targetPos;
             base.sprite = sprite[0];
             base.explosionSprites = sprite[1];
             base.createSourceRectangles();
             base.position = new int[2] { playerPos[0], playerPos[1] };
             base.aniCount = 0;
-            base.aniTime = 50;
+            base.aniTime = 100;
             base.exploding = false;
+            this.hit = false;
             base.range = 200;
-            base.speed = 10;
+            base.speed = 5;
             base.getStaticMovement();
             base.rectangle = new Microsoft.Xna.Framework.Rectangle(base.position[0], base.position[1], base.sprite.Height, base.sprite.Height);
 
@@ -32,49 +35,11 @@ namespace RValley.Items.Projectiles
 
         }
 
-        public override bool Update(List<Enemies> enemies)          // return true if the projectile is to be deleted
+        public override bool Update(List<Player> enti)          // return true if the projectile is to be deleted
         {
             if (!base.exploding)
             {
-                base.getStaticMovement();
-
-                base.position[0] += (int)(base.staticMovement[0] * base.speed);
-                base.position[1] += (int)(base.staticMovement[1] * base.speed);
-
-                base.rectangle.X = base.position[0];
-                base.rectangle.Y = base.position[1];
-
-                int distx = base.rectangle.Center.X - base.targetPos[0];
-                if (distx < 0)
-                {
-                    distx *= -1;
-                }
-
-                int disty = base.rectangle.Center.Y - base.targetPos[1];
-                if (disty < 0)
-                {
-                    disty *= -1;
-                }
-                int distance = distx + disty;
-
-                if (distance <= (int)(base.range / 10))
-                {
-                    base.exploding = true;
-                    base.aniCount = 0;
-                    base.aniCountMax = base.expSourceRectangles.Length - 1;
-                }
-
-                for (int i = 0; i < enemies.Count; i++)
-                {       // HERE WE MAKE THE FIREBALL EXPLODE WHEN ITS CLOSE TO AN ENEMY.
-
-                    if (this.range / 3 >= (Math.Abs(enemies[i].hitBox.Center.X - base.rectangle.Center.X) + Math.Abs(enemies[i].hitBox.Center.Y - base.rectangle.Center.Y)))
-                    {
-                        base.exploding = true;
-                        base.aniCount = 0;
-                        base.aniCountMax = base.expSourceRectangles.Length - 1;
-                    }
-
-                }
+                base.Update();
             }
             else
             {
@@ -86,11 +51,19 @@ namespace RValley.Items.Projectiles
                     base.rectangle.Width = base.explosionSprites.Height * 4;
                     base.rectangle.Height = base.explosionSprites.Height * 4;
                 }
-
-
-
-
+                for (int i = 0; i < enti.Count; i++) {
+                    if (this.range >= base.rectangle.Center.X - enti[i].hitBox.Center.X + base.rectangle.Center.Y - enti[i].hitBox.Center.Y && !this.hit) {
+                        enti[i].TakeDamage(this.damage);
+                        base.exploding = true;
+                        base.aniCount = 0;
+                        base.aniCountMax = base.expSourceRectangles.Length - 1;
+                    }
+                    
+                }
             }
+
+            //base.Update();
+
             return base.Animation();
         }
 

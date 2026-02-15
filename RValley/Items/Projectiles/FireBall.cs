@@ -24,7 +24,7 @@ namespace RValley.Items.Projectiles
             base.aniCount = 0;
             base.aniTime = 50;
             base.exploding = false;
-            base.range = 200;
+            base.range = 20;
             base.speed = 20;
             base.getStaticMovement();
             base.rectangle = new Microsoft.Xna.Framework.Rectangle(base.position[0], base.position[1], base.sprite.Height, base.sprite.Height);
@@ -72,8 +72,8 @@ namespace RValley.Items.Projectiles
                         base.exploding = true;
                         base.aniCount = 0;
                         base.aniCountMax = base.expSourceRectangles.Length - 1;
+                        enemies[i].TakeDamage(this.damage);
                     }
-
                 }
             }
             else 

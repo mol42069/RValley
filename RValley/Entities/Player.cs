@@ -39,8 +39,8 @@ namespace RValley.Entities
             base.hp = base.hpMax;
             base.spriteScale = 1;
 
-            base.position = new int[2] {200, 200};base.drawPosition = base.position;
-            
+            base.position = new int[2] {200, 200};
+            base.drawPosition = base.position;            
             
             base.hitBoxOffset = new int[2] { (int)(56 * base.spriteScale), (int)(67 * base.spriteScale) };
 
