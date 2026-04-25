@@ -29,7 +29,7 @@ namespace RValley.Entities.Enemies
             base.drawPosition = base.position;
             base.spriteScale = 1.0f;
             base.projectiles = new List<Items.Projectiles.Projectile>();
-            this.attackFrequency = 40;
+            this.attackFrequency = 100;
             this.lAttack = 0;
 
             base.aniCount = 0;

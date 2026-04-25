@@ -67,16 +67,16 @@ namespace RValley.Maps
             this.mapRectangle = new Rectangle(this.position[0], this.position[1], this.backgroundSprite.Width, this.backgroundSprite.Height);
         }
 
-        public int[] calculateDrawPositionEntity(int[] realPosition) { // whenever we update we want to send the positions of the entities here to get the pos at wich we want to draw them.
-
+        // whenever we update we want to send the positions of the entities here to get the pos at wich we want to draw them.
+        public int[] calculateDrawPositionEntity(int[] realPosition) { 
             int[] drawPosition = new int[2] {realPosition[0] + this.position[0], realPosition[1] + this.position[1] };
 
             return drawPosition;
         }
 
+        // whenever we update we want to send the positions of the entities here to get the pos at wich we want to draw them.
         public int[] calculateRealPositionEntity(int[] drawPosition)
-        { // whenever we update we want to send the positions of the entities here to get the pos at wich we want to draw them.
-
+        { 
             int[] realPosition = new int[2] { drawPosition[0] - this.position[0], drawPosition[1] - this.position[1] };
 
             return realPosition;

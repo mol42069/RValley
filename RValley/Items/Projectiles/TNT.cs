@@ -25,7 +25,7 @@ namespace RValley.Items.Projectiles
             base.aniTime = 100;
             base.exploding = false;
             this.hit = false;
-            base.range = 200;
+            base.range = 50;
             base.speed = 5;
             base.getStaticMovement();
             base.rectangle = new Microsoft.Xna.Framework.Rectangle(base.position[0], base.position[1], base.sprite.Height, base.sprite.Height);
@@ -35,28 +35,36 @@ namespace RValley.Items.Projectiles
 
         }
 
-        public override bool Update(List<Player> enti)          // return true if the projectile is to be deleted
+        public override bool Update(List<Player> enti)          
         {
+            // here we check if the projectile is exploding or not. If it is not exploding we just update the projectile like normal,
+            // but if it is exploding we check if the animation is done and if we need to change the hitbox of the explosion.
             if (!base.exploding)
             {
                 base.Update();
             }
             else
             {
-                if (base.rectangle.Width != base.explosionSprites.Height * 4)
+                // here we check if the explosion animation is done and if we need to change the hitbox of the explosion.
+                if (base.rectangle.Width != base.explosionSprites.Height * 2)
                 {
-                    base.rectangle.X = base.rectangle.Center.X - (base.rectangle.Width * 4 / 2);
-                    base.rectangle.Y = base.rectangle.Center.Y - (base.rectangle.Height * 4 / 2);
+                    base.rectangle.X = base.rectangle.X - (base.rectangle.Width * 2);
+                    base.rectangle.Y = base.rectangle.Y - (base.rectangle.Height * 2);
 
-                    base.rectangle.Width = base.explosionSprites.Height * 4;
-                    base.rectangle.Height = base.explosionSprites.Height * 4;
+                    base.position[0] = base.rectangle.X;
+                    base.position[1] = base.rectangle.Y;
+
+                    base.rectangle.Width = base.explosionSprites.Height * 2;
+                    base.rectangle.Height = base.explosionSprites.Height * 2;
                 }
+                // here we check if the animation is done and if we need to deal damage to the entities in range.
                 for (int i = 0; i < enti.Count; i++) {
-                    if (this.range >= base.rectangle.Center.X - enti[i].hitBox.Center.X + base.rectangle.Center.Y - enti[i].hitBox.Center.Y && !this.hit) {
+                    if (this.range <= base.rectangle.Center.X - enti[i].hitBox.Center.X + base.rectangle.Center.Y - enti[i].hitBox.Center.Y && !this.hit) {
                         enti[i].TakeDamage(this.damage);
                         base.exploding = true;
                         base.aniCount = 0;
                         base.aniCountMax = base.expSourceRectangles.Length - 1;
+                        this.hit = true;
                     }
                     
                 }

@@ -35,6 +35,8 @@ namespace RValley.Items.Projectiles
 
         public virtual bool Update(List<Enemies> enemies)
         {
+            // here we check if the projectile is exploding or not.
+            // If it is not exploding we just update the projectile like normal,
 
             int distx = this.position[0] - this.targetPos[0];
             if (distx < 0)
@@ -50,7 +52,7 @@ namespace RValley.Items.Projectiles
 
             int distance = distx + disty;
 
-            if (distance <= this.range)
+            if (distance <= this.range /2)
             {
                 this.exploding = true;
             }
@@ -103,7 +105,7 @@ namespace RValley.Items.Projectiles
 
             int distance = distx + disty;
 
-            if (distance <= this.range)
+            if (distance <= this.range / 10)
             {
                 this.exploding = true;
             }
