@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -64,7 +65,6 @@ namespace RValley.Entities
 
                 if (this.primaryAttackActive) 
                 {
-
                     if (this.direction)
                     {
                         if (this.entityState != enums.EntityState.PATTACK_L)
@@ -125,14 +125,12 @@ namespace RValley.Entities
                 {
                     if (this.direction)
                     {
-
                         this.entityState = enums.EntityState.IDLE_L;
                         this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
                         this.aniCount = this.aniCountMax - 1;
                     }
                     else
                     {
-
                         this.entityState = enums.EntityState.IDLE_R;
                         this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
                         this.aniCount = 0;
@@ -140,16 +138,15 @@ namespace RValley.Entities
                 }
                 else if (!(this.entityState == enums.EntityState.RUN_R || this.entityState == enums.EntityState.RUN_L) && (this.lastMovement[0] != 0 || this.lastMovement[1] != 0))
                 {
+                    //  Here we check if we are not already in the right state and if we are actually moving, if so we switch the state and set the correct aniCountMax.
                     if (this.direction)
                     {
-
                         this.entityState = enums.EntityState.RUN_L;
                         this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
                         this.aniCount = this.aniCountMax - 1;
                     }
                     else
                     {
-
                         this.entityState = enums.EntityState.RUN_R;
                         this.aniCountMax = this.sourceRectangle[(int)this.entityState].Length;
                         this.aniCount = 0;
@@ -180,7 +177,7 @@ namespace RValley.Entities
 
         public virtual void Movement(float[] move, MapManager mapManager)
         {
-            if(move[0] != 0 && move[0] != 0) this.primaryAttackActive = false;
+            if(this.primaryAttackActive) return;
 
             if (this.drawPosition == null) return;
 

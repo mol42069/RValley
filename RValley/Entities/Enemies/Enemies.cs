@@ -20,7 +20,6 @@ namespace RValley.Entities.Enemies
         public List<Projectile> projectiles;
 
         public Enemies() {
-
         }
 
         public virtual void Update(List<Player> player, MapManager mapManager) 
@@ -28,9 +27,7 @@ namespace RValley.Entities.Enemies
             if (this.projectiles != null) {
                 for (int i = 0; i < this.projectiles.Count; i++)
                 {
-
                     this.projectiles[i].Update();
-
                 }
             }
 
@@ -66,14 +63,11 @@ namespace RValley.Entities.Enemies
 
                     base.Movement(this.AI(player), mapManager);
 
-                    base.drawPosition = mapManager.calculateDrawPositionEntity(base.position);
-
                     base.drawBox.X = base.drawPosition[0];
                     base.drawBox.Y = base.drawPosition[1];
                 }
+                base.drawPosition = mapManager.calculateDrawPositionEntity(base.position);
                 base.Update(mapManager);
-
-               
             }
         }
 

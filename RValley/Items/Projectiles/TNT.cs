@@ -32,7 +32,6 @@ namespace RValley.Items.Projectiles
 
             base.animationTimer = new Stopwatch();
             base.animationTimer.Start();
-
         }
 
         public override bool Update(List<Player> enti)          
@@ -59,22 +58,17 @@ namespace RValley.Items.Projectiles
                 }
                 // here we check if the animation is done and if we need to deal damage to the entities in range.
                 for (int i = 0; i < enti.Count; i++) {
-                    if (this.range <= base.rectangle.Center.X - enti[i].hitBox.Center.X + base.rectangle.Center.Y - enti[i].hitBox.Center.Y && !this.hit) {
+                    // is a player/entity in range of the explosion?
+                    if (this.range <= Math.Abs(base.rectangle.Center.X - enti[i].hitBox.Center.X) + Math.Abs(base.rectangle.Center.Y - enti[i].hitBox.Center.Y) && !this.hit && base.aniCount > 0) {
                         enti[i].TakeDamage(this.damage);
                         base.exploding = true;
                         base.aniCount = 0;
                         base.aniCountMax = base.expSourceRectangles.Length - 1;
                         this.hit = true;
                     }
-                    
                 }
             }
-
-            //base.Update();
-
             return base.Animation();
         }
-
-
     }
 }

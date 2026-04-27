@@ -52,7 +52,7 @@ namespace RValley.Items.Projectiles
 
             int distance = distx + disty;
 
-            if (distance <= this.range /2)
+            if (distance <= this.range / 2)
             {
                 this.exploding = true;
             }
@@ -121,7 +121,6 @@ namespace RValley.Items.Projectiles
         }
         protected void getStaticMovement()
         {
-
             int distx = this.rectangle.Center.X - this.targetPos[0];
             if (distx < 0)
             {
@@ -193,7 +192,6 @@ namespace RValley.Items.Projectiles
                 }
                 else
                 {
-
                     spriteBatch.Draw(this.explosionSprites, this.drawRectangle, this.expSourceRectangles[this.aniCount], Color.White);
 
                 }
@@ -203,7 +201,6 @@ namespace RValley.Items.Projectiles
             {       // HER WE DRAW THE NON EXPLOSIVE PROJECTILES
 
             }
-
             return spriteBatch;
         }
         protected void createSourceRectangles()

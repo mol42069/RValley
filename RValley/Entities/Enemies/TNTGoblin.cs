@@ -45,7 +45,7 @@ namespace RValley.Entities.Enemies
             base.direction = false;
 
             base.hitBoxOffset = new int[2] { 60, 112 };
-
+            base.primaryAttackActive = false;
         }
 
         public override void Update(List<Player> player, MapManager mapManager)
@@ -63,6 +63,8 @@ namespace RValley.Entities.Enemies
                 }
             }
 
+            base.drawPosition = mapManager.calculateDrawPositionEntity(this.position);
+
             if (mapManager.backgroundSprite != null)
             {
                 base.hitBox.X = base.position[0] + base.hitBoxOffset[0];
@@ -79,29 +81,27 @@ namespace RValley.Entities.Enemies
                     this.distance = distx + disty;
                 }
 
+                base.drawBox.X = base.drawPosition[0];
+                base.drawBox.Y = base.drawPosition[1];
+
                 if (this.distance <= base.reach)
                 {
-                    if (!base.alreadyAttacked)
+                    if (!base.alreadyAttacked && !base.primaryAttackActive)
                     {
                         // here we will do the attacks.
                         base.lastMovement[0] = 0;
                         base.lastMovement[1] = 0;
-                        base.drawPosition = mapManager.calculateDrawPositionEntity(this.position);
-                        base.drawBox.X = base.drawPosition[0];
-                        base.drawBox.Y = base.drawPosition[1];
+                        
                         this.PrimaryAttack(player[0]);
                     }
                 }
                 else
                 {
                     base.Movement(base.AI(player), mapManager);
-
-                    base.drawPosition = mapManager.calculateDrawPositionEntity(base.position);
-
-                    base.drawBox.X = base.drawPosition[0];
-                    base.drawBox.Y = base.drawPosition[1];
                 }
+
                 base.Update(mapManager);
+
                 if (this.lAttack > 0)
                 {
                     this.lAttack--;
@@ -137,6 +137,7 @@ namespace RValley.Entities.Enemies
 
             // first we animate the attack windup and when we are far enough we deal damage.
             base.primaryAttackActive = true;
+
             if (player.position[0] <= base.position[0])
             {
                 base.direction = true;
@@ -155,7 +156,7 @@ namespace RValley.Entities.Enemies
             tPos[1] = player.hitBox.Center.Y;
             Array.Copy(tPos, targetPos, 2);
 
-            base.projectiles.Add(new TNT(10, targetPos, base.projectileSprites[(int)ProjEnums.Projectile.TNT], base.position));            
-       }
+            base.projectiles.Add(new TNT(10, targetPos, base.projectileSprites[(int)ProjEnums.Projectile.TNT], base.position));
+        }
     }
 }
