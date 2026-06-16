@@ -14,10 +14,9 @@ namespace RValley.Items
     public class MagicStaffFire : Item
     {
         protected List<Projectile> projectiles;
-        public MagicStaffFire() {
-            
-            this.projectiles = new List<Projectile>();   
-            
+        public MagicStaffFire()
+        {
+            this.projectiles = new List<Projectile>();
         }
 
         public override void PrimaryAttack(List<Enemies> enemies)
@@ -25,21 +24,21 @@ namespace RValley.Items
             base.PrimaryAttack(enemies);
         }
 
-        public override void Update(List<Enemies> enemies, List<Player> players) {
+        public override void Update(List<Enemies> enemies, List<Player> players)
+        {
             int distx = 0;
             int disty = 0;
             int distance = 0;
-        
-
 
             for (int i = 0; i < projectiles.Count; i++)
             {
                 if (this.projectiles[i].Update(enemies)) // projectiles. update returns true if the fireball explodes. so we then have to calculate who gets damaged thats what we do here.
                 {
-                    for (int j = 0; j < enemies.Count; j++) {
-
+                    for (int j = 0; j < enemies.Count; j++)
+                    {
                         distx = enemies[j].hitBox.Center.X - this.projectiles[i].rectangle.Center.X;
-                        if (distx < 0) {
+                        if (distx < 0)
+                        {
                             distx *= -1;
                         }
 
@@ -55,18 +54,16 @@ namespace RValley.Items
                             enemies[j].TakeDamage(this.projectiles[i].damage);
                         }
                     }
-                    
-                    // this is for teamdamage as well as to damage yourself.
 
+                    // this is for teamdamage as well as to damage yourself.
                     for (int z = 0; z < players.Count; z++)
                     {
-
                         distx = players[z].hitBox.Center.X - this.projectiles[i].rectangle.Center.X;
+
                         if (distx < 0)
                         {
                             distx *= -1;
                         }
-
                         disty = players[z].hitBox.Center.Y - this.projectiles[i].rectangle.Center.Y;
 
                         if (disty < 0)
@@ -94,44 +91,39 @@ namespace RValley.Items
             this.projectiles.Add(new ExplosiveBall(500, targetPosition, sprite, playerPos));
         }
 
-        public override void AutoAttack(List<Enemies> enemies, MapManager mapManager, Texture2D[] sprite, int[] playerPos) {
-
+        public override void AutoAttack(List<Enemies> enemies, MapManager mapManager, Texture2D[] sprite, int[] playerPos)
+        {
             int distance = 100000000;
             int distPlayer = -1;
 
-
-            for (int i = 0; i < enemies.Count; i++) {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                if (enemies[i].hp <= 0) continue;
 
                 int tempDist = Math.Abs(Math.Abs(enemies[i].hitBox.Center.X) - Math.Abs(playerPos[0])) + Math.Abs(Math.Abs(enemies[i].hitBox.Center.Y) - Math.Abs(playerPos[1]));
 
-                if (tempDist < distance ) {
-
+                if (tempDist < distance)
+                {
                     distPlayer = i;
                     distance = tempDist;
-                
                 }
             }
 
-            if (distance <= base.reach) {
+            if (distance <= base.reach)
+            {
                 int[] tempPos = { enemies[distPlayer].hitBox.Center.X, enemies[distPlayer].hitBox.Center.Y };
                 this.projectiles.Add(new FireBall(1000, tempPos, sprite, playerPos));
-            
             }
-
-        
         }
-
-
-        public override SpriteBatch Draw(SpriteBatch spriteBatch, MapManager mapManager) {
+        public override SpriteBatch Draw(SpriteBatch spriteBatch, MapManager mapManager)
+        {
             if (this.projectiles == null) return spriteBatch;
-            for (int i = 0; i < this.projectiles.Count; i++)    
+
+            for (int i = 0; i < this.projectiles.Count; i++)
             {
                 spriteBatch = this.projectiles[i].Draw(spriteBatch, mapManager);
             }
             return spriteBatch;
         }
-
-
-
     }
 }

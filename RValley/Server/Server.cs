@@ -40,8 +40,8 @@ namespace RValley.Server
             this.frameTime_ms = (long)(1000 / this.tickrate);
         }
 
-        public void Update() {
-
+        public void Update() 
+        {
             this.sAStopwatch.Start();
             this.stopwatch.Start();
 
@@ -49,8 +49,8 @@ namespace RValley.Server
             {
                 // here we check the still alive signal
                 this.stopwatch.Start();
-                if (this.sAStopwatch.ElapsedMilliseconds >= this.stillAliveTimerMax_ms) {
-
+                if (this.sAStopwatch.ElapsedMilliseconds >= this.stillAliveTimerMax_ms) 
+                {
                     this.sAStopwatch.Stop();
 
                     if (this.stillAliveSignal)
@@ -88,14 +88,11 @@ namespace RValley.Server
                 }
             }
             return;
-
         }
 
         // we want to put networking in a seperate Thread.
-        private void Networking() {
-        
-
-
+        private void Networking() 
+        {
         }
     }
 }

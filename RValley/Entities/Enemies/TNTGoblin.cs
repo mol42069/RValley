@@ -20,7 +20,7 @@ namespace RValley.Entities.Enemies
             base.damage = 50;
 
             base.speed = 5;
-            base.hpMax = 500;
+            base.hpMax = 5000;
             base.hp = base.hpMax;
             base.reach = 700;
             base.distance = 1000000;
@@ -29,7 +29,7 @@ namespace RValley.Entities.Enemies
             base.drawPosition = base.position;
             base.spriteScale = 1.0f;
             base.projectiles = new List<Items.Projectiles.Projectile>();
-            this.attackFrequency = 100;
+            this.attackFrequency = 1000;
             this.lAttack = 0;
 
             base.aniCount = 0;
@@ -86,7 +86,7 @@ namespace RValley.Entities.Enemies
 
                 if (this.distance <= base.reach)
                 {
-                    if (!base.alreadyAttacked && !base.primaryAttackActive)
+                    if (!base.alreadyAttacked && !base.primaryAttackActive && base.hp > 0)
                     {
                         // here we will do the attacks.
                         base.lastMovement[0] = 0;
@@ -110,7 +110,6 @@ namespace RValley.Entities.Enemies
                 { 
                     base.alreadyAttacked = false;
                 }
-
             }
         }/*
 

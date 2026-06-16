@@ -24,10 +24,9 @@ namespace RValley.Entities
         public Texture2D[] spriteSheets;
         public Texture2D[][] projectileSprites;
         protected Rectangle[][] sourceRectangle;
-        public int  aniCountMax, aniCount;   // animation variables
+        public int aniCountMax, aniCount, speed, hp, hpMax, reach;   // animation variables etc
         protected long[] aniTimerMax;
         public enums.EntityState entityState;
-        public int speed, hp, hpMax, reach;
         protected Stopwatch animationTimer;
         public bool direction, spriteRotation;               // true = left | false = right
         public int[] hitBoxOffset;                          // hitBoxOffset is to size and place the hitboxes correctly.

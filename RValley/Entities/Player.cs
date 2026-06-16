@@ -42,7 +42,7 @@ namespace RValley.Entities
             base.position = new int[2] {200, 200};
             base.drawPosition = base.position;            
             
-            base.hitBoxOffset = new int[2] { (int)(56 * base.spriteScale), (int)(67 * base.spriteScale) };
+            base.hitBoxOffset = new int[2] {(int)(56 * base.spriteScale), (int)(67 * base.spriteScale)};
 
             base.hitBox = new Rectangle(base.position[0] + base.hitBoxOffset[0], base.position[1] + base.hitBoxOffset[1], base.spriteSize - base.hitBoxOffset[0] * 2, base.spriteSize - base.hitBoxOffset[1]);
 
@@ -63,7 +63,6 @@ namespace RValley.Entities
 
             this.item = new List<Item>();    // we want this to be an List in case we want the player to have multiple weapons.
             this.item.Add( new MagicStaffFire());
-
         }
         public void LoadContent(Texture2D[] spriteSheets, Texture2D[] uiHBElements, Texture2D[] ProjectileSprites, Texture2D[] explosiveBallSprite)
         {
@@ -74,13 +73,11 @@ namespace RValley.Entities
         }
 
         public void Update(MapManager mapManager, List<Enemies.Enemies> enemies)
-        {
-            
+        {            
             base.Update(mapManager);
 
             base.hitBox.X = base.position[0] + base.hitBoxOffset[0];
             base.hitBox.Y = base.position[1] + base.hitBoxOffset[1];
-
 
             base.drawBox.X = base.drawPosition[0];
             base.drawBox.Y = base.drawPosition[1];
@@ -95,7 +92,6 @@ namespace RValley.Entities
         public void PrimaryAttack(List<Entities> entities)
         {
             // this for auto-attacks
-
         }
         public override SpriteBatch Draw(SpriteBatch spriteBatch, MapManager mapManager) { 
 
@@ -111,7 +107,6 @@ namespace RValley.Entities
             targetPos = mapManager.calculateRealPositionEntity(targetPos);
             int[] temp = { base.hitBox.Center.X, base.hitBox.Center.Y };
             this.item[0].PrimaryAttack(enemies, targetPos, mapManager, this.explosiveBallSprites, base.position);
-
         }
 
         public void AutoAttack(List<Enemies.Enemies> enemies, MapManager mapManager) {
@@ -126,5 +121,3 @@ namespace RValley.Entities
 
     }
 }
-
-

@@ -14,27 +14,26 @@ namespace RValley.Client.UI
     public class HealthBar
     {
         private Texture2D[] textures;
-        private int[] position;
-        private int[] HealthBarSizeMax;
+        private int[] position, HealthBarSizeMax;
         private Rectangle[] rectangles;
 
-        public HealthBar() {
-            this.position = new int[2] { 100, 800 };
-            
+        public HealthBar() 
+        {
+            this.position = new int[2] { 100, 800 };            
         }
 
-        public SpriteBatch Draw(SpriteBatch spriteBatch, Player player) {
-
+        public SpriteBatch Draw(SpriteBatch spriteBatch, Player player) 
+        {
             this.rectangles[(int)UIEnums.HealthBar.REDBAR].Width = (int)(((float)this.HealthBarSizeMax[0] / (float)player.hpMax) * player.hp);
 
             spriteBatch.Draw(this.textures[(int)UIEnums.HealthBar.BG], this.rectangles[0], Microsoft.Xna.Framework.Color.White);
-
             spriteBatch.Draw(this.textures[(int)UIEnums.HealthBar.REDBAR], this.rectangles[1], Microsoft.Xna.Framework.Color.White);
 
             return spriteBatch;
         }
 
-        public void LoadContent(Texture2D[] textures) {
+        public void LoadContent(Texture2D[] textures) 
+        {
             this.textures = textures;
             this.HealthBarSizeMax = new int[2] 
             { 
@@ -47,6 +46,5 @@ namespace RValley.Client.UI
                 new Rectangle(this.position[0] + 5, this.position[1] + 5, this.HealthBarSizeMax[0], this.HealthBarSizeMax[1])
             };
         }
-
     }
 }

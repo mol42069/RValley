@@ -88,8 +88,10 @@ namespace RValley.Entities.Enemies
 
                 int distance = distx + disty;
 
-                if (player.Count > 1)           // if there are more than 1 player we want the entity to move to the closest.
-                {                               // only usefull if multiplayer is implemented.
+                // if there are more than 1 player we want the entity to move to the closest.
+                // only usefull if multiplayer is implemented.
+                if (player.Count > 1)           
+                {                               
                     Player p = player[0];
 
                     distx = (p.hitBox.Center.X - base.hitBox.Center.X);
@@ -122,7 +124,6 @@ namespace RValley.Entities.Enemies
 
             int distys = ((this.target.hitBox.Center.Y + this.targetOffset[1]) - base.hitBox.Center.Y);
             int distyt = ((this.target.hitBox.Center.Y + this.targetOffset[1]) - base.hitBox.Center.Y);
-
             if (distys < 0) distys *= -1;
 
             int distances = distxs + distys;
@@ -203,7 +204,8 @@ namespace RValley.Entities.Enemies
                     spriteBatch = this.projectiles[i].Draw(spriteBatch, mapManager);
                 }
             }
-            return base.Draw(spriteBatch, mapManager);
+            if (base.hp > 0) return base.Draw(spriteBatch, mapManager);
+            else return spriteBatch;
         }
     }
     /*

@@ -10,20 +10,16 @@ namespace RValley.Entities.Enemies
 {
     internal class Zombie : Enemies             // For now these are goblins.
     {
-
-        public Zombie(int[]  startingPos, int[] targetOffset, int aniCount) {
-
+        public Zombie(int[]  startingPos, int[] targetOffset, int aniCount) 
+        {
             base.targetOffset = targetOffset;
-
             base.damage = 5;
-
             base.speed = 5;
             base.hpMax = 100;
             base.hp = base.hpMax;
             base.reach = 100;
             base.distance = 1000000;
-            base.position = startingPos;
-            
+            base.position = startingPos;            
             base.drawPosition = base.position;
             base.spriteScale = 1;
             base.hitBoxOffset = new int[2] { (int)(56 * base.spriteScale), (int)(100 * base.spriteScale) };
@@ -32,7 +28,6 @@ namespace RValley.Entities.Enemies
 
             base.hitBox.Width = (int)(base.spriteSize * base.spriteScale - base.hitBoxOffset[0] * 2);
             base.hitBox.Height = (int)(base.spriteSize * base.spriteScale - base.hitBoxOffset[1]);
-
             
             base.aniCount = 0;
             base.entityState = enums.EntityState.IDLE_L;
@@ -45,8 +40,6 @@ namespace RValley.Entities.Enemies
             base.aniTimerMax = new long[(int)enums.EntityState.MAX] { 50, 50, 100 }; // 0 = RUN | 1 = IDLE | 2 = PATTACK | (see enums.EntityState)
             base.lastMovement = new float[2] { 0, 0 };
             base.direction = false;
-
         }
-
     }
 }

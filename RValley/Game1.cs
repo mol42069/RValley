@@ -11,7 +11,6 @@ namespace RValley
 {
     public class Game1 : Game
     {
-
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Thread serverThread;
@@ -25,20 +24,17 @@ namespace RValley
         private int[] screenSize;
         public EnemyHealthBar enemyHB;
 
-
-
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
-            
+            IsMouseVisible = true;            
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            this.screenSize = new int[2] { 1800, 1000 };
+            this.screenSize = new int[2] {1800, 1000};
 
             this._graphics.PreferredBackBufferWidth = this.screenSize[0];
             this._graphics.PreferredBackBufferHeight = this.screenSize[1];
@@ -60,10 +56,9 @@ namespace RValley
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            this._spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-            
+            // TODO: use this.Content to load your game content here            
 
             // here we create an sprite-sheet array for all mobs.
             {
@@ -86,13 +81,14 @@ namespace RValley
                     }
 
                     // now we append the enemyType to the path of the spriteSheet
-                    switch (i){
+                    switch (i)
+                    {
                         case (int)enums.EnemyType.GOBLIN:
-
                             mobSprites[i] = new Texture2D[(int)enums.GoblinClass.MAX][];
 
                             // now we append the enemyClass to the path of the spriteSheet
-                            for (int n = 0; n < (int)enums.GoblinClass.MAX; n++) {
+                            for (int n = 0; n < (int)enums.GoblinClass.MAX; n++) 
+                            {
                                 contentTypePath = contentPath;
 
                                 switch (n)
@@ -113,7 +109,6 @@ namespace RValley
                                 // now we load all the spriteSheets.
                                 for (int j = 0; j < (int)enums.EntityState.MAXA; j++)
                                 {
-
                                     switch (j)
                                     {
                                         case (int)enums.EntityState.RUN_R:
@@ -145,7 +140,7 @@ namespace RValley
                                     }
                                 }
                             }
-                        break;                          
+                            break;                          
                     }
                 }
                 // now we give these spritesheets to the mob manager.
@@ -161,12 +156,10 @@ namespace RValley
             // here we create an sprite-sheet array for all Heroes.
             {
                 // TODO: change the paths when we change the sprites
-
-
                 this.playerSprites = new Texture2D[(int)enums.PlayerClass.MAX][];
 
-                for (int i = 0; i < (int)enums.PlayerClass.MAX; i++) {
-
+                for (int i = 0; i < (int)enums.PlayerClass.MAX; i++)
+                {
                     string contentPath = "Entities/Friendlies/";
                     this.playerSprites[i] = new Texture2D[(int)enums.EntityState.MAXA];
 
@@ -181,9 +174,10 @@ namespace RValley
                         default:
                             break;
                     }
-                    // then we load for every PlayerClass all EntityStates.
-                    for (int j = 0; j < (int)enums.EntityState.MAXA; j++) {
 
+                    // then we load for every PlayerClass all EntityStates.
+                    for (int j = 0; j < (int)enums.EntityState.MAXA; j++) 
+                    {
                         switch (j) {
                             case (int)enums.EntityState.RUN_R:
                                 this.playerSprites[i][j] = Content.Load<Texture2D>(contentPath + "Run-Sheet");
@@ -234,7 +228,6 @@ namespace RValley
                     Content.Load<Texture2D>("Projectiles/Fire"),
                     Content.Load<Texture2D>("Projectiles/FireBall")
                 };
-
                 Texture2D[] ExplosiveBallSprites = new Texture2D[2]
                 {
                     Content.Load<Texture2D>("Projectiles/Explosions"),
@@ -245,14 +238,12 @@ namespace RValley
                     Content.Load<Texture2D>("Projectiles/TNT"),
                     ExplosiveBallSprites[0]
                 };
-
                 // here we add those sprites
                 this.server.player[0].LoadContent(this.playerSprites[(int)enums.PlayerClass.KNIGHT], UiSprites, FireBallSprites, ExplosiveBallSprites);
 
-                Texture2D[][] projectileSprites = new Texture2D[(int)ProjEnums.Projectile.MAX][] { ExplosiveBallSprites, FireBallSprites, TNTSprites };
+                Texture2D[][] projectileSprites = new Texture2D[(int)ProjEnums.Projectile.MAX][] {ExplosiveBallSprites, FireBallSprites, TNTSprites};
 
-                this.server.mobManager.LoadProjContent(projectileSprites);
-            
+                this.server.mobManager.LoadProjContent(projectileSprites);            
             }
         }
 
@@ -266,7 +257,8 @@ namespace RValley
 
             // THIS HERE WE WANT TO DO WHEN WE CHOOSE PLAYERCLASS INGAME!!!
 
-            switch (this.gameState) {
+            switch (this.gameState) 
+            {
                 case enums.GameState.MENU:
 
                     break;
@@ -274,16 +266,11 @@ namespace RValley
                 case enums.GameState.INGAME:
                     this.client.Update();
                     int tempPlayerCount = this.server.player.Count;
-                    for (int i = 0; i < this.server.player.Count; i++) {
-
-                        if (this.server.player[i].hp <= 0) {
-                            tempPlayerCount--;
-                        }
-                    }
+                    for (int i = 0; i < this.server.player.Count; i++)
+                        if (this.server.player[i].hp <= 0) tempPlayerCount--;
+                   
                     if (tempPlayerCount == 0) 
-                    {
                         this.gameState = enums.GameState.MENU;
-                    }
 
                     break;            
             }
@@ -299,27 +286,26 @@ namespace RValley
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin();
+            this._spriteBatch.Begin();
 
             // TODO: Add your drawing code here
 
             switch (this.gameState) 
             {
                 case enums.GameState.INGAME:
-                    _spriteBatch = this.InGameDraw(_spriteBatch);
+                    this._spriteBatch = this.InGameDraw(this._spriteBatch);
                     break;
 
                 case enums.GameState.MENU:
                     if (this.server.player[0].spriteSheets != null) this.gameState = enums.GameState.INGAME;
                     break;
             }
-            _spriteBatch.End();
+            this._spriteBatch.End();
             base.Draw(gameTime);
         }
 
         private SpriteBatch InGameDraw(SpriteBatch spriteBatch) 
         {
-
             spriteBatch = this.client.Draw(spriteBatch, this.enemyHB);
 
             return spriteBatch;

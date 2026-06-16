@@ -28,8 +28,7 @@ namespace RValley.Client.UI
         public SpriteBatch Draw(SpriteBatch spriteBatch, List<Enemies> enemy, MapManager mapManager) 
         {
             for (int i = 0; i < enemy.Count; i++) {
-
-
+                if (enemy[i].hp <= 0) continue;
 
                 this.baseRectangle = new Rectangle(0, 0, (int)((this.maxSize + 2 * this.offset) * enemy[i].spriteScale), (int)(this.height * enemy[i].spriteScale));
                 this.rectangle = new Rectangle((int)(this.offset * enemy[i].spriteScale), (int)(this.offset * enemy[i].spriteScale), (int)(this.maxSize * enemy[i].spriteScale), (int)((15 - this.offset * 2) * enemy[i].spriteScale));

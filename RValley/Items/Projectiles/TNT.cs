@@ -15,7 +15,7 @@ namespace RValley.Items.Projectiles
         bool hit;
         public TNT(int damage, int[] targetPos, Texture2D[] sprite, int[] playerPos)
         {
-            this.damage = damage;       // Damage is done on ani frame 1
+            base.damage = damage;       // Damage is done on ani frame 1
             base.targetPos = targetPos;
             base.sprite = sprite[0];
             base.explosionSprites = sprite[1];
@@ -25,7 +25,7 @@ namespace RValley.Items.Projectiles
             base.aniTime = 100;
             base.exploding = false;
             this.hit = false;
-            base.range = 50;
+            base.range = 100;
             base.speed = 5;
             base.getStaticMovement();
             base.rectangle = new Microsoft.Xna.Framework.Rectangle(base.position[0], base.position[1], base.sprite.Height, base.sprite.Height);
@@ -40,7 +40,7 @@ namespace RValley.Items.Projectiles
             // but if it is exploding we check if the animation is done and if we need to change the hitbox of the explosion.
             if (!base.exploding)
             {
-                base.Update();
+                base.Update(enti);
             }
             else
             {
@@ -56,11 +56,12 @@ namespace RValley.Items.Projectiles
                     base.rectangle.Width = base.explosionSprites.Height * 2;
                     base.rectangle.Height = base.explosionSprites.Height * 2;
                 }
+
                 // here we check if the animation is done and if we need to deal damage to the entities in range.
                 for (int i = 0; i < enti.Count; i++) {
                     // is a player/entity in range of the explosion?
-                    if (this.range <= Math.Abs(base.rectangle.Center.X - enti[i].hitBox.Center.X) + Math.Abs(base.rectangle.Center.Y - enti[i].hitBox.Center.Y) && !this.hit && base.aniCount > 0) {
-                        enti[i].TakeDamage(this.damage);
+                    if (this.range >= Math.Abs(base.rectangle.Center.X - enti[i].hitBox.Center.X) + Math.Abs(base.rectangle.Center.Y - enti[i].hitBox.Center.Y) && !this.hit && base.aniCount == 1) {
+                        enti[i].TakeDamage(base.damage);
                         base.exploding = true;
                         base.aniCount = 0;
                         base.aniCountMax = base.expSourceRectangles.Length - 1;

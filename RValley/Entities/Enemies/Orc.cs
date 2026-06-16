@@ -25,8 +25,6 @@ namespace RValley.Entities.Enemies
             base.drawPosition = base.position;
             base.spriteScale = 1.0f;
 
-
-
             base.aniCount = 0;
             base.entityState = enums.EntityState.IDLE_L;
 
@@ -40,7 +38,6 @@ namespace RValley.Entities.Enemies
             base.direction = false;
 
             base.hitBoxOffset = new int[2] { 60, 112 };
-
         }
     }
 }

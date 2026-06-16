@@ -19,44 +19,40 @@ namespace RValley.Items.Projectiles
     public class Projectile
     {
         public int damage, range, speed, aniCount, aniCountMax, aniTime;
-        protected Stopwatch stopwatch;
+        protected Stopwatch stopwatch, animationTimer;
         public int[] targetPos, position;
         protected float[] staticMovement;
         protected Texture2D sprite, explosionSprites;
         protected Rectangle[] rectangles, expSourceRectangles;
         public Rectangle rectangle, drawRectangle;
         protected bool exploding;                                               // also used for making the projectile stop moveing
-        protected Stopwatch animationTimer;
 
         public Projectile()
         {
-
         }
 
         public virtual bool Update(List<Enemies> enemies)
         {
             // here we check if the projectile is exploding or not.
             // If it is not exploding we just update the projectile like normal,
-
             int distx = this.position[0] - this.targetPos[0];
+            
             if (distx < 0)
             {
                 distx *= -1;
             }
-
             int disty = this.position[1] - this.targetPos[1];
+            
             if (disty < 0)
             {
                 disty *= -1;
             }
-
             int distance = distx + disty;
 
             if (distance <= this.range / 2)
             {
                 this.exploding = true;
             }
-
             return false;
         }
 
@@ -66,24 +62,23 @@ namespace RValley.Items.Projectiles
             {
                 distx *= -1;
             }
-
             int disty = this.position[1] - this.targetPos[1];
+            
             if (disty < 0)
             {
                 disty *= -1;
             }
-
             int distance = distx + disty;
 
-            if (distance <= this.range)
+            if (distance <= this.range - this.range/2)
             {
                 this.exploding = true;
             }
-
             this.getStaticMovement();
 
             this.position[0] += (int)(this.staticMovement[0] * (float)this.speed);
             this.position[1] += (int)(this.staticMovement[1] * (float)this.speed);
+
             this.rectangle.X = this.position[0];
             this.rectangle.Y = this.position[1];
 
@@ -96,24 +91,23 @@ namespace RValley.Items.Projectiles
             {
                 distx *= -1;
             }
-
             int disty = this.position[1] - this.targetPos[1];
+            
             if (disty < 0)
             {
                 disty *= -1;
             }
-
             int distance = distx + disty;
 
             if (distance <= this.range / 10)
             {
                 this.exploding = true;
             }
-
             this.getStaticMovement();
 
             this.position[0] += (int)(this.staticMovement[0] * (float)this.speed);
             this.position[1] += (int)(this.staticMovement[1] * (float)this.speed);
+
             this.rectangle.X = this.position[0];
             this.rectangle.Y = this.position[1];
 
@@ -126,13 +120,12 @@ namespace RValley.Items.Projectiles
             {
                 distx *= -1;
             }
-
             int disty = this.rectangle.Center.Y - this.targetPos[1];
+            
             if (disty < 0)
             {
                 disty *= -1;
             }
-
             int distance = distx + disty;
 
             distx = this.targetPos[0] - this.rectangle.Center.X;
@@ -143,11 +136,9 @@ namespace RValley.Items.Projectiles
                 (float) distx/ (float)distance,
                 (float) disty/ (float)distance
             };
-
         }
         protected bool Animation()
         {
-
             if (this.animationTimer.ElapsedMilliseconds >= this.aniTime)
             {
                 this.animationTimer.Stop();
@@ -163,7 +154,7 @@ namespace RValley.Items.Projectiles
                     this.aniCount++;
                 }
 
-                if (this.aniCount == this.expSourceRectangles.Length - 1 && this.exploding)
+                if (this.aniCount == this.aniCountMax && this.exploding)
                 {
                     return true;
                 }
@@ -184,8 +175,7 @@ namespace RValley.Items.Projectiles
             this.drawRectangle = new Rectangle(drawPos[0], drawPos[1], this.rectangle.Width, this.rectangle.Height);
 
             if (this.explosionSprites != null)
-            {       // HERE WE DRAW THE EXPLODING PROJECTILES
-
+            {   // HERE WE DRAW THE EXPLODING PROJECTILES
                 if (!this.exploding)
                 {
                     spriteBatch.Draw(this.sprite, this.drawRectangle, this.rectangles[this.aniCount], Color.White);
@@ -193,12 +183,10 @@ namespace RValley.Items.Projectiles
                 else
                 {
                     spriteBatch.Draw(this.explosionSprites, this.drawRectangle, this.expSourceRectangles[this.aniCount], Color.White);
-
                 }
-
             }
             else
-            {       // HER WE DRAW THE NON EXPLOSIVE PROJECTILES
+            {   // HER WE DRAW THE NON-EXPLOSIVE PROJECTILES
 
             }
             return spriteBatch;

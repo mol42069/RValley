@@ -14,9 +14,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-
-
-
 namespace RValley.Client
 {
     internal class Client
@@ -59,7 +56,6 @@ namespace RValley.Client
 
             // here we do the attacks.
 
-
             if (!this.server.player[0].primaryAttackActive && this.server.player[0].primaryAttackFinished)
             {
                 this.server.player[0].primaryAttackFinished = false;
@@ -71,8 +67,6 @@ namespace RValley.Client
 
             var mouseState = Mouse.GetState();
 
-
-
             if (mouseState.LeftButton == ButtonState.Released)
             {
                 this.mouseClicked = false;
@@ -81,8 +75,6 @@ namespace RValley.Client
             {
                 this.mouseClicked = true;
             }
-
-
 
             if (this.pastMouseClicked && !this.mouseClicked)
             {
@@ -154,7 +146,6 @@ namespace RValley.Client
                     }
                 }
 
-
                 try
                 {
                     KeyboardState state = Keyboard.GetState();
@@ -188,9 +179,6 @@ namespace RValley.Client
                     {
                         this.move[1] = 0;
                     }
-
-                   
-
                 } 
                 catch 
                 {
