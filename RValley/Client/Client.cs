@@ -196,11 +196,11 @@ namespace RValley.Client
 
             // HERE WE DRAW EVERITHING:
             spriteBatch = this.server.mapManager.Draw(spriteBatch);
+            //spriteBatch = this.server.objectManager.Draw(spriteBatch, this.server.mapManager);
             spriteBatch = this.server.mobManager.Draw(spriteBatch, this.server.mapManager, enemyHealthBar);
             for (int i = 0; i < this.server.player.Count; i++)
             {
                 spriteBatch = this.server.player[i].Draw(spriteBatch, this.server.mapManager);
-
             }
 
             spriteBatch = this.server.player[0].healthBar.Draw(spriteBatch, this.server.player[0]);    // we have to make sure somewhere that player[0] is the player which is running on this machine

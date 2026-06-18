@@ -245,6 +245,16 @@ namespace RValley
 
                 this.server.mobManager.LoadProjContent(projectileSprites);            
             }
+
+            // load Object sprites
+            {
+                Texture2D[][] objectSprites = new Texture2D[1][];
+                objectSprites[0] = new Texture2D[1]
+                {
+                    Content.Load<Texture2D>("Environment/Objects/stone")
+                };
+                this.server.objectManager.LoadContent(objectSprites);
+            }
         }
 
         protected override void Update(GameTime gameTime)

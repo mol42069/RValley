@@ -25,6 +25,7 @@ namespace RValley.Client.UI
             this.offset = 2;
             this.height = 15;
         }
+
         public SpriteBatch Draw(SpriteBatch spriteBatch, List<Enemies> enemy, MapManager mapManager) 
         {
             for (int i = 0; i < enemy.Count; i++) {
@@ -51,9 +52,7 @@ namespace RValley.Client.UI
 
                 spriteBatch.Draw(this.texture[0], this.baseRectangle, Color.White);
                 spriteBatch.Draw(this.texture[1], this.rectangle, Color.White);
-
             }
-
 
             return spriteBatch;
         }

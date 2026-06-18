@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Runtime.Serialization;
+using RValley.Maps.MapObjects;
+using ObjectManager = RValley.Maps.MapObjects.ObjectManager;
 
 namespace RValley.Server
 {
@@ -18,6 +21,7 @@ namespace RValley.Server
         private Thread networkingThread;
         public MobManager mobManager;
         public MapManager mapManager;
+        public ObjectManager objectManager;
         public List<Player> player;
         public long stillAliveTimerMax_ms, frameTime_ms;    // we use these to check if the client is still running.
         public int tickrate;
@@ -34,6 +38,7 @@ namespace RValley.Server
             this.mapManager = new MapManager(startingmappos);
             this.stopwatch = new Stopwatch();
             this.sAStopwatch = new Stopwatch();
+            this.objectManager = new ObjectManager(screenSize);
             this.stillAliveTimerMax_ms = 1000;
             this.stillAliveSignal = false;
             this.tickrate = 128;

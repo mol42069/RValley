@@ -101,7 +101,7 @@ namespace RValley
             // here we spawn the enemies for now we do this manualy so we need to change this when we have rooms.
             if (mapManager.backgroundSprite == null) return;
 
-            if (this.enemies.Count < 1) 
+            if (this.enemies.Count < 20) 
             {
                 int x = this.rand.Next(0, 2);
                 x = 1;

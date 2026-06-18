@@ -30,7 +30,6 @@ namespace RValley.Entities
 
             this.mouseReleased = false;
             this.mousePress = false;
-
             base.primaryAttackActive = false;
             base.primaryAttackAnimationCount = 0;
 

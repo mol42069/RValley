@@ -17,6 +17,7 @@ namespace RValley.Items
         public MagicStaffFire()
         {
             this.projectiles = new List<Projectile>();
+            base.damage = 500;
         }
 
         public override void PrimaryAttack(List<Enemies> enemies)
@@ -88,7 +89,7 @@ namespace RValley.Items
 
         public override void PrimaryAttack(List<Enemies> enemies, int[] targetPosition, MapManager mapManager, Texture2D[] sprite, int[] playerPos)
         {
-            this.projectiles.Add(new ExplosiveBall(500, targetPosition, sprite, playerPos));
+            this.projectiles.Add(new ExplosiveBall(base.damage, targetPosition, sprite, playerPos));
         }
 
         public override void AutoAttack(List<Enemies> enemies, MapManager mapManager, Texture2D[] sprite, int[] playerPos)
@@ -112,7 +113,7 @@ namespace RValley.Items
             if (distance <= base.reach)
             {
                 int[] tempPos = { enemies[distPlayer].hitBox.Center.X, enemies[distPlayer].hitBox.Center.Y };
-                this.projectiles.Add(new FireBall(1000, tempPos, sprite, playerPos));
+                this.projectiles.Add(new FireBall(10, tempPos, sprite, playerPos));
             }
         }
         public override SpriteBatch Draw(SpriteBatch spriteBatch, MapManager mapManager)

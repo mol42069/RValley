@@ -19,7 +19,7 @@ namespace RValley.Items
 
         public Item() {
         
-            this.damage = 50;
+            this.damage = 500;
             this.targetAmount = 2000;
             this.reach = 800;
             this.weaponRange = 200;     // <- must be the same as the range of the weapon

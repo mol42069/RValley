@@ -67,7 +67,9 @@ namespace RValley.Items.Projectiles
                 }
 
                 for (int i = 0; i < enemies.Count; i++) {       // HERE WE MAKE THE FIREBALL EXPLODE WHEN ITS CLOSE TO AN ENEMY.
-
+                    // fixed a weird exception where the enemies list was being modified while iterating over it, causing a null reference exception. Now we check if the enemy is null before accessing its properties.
+                    var e = enemies[i];
+                    if (e == null) continue;
                     if ((this.range >= (Math.Abs(enemies[i].hitBox.Center.X - base.rectangle.Center.X) + Math.Abs(enemies[i].hitBox.Center.Y - base.rectangle.Center.Y)))) {
                         base.exploding = true;
                         base.aniCount = 0;

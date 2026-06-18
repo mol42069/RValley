@@ -64,17 +64,16 @@ namespace RValley.Items.Projectiles
                     base.aniCountMax = base.expSourceRectangles.Length - 1;
                 }
 
-                for (int i = 0; i < enemies.Count; i++)
-                {       // HERE WE MAKE THE FIREBALL EXPLODE WHEN ITS CLOSE TO AN ENEMY.
+                if (base.exploding) {
+                    for (int i = 0; i < enemies.Count; i++)
+                    {       // HERE WE MAKE THE FIREBALL EXPLODE WHEN ITS CLOSE TO AN ENEMY.
 
-                    if (this.range / 3 >= (Math.Abs(enemies[i].hitBox.Center.X - base.rectangle.Center.X) + Math.Abs(enemies[i].hitBox.Center.Y - base.rectangle.Center.Y)))
-                    {
-                        base.exploding = true;
-                        base.aniCount = 0;
-                        base.aniCountMax = base.expSourceRectangles.Length - 1;
-                        enemies[i].TakeDamage(this.damage);
+                        if (this.range >= (Math.Abs(enemies[i].hitBox.Center.X - base.rectangle.Center.X) + Math.Abs(enemies[i].hitBox.Center.Y - base.rectangle.Center.Y)))
+                        {
+                            enemies[i].TakeDamage(this.damage);
+                        }
+
                     }
-
                 }
             }
             else
